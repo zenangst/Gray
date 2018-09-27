@@ -9,6 +9,8 @@ To quote the late Michael Jackon:
 
 Go into `System Preferences > General` and set your Mac to use dark appearance.
 
+**Note** the application that you want to change the appearance of will have to restart before you see the changes. This is currently handled by **Gray** but be sure to not have any unsaved changes before you start tailoring your macOS experience.
+
 ### How it works
 
 Under the hood, **Gray** simply configures which app should be forced to use the light aqua appearance. You can achieve this without installing the **Gray** by merely running a terminal command.
