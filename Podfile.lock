@@ -1,0 +1,31 @@
+PODS:
+  - Blueprints (0.8.0)
+  - Family (0.6.0)
+  - UserInterface (0.4.0)
+  - Vaccine (0.12.1)
+
+DEPENDENCIES:
+  - Blueprints (from `_pods/Blueprints`)
+  - Family (from `_pods/Family`)
+  - UserInterface (from `_pods/UserInterface`)
+  - Vaccine (from `_pods/Vaccine`)
+
+EXTERNAL SOURCES:
+  Blueprints:
+    :path: _pods/Blueprints
+  Family:
+    :path: _pods/Family
+  UserInterface:
+    :path: _pods/UserInterface
+  Vaccine:
+    :path: _pods/Vaccine
+
+SPEC CHECKSUMS:
+  Blueprints: bcea148ee17109c435e9374d9a1e6f7a38109596
+  Family: 26fa629e314e9b687afed8f54796d102923ffff2
+  UserInterface: b0a02d3f20d2a0021e90d4b43970d2970a4e37bc
+  Vaccine: 663d55c6d55268c0a6b461c4422294edfa3e5cc9
+
+PODFILE CHECKSUM: 625066cffc227ae8888180387aac8a0941e3f5c3
+
+COCOAPODS: 1.6.0.beta.1
