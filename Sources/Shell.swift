@@ -9,8 +9,6 @@ class Shell {
     let arguments = arguments.joined(separator: " ")
     let command = "cd \(path) && \(command) \(arguments)"
 
-    Swift.print(command)
-
     return try launch(process, command: command)
   }
 
