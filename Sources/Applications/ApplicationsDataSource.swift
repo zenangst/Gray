@@ -40,6 +40,8 @@ class ApplicationsDataSource: NSObject, NSCollectionViewDataSource {
     return collectionView.dequeue(ApplicationView.self, with: model(at: indexPath), for: indexPath) {
       view, model in
       view.label.stringValue = model.name
+      view.toggle.setSelected(model.appearance == .light, forSegment: 0)
+      view.toggle.setSelected(model.appearance == .dark, forSegment: 1)
     }
   }
 }

@@ -18,10 +18,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let window = NSWindow(contentViewController: contentViewController)
     window.setFrameAutosaveName(NSWindow.FrameAutosaveName.init("MainApplicationWindow"))
     window.styleMask = [.closable, .miniaturizable, .resizable, .titled]
-
-    if window.frame.size == .zero {
+    if window.frame.size.width == 0 {
       window.setFrame(NSRect.init(origin: .zero, size: .init(width: 200, height: 200)),
-                      display: true)
+                      display: false)
+    }
+
+    if let screen = NSScreen.main {
+      let origin = NSPoint(x: screen.frame.width / 2 - window.frame.size.width / 2,
+                           y: screen.frame.height / 2 - window.frame.size.height / 2)
+      window.setFrameOrigin(origin)
     }
 
     window.makeKeyAndOrderFront(nil)
@@ -29,7 +34,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   @objc open func injected(_ notification: Notification) {
-//    guard Injection.objectWasInjected(self, in: notification) else { return }
     loadApplication()
   }
 }
