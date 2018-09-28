@@ -32,15 +32,18 @@ class ApplicationsLogicController {
         let shell = Shell()
         let applicationIsRunning = !NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).isEmpty
         if applicationIsRunning {
-          var closeScript = String()
-          closeScript = closeScript.craft("\"tell application ", "\\", "\"", application.name, "\\", "\" to ", "quit\"")
-          try shell.execute(command: "osascript", arguments: ["-e", closeScript])
+          do {
+            let script = """
+            tell application "\(application.name)" to quit
+            """
+            NSAppleScript(source: script)?.executeAndReturnError(nil)
+          }
         }
 
         try shell.execute(command: "defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)")
 
         if applicationIsRunning {
-          try shell.execute(command: "open \"\(application.url.path)\"")
+          NSWorkspace.shared.launchApplication(application.name)
         }
 
         DispatchQueue.main.async { [weak self] in
@@ -89,16 +92,6 @@ class ApplicationsLogicController {
       applications.append(app)
     }
     return applications
-  }
-}
-
-fileprivate extension String {
-  mutating func craft(_ strings: String ...) -> String {
-    for string in strings {
-      self = self.appending(string)
-    }
-
-    return self
   }
 }
 
