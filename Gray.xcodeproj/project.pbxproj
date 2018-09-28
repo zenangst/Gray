@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2AECAC775C01910CCBFAD88E /* libPods-Gray.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C02BDE925690A5BBA8E6D44 /* libPods-Gray.a */; };
 		BD111046215CEB240002D537 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD111045215CEB240002D537 /* Shell.swift */; };
+		BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1D9544215E435F003ABBCF /* VersionController.swift */; };
 		BD30844A215C198D002A9349 /* ApplicationsLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD308449215C198D002A9349 /* ApplicationsLogicController.swift */; };
 		BD67CE0E215BF15F00216FDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CE0D215BF15F00216FDB /* AppDelegate.swift */; };
 		BD67CE10215BF16100216FDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD67CE0F215BF16100216FDB /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		8925482688825713455FEF24 /* Pods-Gray.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gray.release.xcconfig"; path = "Target Support Files/Pods-Gray/Pods-Gray.release.xcconfig"; sourceTree = "<group>"; };
 		9C02BDE925690A5BBA8E6D44 /* libPods-Gray.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Gray.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD111045215CEB240002D537 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
+		BD1D9544215E435F003ABBCF /* VersionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionController.swift; sourceTree = "<group>"; };
 		BD308449215C198D002A9349 /* ApplicationsLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsLogicController.swift; sourceTree = "<group>"; };
 		BD67CE0A215BF15F00216FDB /* Gray.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gray.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD67CE0D215BF15F00216FDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				BD9D3D79215C2D3F00233333 /* Applications */,
 				BD67CE0D215BF15F00216FDB /* AppDelegate.swift */,
 				BD111045215CEB240002D537 /* Shell.swift */,
+				BD1D9544215E435F003ABBCF /* VersionController.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				BD67CE1C215BF4FE00216FDB /* ApplicationsViewController.swift in Sources */,
 				BD67CE0E215BF15F00216FDB /* AppDelegate.swift in Sources */,
 				BD30844A215C198D002A9349 /* ApplicationsLogicController.swift in Sources */,
+				BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */,
 				BD9D3D7D215C2D7100233333 /* ApplicationView.swift in Sources */,
 				BD111046215CEB240002D537 /* Shell.swift in Sources */,
 				BD9D3D7F215C30B000233333 /* ApplicationCollectionViewController.swift in Sources */,
