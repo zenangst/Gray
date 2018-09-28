@@ -5,6 +5,8 @@ Ever wanted to have light and dark apps live side-by-side in harmony, well now y
 To quote the late Michael Jackon:
 > It don't matter if you're black or white
 
+Current version: 0.0.2 [[Download](https://github.com/zenangst/Gray/releases/download/0.0.2/Gray.zip)]
+
 ### Instructions
 
 Go into `System Preferences > General` and set your Mac to use dark appearance.
