@@ -29,6 +29,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       window.setFrameOrigin(origin)
     }
 
+    window.minSize = .init(width: 320, height: 320)
+
     window.makeKeyAndOrderFront(nil)
     self.window = window
   }
