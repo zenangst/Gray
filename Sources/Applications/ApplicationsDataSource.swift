@@ -4,6 +4,7 @@ import UserInterface
 
 class ApplicationsDataSource: NSObject, NSCollectionViewDataSource {
   private(set) var models: [Application]
+  let iconController = IconController()
 
   // MARK: - Initializer
 
@@ -40,8 +41,9 @@ class ApplicationsDataSource: NSObject, NSCollectionViewDataSource {
 
   func collectionView(_ collectionView: NSCollectionView,
                       itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    return collectionView.dequeue(ApplicationView.self, with: model(at: indexPath), for: indexPath) {
+    return collectionView.dequeue(ApplicationListView.self, with: model(at: indexPath), for: indexPath) {
       view, model in
+      view.iconView.image = self.iconController.icon(for: model)
       view.label.stringValue = model.name
       view.toggle.setSelected(model.appearance == .light, forSegment: 0)
       view.toggle.setSelected(model.appearance == .dark, forSegment: 1)

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2AECAC775C01910CCBFAD88E /* libPods-Gray.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C02BDE925690A5BBA8E6D44 /* libPods-Gray.a */; };
 		BD111046215CEB240002D537 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD111045215CEB240002D537 /* Shell.swift */; };
+		BD1BA9BE215E68840052633B /* IconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BA9BD215E68840052633B /* IconController.swift */; };
 		BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1D9544215E435F003ABBCF /* VersionController.swift */; };
 		BD30844A215C198D002A9349 /* ApplicationsLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD308449215C198D002A9349 /* ApplicationsLogicController.swift */; };
 		BD67CE0E215BF15F00216FDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CE0D215BF15F00216FDB /* AppDelegate.swift */; };
@@ -17,7 +18,7 @@
 		BD67CE1C215BF4FE00216FDB /* ApplicationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CE1B215BF4FE00216FDB /* ApplicationsViewController.swift */; };
 		BD750FDC215C1AC60024E70A /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD750FDB215C1AC60024E70A /* Application.swift */; };
 		BD9D3D7B215C2D5C00233333 /* ApplicationsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7A215C2D5C00233333 /* ApplicationsDataSource.swift */; };
-		BD9D3D7D215C2D7100233333 /* ApplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7C215C2D7100233333 /* ApplicationView.swift */; };
+		BD9D3D7D215C2D7100233333 /* ApplicationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7C215C2D7100233333 /* ApplicationListView.swift */; };
 		BD9D3D7F215C30B000233333 /* ApplicationCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7E215C30B000233333 /* ApplicationCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		8925482688825713455FEF24 /* Pods-Gray.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gray.release.xcconfig"; path = "Target Support Files/Pods-Gray/Pods-Gray.release.xcconfig"; sourceTree = "<group>"; };
 		9C02BDE925690A5BBA8E6D44 /* libPods-Gray.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Gray.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD111045215CEB240002D537 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
+		BD1BA9BD215E68840052633B /* IconController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconController.swift; sourceTree = "<group>"; };
 		BD1D9544215E435F003ABBCF /* VersionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionController.swift; sourceTree = "<group>"; };
 		BD308449215C198D002A9349 /* ApplicationsLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsLogicController.swift; sourceTree = "<group>"; };
 		BD67CE0A215BF15F00216FDB /* Gray.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gray.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,7 +39,7 @@
 		BD67CE1B215BF4FE00216FDB /* ApplicationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsViewController.swift; sourceTree = "<group>"; };
 		BD750FDB215C1AC60024E70A /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		BD9D3D7A215C2D5C00233333 /* ApplicationsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsDataSource.swift; sourceTree = "<group>"; };
-		BD9D3D7C215C2D7100233333 /* ApplicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationView.swift; sourceTree = "<group>"; };
+		BD9D3D7C215C2D7100233333 /* ApplicationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListView.swift; sourceTree = "<group>"; };
 		BD9D3D7E215C30B000233333 /* ApplicationCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,6 +79,7 @@
 				BD67CE0D215BF15F00216FDB /* AppDelegate.swift */,
 				BD111045215CEB240002D537 /* Shell.swift */,
 				BD1D9544215E435F003ABBCF /* VersionController.swift */,
+				BD1BA9BD215E68840052633B /* IconController.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -119,7 +122,7 @@
 				BD9D3D7A215C2D5C00233333 /* ApplicationsDataSource.swift */,
 				BD308449215C198D002A9349 /* ApplicationsLogicController.swift */,
 				BD67CE1B215BF4FE00216FDB /* ApplicationsViewController.swift */,
-				BD9D3D7C215C2D7100233333 /* ApplicationView.swift */,
+				BD9D3D7C215C2D7100233333 /* ApplicationListView.swift */,
 			);
 			path = Applications;
 			sourceTree = "<group>";
@@ -227,11 +230,12 @@
 			files = (
 				BD750FDC215C1AC60024E70A /* Application.swift in Sources */,
 				BD9D3D7B215C2D5C00233333 /* ApplicationsDataSource.swift in Sources */,
+				BD1BA9BE215E68840052633B /* IconController.swift in Sources */,
 				BD67CE1C215BF4FE00216FDB /* ApplicationsViewController.swift in Sources */,
 				BD67CE0E215BF15F00216FDB /* AppDelegate.swift in Sources */,
 				BD30844A215C198D002A9349 /* ApplicationsLogicController.swift in Sources */,
 				BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */,
-				BD9D3D7D215C2D7100233333 /* ApplicationView.swift in Sources */,
+				BD9D3D7D215C2D7100233333 /* ApplicationListView.swift in Sources */,
 				BD111046215CEB240002D537 /* Shell.swift in Sources */,
 				BD9D3D7F215C30B000233333 /* ApplicationCollectionViewController.swift in Sources */,
 			);
