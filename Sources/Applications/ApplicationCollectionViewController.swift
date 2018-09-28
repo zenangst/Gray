@@ -16,7 +16,7 @@ class ApplicationCollectionViewController: NSViewController, ApplicationViewDele
     itemSize: .init(width: 100, height: 70),
     minimumLineSpacing: 0)
   lazy var collectionView = NSCollectionView(layout: layout,
-                                             register: ApplicationView.self)
+                                             register: ApplicationListView.self)
 
   init(models: [Application] = []) {
     self.dataSource = ApplicationsDataSource(models: models)
@@ -44,12 +44,12 @@ class ApplicationCollectionViewController: NSViewController, ApplicationViewDele
   func collectionView(_ collectionView: NSCollectionView,
                       willDisplay item: NSCollectionViewItem,
                       forRepresentedObjectAt indexPath: IndexPath) {
-    (item as? ApplicationView)?.delegate = self
+    (item as? ApplicationListView)?.delegate = self
   }
 
   // MARK: - ApplicationViewDelegate
 
-  func applicationView(_ view: ApplicationView, didClickSegmentedControl segmentedControl: NSSegmentedControl) {
+  func applicationView(_ view: ApplicationListView, didClickSegmentedControl segmentedControl: NSSegmentedControl) {
     guard let indexPath = collectionView.indexPath(for: view),
       let appearance = segmentedControl.label(forSegment: segmentedControl.selectedSegment),
       let newAppearance = Application.Appearance.init(rawValue: appearance) else { return }
