@@ -23,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                       display: false)
     }
 
-    if let screen = NSScreen.main {
+    if let screen = NSScreen.main, window.frame.origin == .zero {
       let origin = NSPoint(x: screen.frame.width / 2 - window.frame.size.width / 2,
                            y: screen.frame.height / 2 - window.frame.size.height / 2)
       window.setFrameOrigin(origin)
