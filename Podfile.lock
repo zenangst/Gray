@@ -1,11 +1,13 @@
 PODS:
   - Blueprints (0.8.0)
+  - Differific (0.5.0)
   - Family (0.6.0)
   - UserInterface (0.5.0)
   - Vaccine (0.12.2)
 
 DEPENDENCIES:
   - Blueprints
+  - Differific
   - Family
   - UserInterface
   - Vaccine
@@ -13,16 +15,18 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Blueprints
+    - Differific
     - Family
     - UserInterface
     - Vaccine
 
 SPEC CHECKSUMS:
   Blueprints: bd8e23ee3b1ee9faa751ddb6e9cd82fef862ce9a
+  Differific: 44185f21f5f5772c7f68077946b0f803f4934eb4
   Family: dc169b9a69bad47a116c07f2134ab5baa84b52c5
   UserInterface: 54e15db9aceaec2b9686d00f471adb15d2598ea3
   Vaccine: a8ccb41c6b9aa93242560ceaa066040fa9e18b27
 
-PODFILE CHECKSUM: 8d3137c9109c35467f4afb5a02c4b2395646d0fd
+PODFILE CHECKSUM: cc5e0a81b9c0eb7a8912c97a9ac152643c4403a3
 
 COCOAPODS: 1.6.0.beta.1

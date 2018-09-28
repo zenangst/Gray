@@ -1,8 +1,8 @@
 import Cocoa
+import Differific
 import UserInterface
 
 class ApplicationsDataSource: NSObject, NSCollectionViewDataSource {
-  weak var collectionView: NSCollectionView?
   private(set) var models: [Application]
 
   // MARK: - Initializer
@@ -14,11 +14,14 @@ class ApplicationsDataSource: NSObject, NSCollectionViewDataSource {
 
   // MARK: - Public API
 
-  func reload(with models: [Application],
+  func reload(_ collectionView: NSCollectionView,
+              with models: [Application],
               then handler: (() -> Void)? = nil) {
-    self.models = models
-    collectionView?.reloadData()
-    handler?()
+    let manager = DiffManager()
+    let changes = manager.diff(self.models, models)
+    collectionView.reload(with: changes,
+                           updateDataSource: { self.models = models },
+                           completion: handler)
   }
 
   func model(at indexPath: IndexPath) -> Application {

@@ -4,6 +4,7 @@ platform :macos, '10.14'
 
 # Frameworks
 pod 'Blueprints'
+pod 'Differific'
 pod 'Family'
 pod 'UserInterface'
 pod 'Vaccine'

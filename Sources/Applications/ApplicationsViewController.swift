@@ -17,7 +17,7 @@ class ApplicationsViewController: FamilyViewController, ApplicationCollectionVie
   private func render(_ state: State) {
     switch state {
     case .list(let applications):
-      collectionViewController.dataSource.reload(with: applications)
+      collectionViewController.dataSource.reload(collectionViewController.collectionView, with: applications)
     }
   }
 
