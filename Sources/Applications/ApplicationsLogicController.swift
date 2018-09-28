@@ -2,8 +2,6 @@ import Foundation
 import Cocoa
 
 class ApplicationsLogicController {
-  let shell = Shell()
-
   enum PlistKey: String {
     case bundleName = "CFBundleName"
     case bundleIdentifier = "CFBundleIdentifier"
@@ -27,25 +25,29 @@ class ApplicationsLogicController {
 
   func toggleAppearance(for application: Application,
                         newAppearance appearance: Application.Appearance,
-                        then handler: (ApplicationsViewController.State) -> Void) {
-    let newSetting = appearance == .light ? "YES" : "NO"
+                        then handler: @escaping (ApplicationsViewController.State) -> Void) {
+    DispatchQueue.global(qos: .utility).async {
+      let newSetting = appearance == .light ? "YES" : "NO"
+      do {
+        let shell = Shell()
+        let applicationIsRunning = !NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).isEmpty
+        if applicationIsRunning {
+          var closeScript = String()
+          closeScript = closeScript.craft("\"tell application ", "\\", "\"", application.name, "\\", "\" to ", "quit\"")
+          try shell.execute(command: "osascript", arguments: ["-e", closeScript])
+        }
 
-    do {
-      let applicationIsRunning = !NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).isEmpty
-      if applicationIsRunning {
-        var closeScript = String()
-        closeScript = closeScript.craft("\"tell application ", "\\", "\"", application.name, "\\", "\" to ", "quit\"")
-        try shell.execute(command: "osascript", arguments: ["-e", closeScript])
-      }
+        try shell.execute(command: "defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)")
 
-      try shell.execute(command: "defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)")
+        if applicationIsRunning {
+          try shell.execute(command: "open \"\(application.url.path)\"")
+        }
 
-      if applicationIsRunning {
-        try shell.execute(command: "open \"\(application.url.path)\"")
-      }
-
-      load(then: handler)
-    } catch {}
+        DispatchQueue.main.async { [weak self] in
+          self?.load(then: handler)
+        }
+      } catch {}
+    }
   }
 
   private func processApplications(_ appUrls: [URL], at directoryUrl: URL) throws -> [Application] {
