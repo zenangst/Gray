@@ -22,3 +22,24 @@ defaults write com.apple.dt.Xcode NSRequiresAquaSystemAppearance -bool YES
 ```
 
 The command creates a new entry in the user's configuration file for the specific application. It does not alter the system in any way. So when you are done configuring, you can toss **Gray** in the trash if you like (I hope you don't :) )
+
+## Building
+
+If you want to build `Gray` using Xcode, you can follow these instructions.
+
+```fish
+git clone git@github.com:zenangst/Gray.git
+cd Gray
+pod install
+open Gray.xcworkspace
+```
+
+Happy coding!
+
+## Author
+
+Christoffer Winterkvist, christoffer@winterkvist.com
+
+## License
+
+**Gray** is available under the MIT license. See the [LICENSE](https://github.com/zenangst/Gray/blob/master/LICENSE.md) file for more info.
