@@ -1,6 +1,8 @@
 import Foundation
 
 class Shell {
+  let queue = DispatchQueue(label: "shell-execution")
+
   @discardableResult func execute(command: String,
                                   arguments: [String] = [],
                                   at path: String = ".") throws -> String {
@@ -15,12 +17,12 @@ class Shell {
   private func launch(_ process: Process,
                       command: String,
                       withShell: String = "/bin/bash") throws -> String {
-    let queue = DispatchQueue(label: "shell-execution")
     let pipe = Pipe()
     var output = Data()
 
-    pipe.fileHandleForReading.readabilityHandler = { handler in
-      queue.async {
+    pipe.fileHandleForReading.readabilityHandler = { [weak self] handler in
+      guard let strongSelf = self else { return }
+      strongSelf.queue.async {
         let data = handler.availableData
         output.append(data)
       }
