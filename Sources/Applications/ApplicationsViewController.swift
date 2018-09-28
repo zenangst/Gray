@@ -26,7 +26,6 @@ class ApplicationsViewController: FamilyViewController, ApplicationCollectionVie
   func applicationCollectionViewController(_ controller: ApplicationCollectionViewController,
                                            toggleAppearance newAppearance: Application.Appearance,
                                            application: Application) {
-    logicController.toggleAppearance(for: application, newAppearance: newAppearance, then: { _ in
-    })
+    logicController.toggleAppearance(for: application, newAppearance: newAppearance, then: render)
   }
 }
