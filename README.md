@@ -1,6 +1,6 @@
 # Gray
 
-Current version: 0.0.3 [[Download](https://github.com/zenangst/Gray/releases/download/0.0.3/Gray.zip)]
+Current version: 0.0.4 [[Download](https://github.com/zenangst/Gray/releases/download/0.0.4/Gray.zip)]
 
 Ever wanted to have light and dark apps live side-by-side in harmony, well now you can. With **Gray** you can pick which apps should use the light and dark appearance with a click of a button.
 
