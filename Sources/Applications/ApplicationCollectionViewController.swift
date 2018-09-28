@@ -18,7 +18,7 @@ class ApplicationCollectionViewController: NSViewController, ApplicationViewDele
   lazy var collectionView = NSCollectionView(layout: layout,
                                              register: ApplicationView.self)
 
-  init(models: [Application]) {
+  init(models: [Application] = []) {
     self.dataSource = ApplicationsDataSource(models: models)
     super.init(nibName: nil, bundle: nil)
   }
