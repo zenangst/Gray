@@ -17,7 +17,7 @@ Go into `System Preferences > General` and set your Mac to use dark appearance.
 
 Under the hood, **Gray** simply configures which app should be forced to use the light aqua appearance. You can achieve this without installing the **Gray** by merely running a terminal command.
 
-```
+```fish
 defaults write com.apple.dt.Xcode NSRequiresAquaSystemAppearance -bool YES
 ```
 
