@@ -41,14 +41,14 @@ class ApplicationGridView: NSCollectionViewItem {
     let margin: CGFloat = 20
 
     NSLayoutConstraint.constrain(
-      iconView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin),
+      iconView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
       iconView.topAnchor.constraint(equalTo: view.topAnchor, constant: margin),
       iconView.widthAnchor.constraint(equalToConstant: 50),
       iconView.heightAnchor.constraint(equalToConstant: 50),
 
       titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin),
       titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin),
-      titleLabel.bottomAnchor.constraint(equalTo: subtitleLabel.topAnchor, constant: -12),
+      titleLabel.bottomAnchor.constraint(equalTo: subtitleLabel.topAnchor, constant: 0),
 
       subtitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin),
       subtitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin),
@@ -60,7 +60,7 @@ class ApplicationGridView: NSCollectionViewItem {
     if duration > 0 {
       NSAnimationContext.current.allowsImplicitAnimation = true
       NSAnimationContext.runAnimationGroup({ (context) in
-        context.duration = 1.0
+        context.duration = duration
         switch appearance {
         case .dark:
           view.animator().layer?.backgroundColor = .black

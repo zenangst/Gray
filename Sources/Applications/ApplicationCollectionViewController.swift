@@ -57,7 +57,7 @@ class ApplicationCollectionViewController: NSViewController, ApplicationListView
 
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
     guard let indexPath = indexPaths.first,
-      let view = collectionView.item(at: indexPath) as? ApplicationGridView else {
+      let item = collectionView.item(at: indexPath) as? ApplicationGridView else {
         return
     }
 
@@ -67,13 +67,31 @@ class ApplicationCollectionViewController: NSViewController, ApplicationListView
     let newAppearance: Application.Appearance = application.appearance == .light
       ? .dark
       : .light
+    let duration: TimeInterval = 0.15
 
-    view.update(with: newAppearance, duration: 0.75) { [weak self] in
-      guard let strongSelf = self else { return }
-      strongSelf.delegate?.applicationCollectionViewController(strongSelf,
-                                                               toggleAppearance: newAppearance,
-                                                               application: application)
-    }
+    NSAnimationContext.runAnimationGroup({ (context) in
+      let scale: CGFloat = 0.8
+      let scaleTransform = CGAffineTransform.init(scaleX: scale, y: scale)
+      let (width, height) = (item.view.frame.width / 2, item.view.frame.height / 2)
+      let moveTransform = CGAffineTransform.init(translationX: width - (width * scale),
+                                                 y: height - (height * scale))
+      let concatTransform = scaleTransform.concatenating(moveTransform)
+      context.duration = duration
+      context.allowsImplicitAnimation = true
+      item.view.animator().layer?.setAffineTransform(concatTransform)
+    }, completionHandler:{
+      NSAnimationContext.runAnimationGroup({ (context) in
+        context.duration = duration
+        context.allowsImplicitAnimation = true
+        item.view.animator().layer?.setAffineTransform(.identity)
+        item.update(with: newAppearance, duration: 0.5) { [weak self] in
+          guard let strongSelf = self else { return }
+          strongSelf.delegate?.applicationCollectionViewController(strongSelf,
+                                                                   toggleAppearance: newAppearance,
+                                                                   application: application)
+        }
+      })
+    })
   }
 
   // MARK: - ApplicationViewDelegate
