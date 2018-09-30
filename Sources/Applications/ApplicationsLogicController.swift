@@ -14,11 +14,11 @@ class ApplicationsLogicController {
                                                              in: .localDomainMask,
                                                              appropriateFor: nil,
                                                              create: false)
-      let urls = try FileManager.default.contentsOfDirectory(at: applicationDirectory,
+      var urls = try FileManager.default.contentsOfDirectory(at: applicationDirectory,
                                                               includingPropertiesForKeys: nil,
                                                               options: .skipsHiddenFiles)
-      let sortedUrls = urls.sorted(by: { $0.absoluteString.lowercased() < $1.absoluteString.lowercased() } )
-      let applications = try processApplications(sortedUrls, at: applicationDirectory)
+      urls.append(URL(string: "file:///System/Library/CoreServices/Finder.app")!)
+      let applications = try processApplications(urls, at: applicationDirectory)
       handler(.list(applications))
     } catch {}
   }
@@ -91,7 +91,7 @@ class ApplicationsLogicController {
                             appearance: resolvedPlist.appearance())
       applications.append(app)
     }
-    return applications
+    return applications.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
   }
 }
 
