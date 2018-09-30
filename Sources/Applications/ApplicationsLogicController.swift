@@ -31,7 +31,7 @@ class ApplicationsLogicController {
       do {
         let shell = Shell()
         let applicationIsRunning = !NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).isEmpty
-        if applicationIsRunning {
+        if applicationIsRunning && !application.url.path.contains("CoreServices") {
           do {
             let script = """
             tell application "\(application.name)" to quit
@@ -42,8 +42,10 @@ class ApplicationsLogicController {
 
         try shell.execute(command: "defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)")
 
-        if applicationIsRunning {
+        if applicationIsRunning && !application.url.path.contains("CoreServices") {
           NSWorkspace.shared.launchApplication(application.name)
+        } else {
+          try shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
         }
 
         DispatchQueue.main.async { [weak self] in
