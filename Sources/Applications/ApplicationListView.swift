@@ -1,12 +1,12 @@
 import Cocoa
 import UserInterface
 
-protocol ApplicationViewDelegate: class {
+protocol ApplicationListViewDelegate: class {
   func applicationView(_ view: ApplicationListView, didClickSegmentedControl segmentedControl: NSSegmentedControl)
 }
 
 class ApplicationListView: NSCollectionViewItem {
-  weak var delegate: ApplicationViewDelegate?
+  weak var delegate: ApplicationListViewDelegate?
   
   lazy var iconView: NSImageView = .init()
   lazy var label: NSTextField = .init()
