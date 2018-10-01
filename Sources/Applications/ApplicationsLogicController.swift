@@ -77,11 +77,11 @@ class ApplicationsLogicController {
       var resolvedAppPreferenceUrl = appPreferenceUrl
       var applicationPlist: NSDictionary? = nil
 
-      if let plist = NSDictionary.init(contentsOfFile: appPreferenceUrl.path) {
-        applicationPlist = plist
-      } else if let plist = NSDictionary.init(contentsOfFile: appContainerPreferenceUrl.path) {
+      if let plist = NSDictionary.init(contentsOfFile: appContainerPreferenceUrl.path) {
         applicationPlist = plist
         resolvedAppPreferenceUrl = appContainerPreferenceUrl
+      } else if let plist = NSDictionary.init(contentsOfFile: appPreferenceUrl.path) {
+        applicationPlist = plist
       }
 
       guard let resolvedPlist = applicationPlist else { continue }
