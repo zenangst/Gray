@@ -17,10 +17,10 @@
 		BD67CE10215BF16100216FDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD67CE0F215BF16100216FDB /* Assets.xcassets */; };
 		BD67CE13215BF16100216FDB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD67CE11215BF16100216FDB /* MainMenu.xib */; };
 		BD67CE1C215BF4FE00216FDB /* ApplicationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CE1B215BF4FE00216FDB /* ApplicationsViewController.swift */; };
+		BD6F243221620A240032338F /* ApplicationsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7E215C30B000233333 /* ApplicationsCollectionViewController.swift */; };
 		BD750FDC215C1AC60024E70A /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD750FDB215C1AC60024E70A /* Application.swift */; };
 		BD9D3D7B215C2D5C00233333 /* ApplicationsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7A215C2D5C00233333 /* ApplicationsDataSource.swift */; };
 		BD9D3D7D215C2D7100233333 /* ApplicationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7C215C2D7100233333 /* ApplicationListView.swift */; };
-		BD9D3D7F215C30B000233333 /* ApplicationCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7E215C30B000233333 /* ApplicationCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +42,7 @@
 		BD750FDB215C1AC60024E70A /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		BD9D3D7A215C2D5C00233333 /* ApplicationsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsDataSource.swift; sourceTree = "<group>"; };
 		BD9D3D7C215C2D7100233333 /* ApplicationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListView.swift; sourceTree = "<group>"; };
-		BD9D3D7E215C30B000233333 /* ApplicationCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCollectionViewController.swift; sourceTree = "<group>"; };
+		BD9D3D7E215C30B000233333 /* ApplicationsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +77,10 @@
 		BD111047215CEB8E0002D537 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				BD9D3D79215C2D3F00233333 /* Applications */,
 				BD67CE0D215BF15F00216FDB /* AppDelegate.swift */,
-				BD111045215CEB240002D537 /* Shell.swift */,
-				BD1D9544215E435F003ABBCF /* VersionController.swift */,
-				BD1BA9BD215E68840052633B /* IconController.swift */,
+				BD9D3D79215C2D3F00233333 /* Applications */,
+				BD6F243621620A570032338F /* Utilities */,
+				BD6F243321620A370032338F /* Versions */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -116,16 +115,73 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		BD9D3D79215C2D3F00233333 /* Applications */ = {
+		BD6F242D216209BF0032338F /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				BD9D3D7A215C2D5C00233333 /* ApplicationsDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		BD6F242E216209C50032338F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BD1BA9BF215E6DBB0052633B /* ApplicationGridView.swift */,
+				BD9D3D7C215C2D7100233333 /* ApplicationListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BD6F242F216209CC0032338F /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				BD750FDB215C1AC60024E70A /* Application.swift */,
-				BD9D3D7E215C30B000233333 /* ApplicationCollectionViewController.swift */,
-				BD9D3D7A215C2D5C00233333 /* ApplicationsDataSource.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BD6F2430216209DE0032338F /* Logic */ = {
+			isa = PBXGroup;
+			children = (
 				BD308449215C198D002A9349 /* ApplicationsLogicController.swift */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		BD6F2431216209E50032338F /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BD9D3D7E215C30B000233333 /* ApplicationsCollectionViewController.swift */,
 				BD67CE1B215BF4FE00216FDB /* ApplicationsViewController.swift */,
-				BD9D3D7C215C2D7100233333 /* ApplicationListView.swift */,
-				BD1BA9BF215E6DBB0052633B /* ApplicationGridView.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BD6F243321620A370032338F /* Versions */ = {
+			isa = PBXGroup;
+			children = (
+				BD1D9544215E435F003ABBCF /* VersionController.swift */,
+			);
+			path = Versions;
+			sourceTree = "<group>";
+		};
+		BD6F243621620A570032338F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				BD1BA9BD215E68840052633B /* IconController.swift */,
+				BD111045215CEB240002D537 /* Shell.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		BD9D3D79215C2D3F00233333 /* Applications */ = {
+			isa = PBXGroup;
+			children = (
+				BD6F242D216209BF0032338F /* DataSource */,
+				BD6F2430216209DE0032338F /* Logic */,
+				BD6F242F216209CC0032338F /* Models */,
+				BD6F2431216209E50032338F /* View Controllers */,
+				BD6F242E216209C50032338F /* Views */,
 			);
 			path = Applications;
 			sourceTree = "<group>";
@@ -231,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD6F243221620A240032338F /* ApplicationsCollectionViewController.swift in Sources */,
 				BD750FDC215C1AC60024E70A /* Application.swift in Sources */,
 				BD9D3D7B215C2D5C00233333 /* ApplicationsDataSource.swift in Sources */,
 				BD1BA9BE215E68840052633B /* IconController.swift in Sources */,
@@ -241,7 +298,6 @@
 				BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */,
 				BD9D3D7D215C2D7100233333 /* ApplicationListView.swift in Sources */,
 				BD111046215CEB240002D537 /* Shell.swift in Sources */,
-				BD9D3D7F215C30B000233333 /* ApplicationCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

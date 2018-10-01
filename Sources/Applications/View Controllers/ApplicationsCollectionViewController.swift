@@ -2,14 +2,14 @@ import Blueprints
 import Cocoa
 import UserInterface
 
-protocol ApplicationCollectionViewControllerDelegate: class {
-  func applicationCollectionViewController(_ controller: ApplicationCollectionViewController,
+protocol ApplicationsCollectionViewControllerDelegate: class {
+  func applicationCollectionViewController(_ controller: ApplicationsCollectionViewController,
                                            toggleAppearance newAppearance: Application.Appearance,
                                            application: Application)
 }
 
-class ApplicationCollectionViewController: NSViewController, ApplicationListViewDelegate, NSCollectionViewDelegate {
-  weak var delegate: ApplicationCollectionViewControllerDelegate?
+class ApplicationsCollectionViewController: NSViewController, ApplicationListViewDelegate, NSCollectionViewDelegate {
+  weak var delegate: ApplicationsCollectionViewControllerDelegate?
   let dataSource: ApplicationsDataSource
   lazy var listLayout = VerticalBlueprintLayout(
     itemsPerRow: 1,

@@ -1,10 +1,10 @@
 import Cocoa
 import Family
 
-class ApplicationsViewController: FamilyViewController, ApplicationCollectionViewControllerDelegate {
+class ApplicationsViewController: FamilyViewController, ApplicationsCollectionViewControllerDelegate {
   enum State { case list([Application]) }
   let logicController = ApplicationsLogicController()
-  lazy var collectionViewController = ApplicationCollectionViewController()
+  lazy var collectionViewController = ApplicationsCollectionViewController()
 
   override func viewWillAppear() {
     super.viewWillAppear()
@@ -23,7 +23,7 @@ class ApplicationsViewController: FamilyViewController, ApplicationCollectionVie
 
   // MARK: - ApplicationCollectionViewControllerDelegate
 
-  func applicationCollectionViewController(_ controller: ApplicationCollectionViewController,
+  func applicationCollectionViewController(_ controller: ApplicationsCollectionViewController,
                                            toggleAppearance newAppearance: Application.Appearance,
                                            application: Application) {
     logicController.toggleAppearance(for: application, newAppearance: newAppearance, then: render)
