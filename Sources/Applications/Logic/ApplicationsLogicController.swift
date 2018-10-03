@@ -41,6 +41,7 @@ class ApplicationsLogicController {
         }
 
         try shell.execute(command: "/usr/bin/killall", arguments: ["-u", "$USER", "cfprefsd"])
+        try self.write(appearance, for: application)
         try shell.execute(command: "defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)")
 
         if applicationIsRunning && !application.url.path.contains("CoreServices") {
@@ -54,6 +55,19 @@ class ApplicationsLogicController {
         }
       } catch {}
     }
+  }
+
+  private func write(_ appearance: Application.Appearance, for application: Application) throws {
+    let newSetting = appearance == .light
+    let command = "/usr/libexec/PlistBuddy"
+    let arguments = [
+      "-c",
+      "\"Set :NSRequiresAquaSystemAppearance \(newSetting)\"",
+      application.preferencesUrl.path
+    ]
+
+    let shell = Shell()
+    try shell.execute(command: command, arguments: arguments)
   }
 
   private func processApplications(_ appUrls: [URL], at directoryUrl: URL) throws -> [Application] {
