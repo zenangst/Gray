@@ -10,7 +10,6 @@ class Shell {
     let path = path.replacingOccurrences(of: " ", with: "\\ ")
     let arguments = arguments.joined(separator: " ")
     let command = "cd \(path) && \(command) \(arguments)"
-
     return try launch(process, command: command)
   }
 
@@ -20,11 +19,10 @@ class Shell {
     let pipe = Pipe()
     var output = Data()
 
-    pipe.fileHandleForReading.readabilityHandler = { [weak self] handler in
-      guard let strongSelf = self else { return }
-      strongSelf.queue.async {
-        let data = handler.availableData
-        output.append(data)
+    pipe.fileHandleForReading.readabilityHandler = { handler in
+      if handler.availableData.count > 0 {
+        output.append(handler.availableData)
+        handler.waitForDataInBackgroundAndNotify()
       }
     }
 
