@@ -20,7 +20,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
     let contentViewController = ApplicationsViewController()
     let window = NSWindow(contentViewController: contentViewController)
     window.setFrameAutosaveName(NSWindow.FrameAutosaveName.init("MainApplicationWindow"))
-    window.styleMask = [.closable, .miniaturizable, .resizable, .titled]
+    window.styleMask = [.closable, .miniaturizable, .resizable, .titled,
+                        .fullSizeContentView, .unifiedTitleAndToolbar]
+    window.titleVisibility = .hidden
+    window.toolbar = NSToolbar()
     if window.frame.size.width == 0 {
       window.setFrame(NSRect.init(origin: .zero, size: .init(width: 200, height: 200)),
                       display: false)
