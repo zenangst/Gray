@@ -26,32 +26,32 @@ class ApplicationsLogicController {
   func toggleAppearance(for application: Application,
                         newAppearance appearance: Application.Appearance,
                         then handler: @escaping (ApplicationsViewController.State) -> Void) {
-    DispatchQueue.global(qos: .utility).async {
+    DispatchQueue.global(qos: .utility).async { [weak self] in
+      let shell = Shell()
       let newSetting = appearance == .light ? "YES" : "NO"
-      do {
-        let shell = Shell()
-        let applicationIsRunning = !NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).isEmpty
-        if applicationIsRunning && !application.url.path.contains("CoreServices") {
-          do {
-            let script = """
-            tell application "\(application.name)" to quit
-            """
-            NSAppleScript(source: script)?.executeAndReturnError(nil)
-          }
-        }
+      let applicationIsRunning = !NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).isEmpty
+      if applicationIsRunning && !application.url.path.contains("CoreServices") {
+        let script = """
+        tell application "\(application.name)" to quit
+        """
+        NSAppleScript(source: script)?.executeAndReturnError(nil)
+      }
 
-        try shell.execute(command: "defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)")
+      shell.execute(command: """
+        /usr/bin/killall -u $USER cfprefsd &&
+        /usr/libexec/PlistBuddy -c \"Set :NSRequiresAquaSystemAppearance \(newSetting)\" \(application.preferencesUrl.path) &&
+        defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)
+        """)
 
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
         if applicationIsRunning && !application.url.path.contains("CoreServices") {
           NSWorkspace.shared.launchApplication(application.name)
         } else {
-          try shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
+          let shell = Shell()
+          shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
         }
-
-        DispatchQueue.main.async { [weak self] in
-          self?.load(then: handler)
-        }
-      } catch {}
+        self?.load(then: handler)
+      })
     }
   }
 
@@ -62,7 +62,6 @@ class ApplicationsLogicController {
                                                        in: .userDomainMask,
                                                        appropriateFor: nil,
                                                        create: false)
-
     for url in appUrls {
       let path = url.path
       let infoPath = "\(path)/Contents/Info.plist"
@@ -100,8 +99,11 @@ class ApplicationsLogicController {
 fileprivate extension NSDictionary {
   func appearance() -> Application.Appearance {
     let key = ApplicationsLogicController.PlistKey.requiresAquaSystemAppearance.rawValue
-    let result = (value(forKey: key) as? Bool) ?? false
-    return result ? .light : .dark
+    if let result = (value(forKey: key) as? Bool) {
+      return result ? .light : .dark
+    } else {
+      return .system
+    }
   }
 
   func value(forPlistKey plistKey: ApplicationsLogicController.PlistKey) -> String? {
