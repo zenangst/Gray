@@ -22,6 +22,8 @@ class ApplicationGridView: NSCollectionViewItem {
     super.viewDidLoad()
 
     view.layer?.backgroundColor = NSColor.white.cgColor
+    view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
+    view.layer?.borderWidth = 1.5
     view.layer?.cornerRadius = 28
     view.layer?.masksToBounds = true
 
@@ -66,12 +68,17 @@ class ApplicationGridView: NSCollectionViewItem {
           view.animator().layer?.backgroundColor = .black
           titleLabel.animator().textColor = .white
           subtitleLabel.animator().textColor = .lightGray
-          subtitleLabel.animator().stringValue = "Dark mode"
+          subtitleLabel.animator().stringValue = "Dark apperance"
+        case .system:
+          view.animator().layer?.backgroundColor = NSColor.gray.cgColor
+          titleLabel.animator().textColor = .white
+          subtitleLabel.animator().textColor = .lightGray
+          subtitleLabel.animator().stringValue = "System apperance"
         case .light:
           view.animator().layer?.backgroundColor = .white
           titleLabel.animator().textColor = .black
           subtitleLabel.animator().textColor = .darkGray
-          subtitleLabel.animator().stringValue = "Light mode"
+          subtitleLabel.animator().stringValue = "Light apperance"
         }
       }, completionHandler:{
         handler?()
@@ -82,12 +89,17 @@ class ApplicationGridView: NSCollectionViewItem {
         view.layer?.backgroundColor = .black
         titleLabel.animator().textColor = .white
         subtitleLabel.textColor = .lightGray
-        subtitleLabel.stringValue = "Dark mode"
+        subtitleLabel.stringValue = "Dark apperance"
+      case .system:
+        view.layer?.backgroundColor = NSColor.gray.cgColor
+        titleLabel.animator().textColor = .white
+        subtitleLabel.textColor = .lightGray
+        subtitleLabel.stringValue = "System apperance"
       case .light:
         view.layer?.backgroundColor = .white
         titleLabel.textColor = .black
         subtitleLabel.textColor = .darkGray
-        subtitleLabel.stringValue = "Light mode"
+        subtitleLabel.stringValue = "Light apperance"
       }
     }
   }

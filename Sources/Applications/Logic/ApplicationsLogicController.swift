@@ -77,7 +77,6 @@ class ApplicationsLogicController {
                                                        in: .userDomainMask,
                                                        appropriateFor: nil,
                                                        create: false)
-
     for url in appUrls {
       let path = url.path
       let infoPath = "\(path)/Contents/Info.plist"
@@ -115,8 +114,11 @@ class ApplicationsLogicController {
 fileprivate extension NSDictionary {
   func appearance() -> Application.Appearance {
     let key = ApplicationsLogicController.PlistKey.requiresAquaSystemAppearance.rawValue
-    let result = (value(forKey: key) as? Bool) ?? false
-    return result ? .light : .dark
+    if let result = (value(forKey: key) as? Bool) {
+      return result ? .light : .dark
+    } else {
+      return .system
+    }
   }
 
   func value(forPlistKey plistKey: ApplicationsLogicController.PlistKey) -> String? {
