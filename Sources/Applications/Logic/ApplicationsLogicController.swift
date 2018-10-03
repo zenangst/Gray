@@ -2,8 +2,6 @@ import Foundation
 import Cocoa
 
 class ApplicationsLogicController {
-  let shell = Shell()
-
   enum PlistKey: String {
     case bundleName = "CFBundleName"
     case bundleIdentifier = "CFBundleIdentifier"
@@ -29,47 +27,32 @@ class ApplicationsLogicController {
                         newAppearance appearance: Application.Appearance,
                         then handler: @escaping (ApplicationsViewController.State) -> Void) {
     DispatchQueue.global(qos: .utility).async { [weak self] in
-      guard let strongSelf = self else { return }
-
+      let shell = Shell()
       let newSetting = appearance == .light ? "YES" : "NO"
-      do {
-        let applicationIsRunning = !NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).isEmpty
-        if applicationIsRunning && !application.url.path.contains("CoreServices") {
-          do {
-            let script = """
-            tell application "\(application.name)" to quit
-            """
-            NSAppleScript(source: script)?.executeAndReturnError(nil)
-          }
-        }
+      let applicationIsRunning = !NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).isEmpty
+      if applicationIsRunning && !application.url.path.contains("CoreServices") {
+        let script = """
+        tell application "\(application.name)" to quit
+        """
+        NSAppleScript(source: script)?.executeAndReturnError(nil)
+      }
 
-        try strongSelf.shell.execute(command: "/usr/bin/killall", arguments: ["-u", "$USER", "cfprefsd"])
-        try strongSelf.write(appearance, for: application)
-        try strongSelf.shell.execute(command: "defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)")
+      shell.execute(command: """
+        /usr/bin/killall -u $USER cfprefsd &&
+        /usr/libexec/PlistBuddy -c \"Set :NSRequiresAquaSystemAppearance \(newSetting)\" \(application.preferencesUrl.path) &&
+        defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)
+        """)
 
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
         if applicationIsRunning && !application.url.path.contains("CoreServices") {
           NSWorkspace.shared.launchApplication(application.name)
         } else {
-          try strongSelf.shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
+          let shell = Shell()
+          shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
         }
-
-        DispatchQueue.main.async { [weak self] in
-          self?.load(then: handler)
-        }
-      } catch {}
+        self?.load(then: handler)
+      })
     }
-  }
-
-  private func write(_ appearance: Application.Appearance, for application: Application) throws {
-    let newSetting = appearance == .light
-    let command = "/usr/libexec/PlistBuddy"
-    let arguments = [
-      "-c",
-      "\"Set :NSRequiresAquaSystemAppearance \(newSetting)\"",
-      application.preferencesUrl.path
-    ]
-
-    try shell.execute(command: command, arguments: arguments)
   }
 
   private func processApplications(_ appUrls: [URL], at directoryUrl: URL) throws -> [Application] {
