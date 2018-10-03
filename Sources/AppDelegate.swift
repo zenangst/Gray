@@ -18,6 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
     self.window = nil
 
     let contentViewController = ApplicationsViewController()
+    let windowSize = CGSize(width: 768, height: 640)
     let window = NSWindow(contentViewController: contentViewController)
     window.setFrameAutosaveName(NSWindow.FrameAutosaveName.init("MainApplicationWindow"))
     window.styleMask = [.closable, .miniaturizable, .resizable, .titled,
@@ -32,10 +33,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
     if let screen = NSScreen.main, window.frame.origin == .zero {
       let origin = NSPoint(x: screen.frame.width / 2 - window.frame.size.width / 2,
                            y: screen.frame.height / 2 - window.frame.size.height / 2)
-      window.setFrameOrigin(origin)
+      window.setFrame(NSRect.init(origin: origin, size: windowSize),
+                      display: true)
     }
 
-    window.minSize = .init(width: 320, height: 320)
+    window.minSize = windowSize
+    window.maxSize = windowSize
     window.makeKeyAndOrderFront(nil)
     self.window = window
   }
