@@ -40,6 +40,7 @@ class ApplicationsLogicController {
           }
         }
 
+        try shell.execute(command: "/usr/bin/killall", arguments: ["-u", "$USER", "cfprefsd"])
         try shell.execute(command: "defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)")
 
         if applicationIsRunning && !application.url.path.contains("CoreServices") {
