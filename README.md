@@ -2,9 +2,9 @@
 
 Current version: 0.2.1 [[Download](https://github.com/zenangst/Gray/releases/download/0.2.1/Gray.zip)]
 
-Ever wanted to have light and dark apps live side-by-side in harmony, well now you can. With **Gray** you can pick which apps should use the light and dark appearance with a click of a button.
+Ever wanted to have light and dark apps live side-by-side in harmony? Well, now you can. With **Gray** you can pick between the light appearance and the dark appearance on a per-app basis with the click of a button.
 
-To quote the late Michael Jackon:
+To quote the late Michael Jackson:
 > It don't matter if you're black or white
 
 ### Instructions
@@ -15,7 +15,7 @@ Go into `System Preferences > General` and set your Mac to use dark appearance.
 
 ### How it works
 
-Under the hood, **Gray** simply configures which app should be forced to use the light aqua appearance. You can achieve this without installing the **Gray** by merely running a terminal command.
+Under the hood, **Gray** simply configures which app should be forced to use the light aqua appearance. You can achieve this without installing **Gray** by merely running a terminal command.
 
 ```fish
 defaults write com.apple.dt.Xcode NSRequiresAquaSystemAppearance -bool YES
