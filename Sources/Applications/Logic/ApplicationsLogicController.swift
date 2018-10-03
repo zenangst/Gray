@@ -2,6 +2,8 @@ import Foundation
 import Cocoa
 
 class ApplicationsLogicController {
+  let shell = Shell()
+
   enum PlistKey: String {
     case bundleName = "CFBundleName"
     case bundleIdentifier = "CFBundleIdentifier"
@@ -26,10 +28,11 @@ class ApplicationsLogicController {
   func toggleAppearance(for application: Application,
                         newAppearance appearance: Application.Appearance,
                         then handler: @escaping (ApplicationsViewController.State) -> Void) {
-    DispatchQueue.global(qos: .utility).async {
+    DispatchQueue.global(qos: .utility).async { [weak self] in
+      guard let strongSelf = self else { return }
+
       let newSetting = appearance == .light ? "YES" : "NO"
       do {
-        let shell = Shell()
         let applicationIsRunning = !NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).isEmpty
         if applicationIsRunning && !application.url.path.contains("CoreServices") {
           do {
@@ -40,14 +43,14 @@ class ApplicationsLogicController {
           }
         }
 
-        try shell.execute(command: "/usr/bin/killall", arguments: ["-u", "$USER", "cfprefsd"])
-        try self.write(appearance, for: application)
-        try shell.execute(command: "defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)")
+        try strongSelf.shell.execute(command: "/usr/bin/killall", arguments: ["-u", "$USER", "cfprefsd"])
+        try strongSelf.write(appearance, for: application)
+        try strongSelf.shell.execute(command: "defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)")
 
         if applicationIsRunning && !application.url.path.contains("CoreServices") {
           NSWorkspace.shared.launchApplication(application.name)
         } else {
-          try shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
+          try strongSelf.shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
         }
 
         DispatchQueue.main.async { [weak self] in
@@ -66,7 +69,6 @@ class ApplicationsLogicController {
       application.preferencesUrl.path
     ]
 
-    let shell = Shell()
     try shell.execute(command: command, arguments: arguments)
   }
 
