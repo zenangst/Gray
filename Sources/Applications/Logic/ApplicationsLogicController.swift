@@ -73,6 +73,12 @@ class ApplicationsLogicController {
         let bundleIdentifier = plist.value(forPlistKey: .bundleIdentifier),
         let bundleName = plist.value(forPlistKey: .bundleName) else { continue }
 
+      // Exclude Electron apps
+      let electronPath = "\(url.path)/Contents/Frameworks/Electron Framework.framework"
+      if FileManager.default.fileExists(atPath: electronPath) {
+        continue
+      }
+
       let suffix = "Preferences/\(bundleIdentifier).plist"
       let appPreferenceUrl = libraryDirectory.appendingPathComponent(suffix)
       let appContainerPreferenceUrl = libraryDirectory.appendingPathComponent("Containers/\(bundleIdentifier)/Data/Library/\(suffix)")
