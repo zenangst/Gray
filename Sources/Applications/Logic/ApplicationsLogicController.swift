@@ -26,35 +26,41 @@ class ApplicationsLogicController {
   func toggleAppearance(for application: Application,
                         newAppearance appearance: Application.Appearance,
                         then handler: @escaping (ApplicationsViewController.State) -> Void) {
-    DispatchQueue.global(qos: .utility).async { [weak self] in
+    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
       let shell = Shell()
       let newSetting = appearance == .light ? "YES" : "NO"
-      let applicationIsRunning = !NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).isEmpty
-      if applicationIsRunning && !application.url.path.contains("CoreServices") {
-        let script = """
-        tell application "\(application.name)" to quit
-        """
-        NSAppleScript(source: script)?.executeAndReturnError(nil)
+      let runningApplication = NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).first
+
+      if !application.url.path.contains("CoreServices") {
+        runningApplication?.terminate()
       }
 
-      shell.execute(command: """
-        /usr/bin/killall -u $USER cfprefsd &&
-        /usr/libexec/PlistBuddy -c \"Set :NSRequiresAquaSystemAppearance \(newSetting)\" \(application.preferencesUrl.path) &&
-        defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)
-        """)
+      // The cfprefsd is killed for the current user to avoid plist caching.
+      // PlistBuddy is used to set new values.
+      // Defaults is invoked in order to renew the cache.
+      // https://nethack.ch/2014/03/30/quick-tip-flush-os-x-mavericks-plist-file-cache/
+      let command = """
+        /usr/bin/killall -u $USER cfprefsd
+        /usr/libexec/PlistBuddy -c \"Set :NSRequiresAquaSystemAppearance \(newSetting)\" \(application.preferencesUrl.path)
+        defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
+        """
 
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
-        if applicationIsRunning && !application.url.path.contains("CoreServices") {
+      shell.execute(command: command)
+
+      if runningApplication != nil && !application.url.path.contains("CoreServices") {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
           NSWorkspace.shared.launchApplication(withBundleIdentifier: application.bundleIdentifier,
-                                               options: .withoutActivation,
+                                               options: [.withoutActivation, .async],
                                                additionalEventParamDescriptor: nil,
                                                launchIdentifier: nil)
-        } else {
-          let shell = Shell()
-          shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
-        }
+        })
+      } else {
+        let shell = Shell()
+        shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
+      }
+      DispatchQueue.main.async {
         self?.load(then: handler)
-      })
+      }
     }
   }
 
