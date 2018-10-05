@@ -43,7 +43,7 @@ class SystemPreferenceCollectionViewController: NSViewController, NSCollectionVi
   }
 
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
-    guard let indexPath = indexPaths.first else { return }
+    guard let indexPath = indexPaths.first else { return }
 
     collectionView.deselectAll(nil)
     let model = dataSource.model(at: indexPath)
