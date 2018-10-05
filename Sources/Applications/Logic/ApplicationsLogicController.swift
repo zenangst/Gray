@@ -35,15 +35,25 @@ class ApplicationsLogicController {
         runningApplication?.terminate()
       }
 
-      // The cfprefsd is killed for the current user to avoid plist caching.
-      // PlistBuddy is used to set new values.
-      // Defaults is invoked in order to renew the cache.
-      // https://nethack.ch/2014/03/30/quick-tip-flush-os-x-mavericks-plist-file-cache/
-      let command = """
+      let command: String
+      if application.appearance == .system {
+        command = """
+        /usr/bin/killall -u $USER cfprefsd
+        /usr/libexec/PlistBuddy -c \"Add :NSRequiresAquaSystemAppearance \(newSetting)\" \(application.preferencesUrl.path)
+        defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)
+        defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
+        """
+      } else {
+        // The cfprefsd is killed for the current user to avoid plist caching.
+        // PlistBuddy is used to set new values.
+        // Defaults is invoked in order to renew the cache.
+        // https://nethack.ch/2014/03/30/quick-tip-flush-os-x-mavericks-plist-file-cache/
+        command = """
         /usr/bin/killall -u $USER cfprefsd
         /usr/libexec/PlistBuddy -c \"Set :NSRequiresAquaSystemAppearance \(newSetting)\" \(application.preferencesUrl.path)
         defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
         """
+      }
 
       shell.execute(command: command)
 
