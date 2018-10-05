@@ -1,6 +1,6 @@
 PODS:
   - Blueprints (0.8.0)
-  - Differific (0.5.0)
+  - Differific (0.5.1)
   - Family (0.6.1)
   - UserInterface (0.5.0)
   - Vaccine (0.12.2)
@@ -22,7 +22,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Blueprints: bd8e23ee3b1ee9faa751ddb6e9cd82fef862ce9a
-  Differific: 44185f21f5f5772c7f68077946b0f803f4934eb4
+  Differific: c1c9525eacb6530eb2d46e565be408d98096a186
   Family: 4b14b8bbfa6b50de16404a8778262d0ea305d44a
   UserInterface: 54e15db9aceaec2b9686d00f471adb15d2598ea3
   Vaccine: a8ccb41c6b9aa93242560ceaa066040fa9e18b27
