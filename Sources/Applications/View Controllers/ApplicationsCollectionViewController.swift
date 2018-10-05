@@ -8,7 +8,7 @@ protocol ApplicationsCollectionViewControllerDelegate: class {
                                            application: Application)
 }
 
-class ApplicationsCollectionViewController: NSViewController, ApplicationListViewDelegate, NSCollectionViewDelegate {
+class ApplicationsCollectionViewController: NSViewController, NSCollectionViewDelegate {
   weak var delegate: ApplicationsCollectionViewControllerDelegate?
   let dataSource: ApplicationsDataSource
   lazy var listLayout = VerticalBlueprintLayout(
@@ -23,7 +23,7 @@ class ApplicationsCollectionViewController: NSViewController, ApplicationListVie
     sectionInset: .init(top: 28, left: 28, bottom: 28, right: 28))
 
   lazy var collectionView = NSCollectionView(layout: gridLayout,
-                                             register: ApplicationListView.self, ApplicationGridView.self)
+                                             register: ApplicationGridView.self)
 
   init(models: [Application] = []) {
     self.dataSource = ApplicationsDataSource(models: models)
@@ -48,12 +48,6 @@ class ApplicationsCollectionViewController: NSViewController, ApplicationListVie
   }
 
   // MARK: - NSCollectionViewDelegate
-
-  func collectionView(_ collectionView: NSCollectionView,
-                      willDisplay item: NSCollectionViewItem,
-                      forRepresentedObjectAt indexPath: IndexPath) {
-    (item as? ApplicationListView)?.delegate = self
-  }
 
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
     guard let indexPath = indexPaths.first,
@@ -92,18 +86,5 @@ class ApplicationsCollectionViewController: NSViewController, ApplicationListVie
         }
       })
     })
-  }
-
-  // MARK: - ApplicationViewDelegate
-
-  func applicationView(_ view: ApplicationListView, didClickSegmentedControl segmentedControl: NSSegmentedControl) {
-    guard let indexPath = collectionView.indexPath(for: view),
-      let appearance = segmentedControl.label(forSegment: segmentedControl.selectedSegment),
-      let newAppearance = Application.Appearance.init(rawValue: appearance) else { return }
-
-    let application = dataSource.model(at: indexPath)
-    delegate?.applicationCollectionViewController(self,
-                                                  toggleAppearance: newAppearance,
-                                                  application: application)
   }
 }

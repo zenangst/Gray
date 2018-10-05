@@ -8,7 +8,7 @@ class ApplicationsLogicController {
     case requiresAquaSystemAppearance = "NSRequiresAquaSystemAppearance"
   }
 
-  func load(then handler: (ApplicationsViewController.State) -> Void) {
+  func load(then handler: (MainViewController.State) -> Void) {
     do {
       let applicationDirectory = try FileManager.default.url(for: .allApplicationsDirectory,
                                                              in: .localDomainMask,
@@ -19,13 +19,13 @@ class ApplicationsLogicController {
                                                               options: .skipsHiddenFiles)
       urls.append(URL(string: "file:///System/Library/CoreServices/Finder.app")!)
       let applications = try processApplications(urls, at: applicationDirectory)
-      handler(.list(applications))
+      handler(.viewApplications(applications))
     } catch {}
   }
 
   func toggleAppearance(for application: Application,
                         newAppearance appearance: Application.Appearance,
-                        then handler: @escaping (ApplicationsViewController.State) -> Void) {
+                        then handler: @escaping (MainViewController.State) -> Void) {
     DispatchQueue.global(qos: .userInitiated).async { [weak self] in
       let shell = Shell()
       let newSetting = appearance == .light ? "YES" : "NO"

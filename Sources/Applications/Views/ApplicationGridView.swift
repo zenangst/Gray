@@ -8,6 +8,8 @@ protocol ApplicationGridViewDelegate: class {
 class ApplicationGridView: NSCollectionViewItem {
   weak var delegate: ApplicationGridViewDelegate?
 
+  var currentAppearance: Application.Appearance?
+
   lazy var iconView: NSImageView = .init()
   lazy var titleLabel: NSTextField = .init()
   lazy var subtitleLabel: NSTextField = .init()
@@ -58,7 +60,16 @@ class ApplicationGridView: NSCollectionViewItem {
     )
   }
 
+  override func viewDidLayout() {
+    super.viewDidLayout()
+
+    guard let currentAppearance = currentAppearance else { return }
+    update(with: currentAppearance)
+  }
+
   func update(with appearance: Application.Appearance, duration: TimeInterval = 0, then handler: (() -> Void)? = nil) {
+    currentAppearance = appearance
+
     if duration > 0 {
       NSAnimationContext.current.allowsImplicitAnimation = true
       NSAnimationContext.runAnimationGroup({ (context) in
@@ -90,16 +101,25 @@ class ApplicationGridView: NSCollectionViewItem {
         titleLabel.animator().textColor = .white
         subtitleLabel.textColor = .lightGray
         subtitleLabel.stringValue = "Dark apperance"
-      case .system:
-        view.layer?.backgroundColor = NSColor.gray.cgColor
-        titleLabel.animator().textColor = .white
-        subtitleLabel.textColor = .lightGray
-        subtitleLabel.stringValue = "System apperance"
       case .light:
         view.layer?.backgroundColor = .white
         titleLabel.textColor = .black
         subtitleLabel.textColor = .darkGray
         subtitleLabel.stringValue = "Light apperance"
+      case .system:
+        switch view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) {
+        case .darkAqua?:
+          view.layer?.backgroundColor = .black
+          titleLabel.animator().textColor = .white
+          subtitleLabel.textColor = .lightGray
+        case .aqua?:
+          view.layer?.backgroundColor = .white
+          titleLabel.textColor = .black
+          subtitleLabel.textColor = .darkGray
+        default:
+          break
+        }
+        subtitleLabel.stringValue = "System apperance"
       }
     }
   }
