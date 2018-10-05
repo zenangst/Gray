@@ -3,7 +3,9 @@ import Family
 
 class MainViewController: FamilyViewController,
   ApplicationsCollectionViewControllerDelegate,
-SystemPreferenceCollectionViewControllerDelegate {
+  SystemPreferenceCollectionViewControllerDelegate,
+  ToolbarSearchDelegate {
+
   enum State {
     case viewApplications([Application])
     case viewPreferences([SystemPreference])
@@ -12,6 +14,7 @@ SystemPreferenceCollectionViewControllerDelegate {
   let systemPreferenceLogicController = SystemLogicController()
   lazy var systemPreferencesCollectionViewController = SystemPreferenceCollectionViewController()
   lazy var applicationsCollectionViewController = ApplicationsCollectionViewController()
+  var applicationCache = [Application]()
 
   override func viewWillAppear() {
     super.viewWillAppear()
@@ -30,8 +33,31 @@ SystemPreferenceCollectionViewControllerDelegate {
       systemPreferencesCollectionViewController.dataSource.reload(systemPreferencesCollectionViewController.collectionView,
                                                                   with: preferences)
     case .viewApplications(let applications):
+      applicationCache = applications
       applicationsCollectionViewController.dataSource.reload(applicationsCollectionViewController.collectionView,
                                                              with: applications)
+    }
+  }
+
+  // MARK: - ToolbarSearchDelegate
+
+  func toolbar(_ toolbar: Toolbar, didSearchFor string: String) {
+    switch string.count {
+    case 0:
+      systemPreferencesCollectionViewController.collectionView.animator().alphaValue = 1.0
+      applicationsCollectionViewController.dataSource.reload(applicationsCollectionViewController.collectionView,
+                                                             with: applicationCache)
+      scrollView.layoutViews(withDuration: 0.15, excludeOffscreenViews: false)
+    case 1:
+      systemPreferencesCollectionViewController.collectionView.animator().alphaValue = 0.0
+      scrollView.layoutViews(withDuration: 0.15, excludeOffscreenViews: false)
+      fallthrough
+    default:
+      let filtered = applicationCache.filter({ $0.name.lowercased().contains(string.lowercased()) })
+      applicationsCollectionViewController.dataSource.reload(applicationsCollectionViewController.collectionView,
+                                                             with: filtered, then: {
+                                                              self.scrollView.layout()
+      })
     }
   }
 

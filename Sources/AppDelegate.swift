@@ -18,13 +18,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
     self.window = nil
 
     let contentViewController = MainViewController()
+    let toolbar = Toolbar(identifier: .init("MainApplicationWindowToolbar"))
+    toolbar.searchDelegate = contentViewController
     let windowSize = CGSize(width: 768, height: 640)
     let window = NSWindow(contentViewController: contentViewController)
     window.setFrameAutosaveName(NSWindow.FrameAutosaveName.init("MainApplicationWindow"))
     window.styleMask = [.closable, .miniaturizable, .resizable, .titled,
                         .fullSizeContentView, .unifiedTitleAndToolbar]
     window.titleVisibility = .hidden
-    window.toolbar = NSToolbar()
+    window.toolbar = toolbar
     if window.frame.size.width == 0 {
       window.setFrame(NSRect.init(origin: .zero, size: .init(width: 200, height: 200)),
                       display: false)
