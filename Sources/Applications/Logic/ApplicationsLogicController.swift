@@ -28,7 +28,14 @@ class ApplicationsLogicController {
                         then handler: @escaping (MainViewController.State) -> Void) {
     DispatchQueue.global(qos: .userInitiated).async { [weak self] in
       let shell = Shell()
-      let newSetting = appearance == .light ? "YES" : "NO"
+      let newSetting: String
+      switch appearance {
+      case .light, .system:
+        newSetting = "true"
+      case .dark:
+        newSetting = "false"
+      }
+
       let runningApplication = NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).first
 
       if !application.url.path.contains("CoreServices") {
@@ -55,7 +62,12 @@ class ApplicationsLogicController {
         """
       }
 
-      shell.execute(command: command)
+      NSLog("New settings for \(application.name) = \(newSetting)")
+      NSLog("command: \(command)")
+
+      let output = shell.execute(command: command)
+      NSLog("output: (\(output))")
+
 
       if runningApplication != nil && !application.url.path.contains("CoreServices") {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
