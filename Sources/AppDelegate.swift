@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
     self.window?.close()
     self.window = nil
 
-    let contentViewController = ApplicationsViewController()
+    let contentViewController = MainViewController()
     let windowSize = CGSize(width: 768, height: 640)
     let window = NSWindow(contentViewController: contentViewController)
     window.setFrameAutosaveName(NSWindow.FrameAutosaveName.init("MainApplicationWindow"))
@@ -39,6 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
 
     window.minSize = windowSize
     window.maxSize = windowSize
+    window.setFrame(NSRect.init(origin: window.frame.origin, size: windowSize), display: true)
     window.makeKeyAndOrderFront(nil)
     self.window = window
   }

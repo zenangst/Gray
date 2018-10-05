@@ -3,11 +3,6 @@ import Differific
 import UserInterface
 
 class ApplicationsDataSource: NSObject, NSCollectionViewDataSource {
-  enum ViewStyle {
-    case list, grid
-  }
-
-  var viewStyle: ViewStyle = .grid
   private(set) var models: [Application]
   let iconController = IconController()
 
@@ -46,22 +41,11 @@ class ApplicationsDataSource: NSObject, NSCollectionViewDataSource {
 
   func collectionView(_ collectionView: NSCollectionView,
                       itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    switch viewStyle {
-    case .grid:
-      return collectionView.dequeue(ApplicationGridView.self, with: model(at: indexPath), for: indexPath) {
-        view, model in
-        view.iconView.image = self.iconController.icon(for: model)
-        view.titleLabel.stringValue = model.name
-        view.update(with: model.appearance)
-      }
-    case .list:
-      return collectionView.dequeue(ApplicationListView.self, with: model(at: indexPath), for: indexPath) {
-        view, model in
-        view.iconView.image = self.iconController.icon(for: model)
-        view.label.stringValue = model.name
-        view.toggle.setSelected(model.appearance == .light, forSegment: 0)
-        view.toggle.setSelected(model.appearance == .dark, forSegment: 1)
-      }
+    return collectionView.dequeue(ApplicationGridView.self, with: model(at: indexPath), for: indexPath) {
+      view, model in
+      view.iconView.image = self.iconController.icon(for: model)
+      view.titleLabel.stringValue = model.name
+      view.update(with: model.appearance)
     }
   }
 }
