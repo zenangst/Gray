@@ -78,7 +78,7 @@ class ApplicationGridView: NSCollectionViewItem {
         case .dark:
           view.animator().layer?.backgroundColor = .black
           titleLabel.animator().textColor = .white
-          subtitleLabel.animator().textColor = .lightGray
+          subtitleLabel.animator().textColor = .controlAccentColor
           subtitleLabel.animator().stringValue = "Dark apperance"
         case .system:
           view.animator().layer?.backgroundColor = NSColor.gray.cgColor
@@ -88,7 +88,7 @@ class ApplicationGridView: NSCollectionViewItem {
         case .light:
           view.animator().layer?.backgroundColor = .white
           titleLabel.animator().textColor = .black
-          subtitleLabel.animator().textColor = .darkGray
+          subtitleLabel.animator().textColor = .controlAccentColor
           subtitleLabel.animator().stringValue = "Light apperance"
         }
       }, completionHandler:{
@@ -99,12 +99,12 @@ class ApplicationGridView: NSCollectionViewItem {
       case .dark:
         view.layer?.backgroundColor = .black
         titleLabel.animator().textColor = .white
-        subtitleLabel.textColor = .lightGray
+        subtitleLabel.textColor = .controlAccentColor
         subtitleLabel.stringValue = "Dark apperance"
       case .light:
         view.layer?.backgroundColor = .white
         titleLabel.textColor = .black
-        subtitleLabel.textColor = .darkGray
+        subtitleLabel.textColor = .controlAccentColor
         subtitleLabel.stringValue = "Light apperance"
       case .system:
         switch view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) {
@@ -115,7 +115,7 @@ class ApplicationGridView: NSCollectionViewItem {
         case .aqua?:
           view.layer?.backgroundColor = .white
           titleLabel.textColor = .black
-          subtitleLabel.textColor = .darkGray
+          subtitleLabel.textColor = .controlAccentColor
         default:
           break
         }
