@@ -62,7 +62,12 @@ class ApplicationsLogicController {
         """
       }
 
-      shell.execute(command: command)
+      NSLog("New settings for \(application.name) = \(newSetting)")
+      NSLog("command: \(command)")
+
+      let output = shell.execute(command: command)
+      NSLog("output: (\(output))")
+
 
       if runningApplication != nil && !application.url.path.contains("CoreServices") {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
