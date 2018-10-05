@@ -28,7 +28,14 @@ class ApplicationsLogicController {
                         then handler: @escaping (MainViewController.State) -> Void) {
     DispatchQueue.global(qos: .userInitiated).async { [weak self] in
       let shell = Shell()
-      let newSetting = appearance == .light ? "YES" : "NO"
+      let newSetting: String
+      switch appearance {
+      case .light, .system:
+        newSetting = "true"
+      case .dark:
+        newSetting = "false"
+      }
+
       let runningApplication = NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).first
 
       if !application.url.path.contains("CoreServices") {
