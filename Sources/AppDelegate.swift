@@ -4,6 +4,7 @@ import Vaccine
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
   let versionController = VersionController()
+  weak var toolbar: Toolbar?
   weak var window: NSWindow?
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -11,6 +12,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
       .add(observer: self, with: #selector(injected(_:)))
     versionController.delegate = self
     checkForNewVersion(nil)
+  }
+
+  func applicationDidBecomeActive(_ notification: Notification) {
+    guard window == nil else { return }
+    loadApplication()
   }
 
   @objc private func loadApplication() {
@@ -44,17 +50,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
     window.setFrame(NSRect.init(origin: window.frame.origin, size: windowSize), display: true)
     window.makeKeyAndOrderFront(nil)
     self.window = window
-  }
-
-  func applicationDidBecomeActive(_ notification: Notification) {
-    guard window == nil else { return }
-    loadApplication()
+    self.toolbar = toolbar
   }
 
   // MARK: - Injection
 
   @objc open func injected(_ notification: Notification) {
     loadApplication()
+  }
+
+  // MARK: - Actions
+
+  @IBAction func search(_ sender: Any?) {
+    toolbar?.searchField?.becomeFirstResponder()
   }
 
   @IBAction func checkForNewVersion(_ sender: Any?) {
