@@ -6,6 +6,7 @@ protocol ToolbarSearchDelegate: class {
 
 class Toolbar: NSToolbar, NSToolbarDelegate {
   weak var searchDelegate: ToolbarSearchDelegate?
+  weak var searchField: SearchField?
 
   override init(identifier: NSToolbar.Identifier) {
     super.init(identifier: identifier)
@@ -36,6 +37,7 @@ class Toolbar: NSToolbar, NSToolbarDelegate {
       let searchToolbarItem = SearchToolbarItem(text: "")
       searchToolbarItem.titleLabel.target = self
       searchToolbarItem.titleLabel.action = #selector(search(_:))
+      searchField = searchToolbarItem.titleLabel
       return searchToolbarItem
     case NSToolbarItem.Identifier.flexibleSpace:
       return NSToolbarItem(itemIdentifier: NSToolbarItem.Identifier.flexibleSpace)
