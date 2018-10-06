@@ -14,6 +14,7 @@ class MainViewController: FamilyViewController,
   let systemPreferenceLogicController = SystemLogicController()
   lazy var systemPreferencesCollectionViewController = SystemPreferenceCollectionViewController()
   lazy var applicationsCollectionViewController = ApplicationsCollectionViewController()
+  var query: String = ""
   var applicationCache = [Application]()
 
   override func viewWillAppear() {
@@ -35,13 +36,15 @@ class MainViewController: FamilyViewController,
     case .viewApplications(let applications):
       applicationCache = applications
       applicationsCollectionViewController.dataSource.reload(applicationsCollectionViewController.collectionView,
-                                                             with: applications)
+                                                             with: applications) { [weak self] in
+                                                              guard let strongSelf = self else { return }
+                                                              strongSelf.performSearch(with: strongSelf.query)
+      }
     }
   }
 
-  // MARK: - ToolbarSearchDelegate
-
-  func toolbar(_ toolbar: Toolbar, didSearchFor string: String) {
+  private func performSearch(with string: String) {
+    query = string
     switch string.count {
     case 0:
       systemPreferencesCollectionViewController.collectionView.animator().alphaValue = 1.0
@@ -59,6 +62,12 @@ class MainViewController: FamilyViewController,
                                                               self.scrollView.layout()
       })
     }
+  }
+
+  // MARK: - ToolbarSearchDelegate
+
+  func toolbar(_ toolbar: Toolbar, didSearchFor string: String) {
+    performSearch(with: string)
   }
 
   // MARK: - ApplicationCollectionViewControllerDelegate
