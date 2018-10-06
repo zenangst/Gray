@@ -4,7 +4,7 @@ import Vaccine
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
   let versionController = VersionController()
-  var window: NSWindow?
+  weak var window: NSWindow?
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     Injection.load(then: loadApplication)
@@ -44,6 +44,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
     window.setFrame(NSRect.init(origin: window.frame.origin, size: windowSize), display: true)
     window.makeKeyAndOrderFront(nil)
     self.window = window
+  }
+
+  func applicationDidBecomeActive(_ notification: Notification) {
+    guard window == nil else { return }
+    loadApplication()
   }
 
   // MARK: - Injection
