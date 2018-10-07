@@ -12,6 +12,7 @@ class MainViewController: FamilyViewController,
   }
   let applicationsLogicController = ApplicationsLogicController()
   let systemPreferenceLogicController = SystemLogicController()
+  lazy var systemLabelController = LabelViewController(text: "System preferences")
   lazy var systemPreferencesCollectionViewController = SystemPreferenceCollectionViewController()
   lazy var applicationsCollectionViewController = ApplicationsCollectionViewController()
   var query: String = ""
@@ -19,12 +20,18 @@ class MainViewController: FamilyViewController,
 
   override func viewWillAppear() {
     super.viewWillAppear()
+    title = "Gray"
     applicationsLogicController.load(then: render)
     systemPreferenceLogicController.load(then: render)
-    title = "Gray"
+
     applicationsCollectionViewController.delegate = self
     systemPreferencesCollectionViewController.delegate = self
+    systemLabelController.view.wantsLayer = true
+    systemLabelController.view.layer?.backgroundColor = NSColor.quaternaryLabelColor.cgColor
+
+    addChild(systemLabelController, height: 60)
     addChild(systemPreferencesCollectionViewController, view: { $0.collectionView })
+    addChild(LabelViewController(text: "Applications"), height: 60)
     addChild(applicationsCollectionViewController, view: { $0.collectionView })
   }
 
@@ -44,23 +51,24 @@ class MainViewController: FamilyViewController,
   }
 
   private func performSearch(with string: String) {
+    let collectionView = applicationsCollectionViewController.collectionView
     query = string
     switch string.count {
     case 0:
+      systemLabelController.view.animator().alphaValue = 1.0
       systemPreferencesCollectionViewController.collectionView.animator().alphaValue = 1.0
-      applicationsCollectionViewController.dataSource.reload(applicationsCollectionViewController.collectionView,
+      applicationsCollectionViewController.dataSource.reload(collectionView,
                                                              with: applicationCache)
       scrollView.layoutViews(withDuration: 0.15, excludeOffscreenViews: false)
     case 1:
+      systemLabelController.view.animator().alphaValue = 0.0
       systemPreferencesCollectionViewController.collectionView.animator().alphaValue = 0.0
-      scrollView.layoutViews(withDuration: 0.15, excludeOffscreenViews: false)
       fallthrough
     default:
       let filtered = applicationCache.filter({ $0.name.lowercased().contains(string.lowercased()) })
-      applicationsCollectionViewController.dataSource.reload(applicationsCollectionViewController.collectionView,
-                                                             with: filtered, then: {
-                                                              self.scrollView.layout()
-      })
+      applicationsCollectionViewController.dataSource.reload(collectionView,
+                                                             with: filtered)
+      scrollView.layoutViews(withDuration: 0.15, excludeOffscreenViews: false)
     }
   }
 

@@ -11,18 +11,8 @@ protocol ApplicationsCollectionViewControllerDelegate: class {
 class ApplicationsCollectionViewController: NSViewController, NSCollectionViewDelegate {
   weak var delegate: ApplicationsCollectionViewControllerDelegate?
   let dataSource: ApplicationsDataSource
-  lazy var listLayout = VerticalBlueprintLayout(
-    itemsPerRow: 1,
-    itemSize: .init(width: 100, height: 70),
-    minimumLineSpacing: 0)
-
-  lazy var gridLayout = VerticalBlueprintLayout(
-    itemSize: .init(width: 157, height: 157),
-    minimumInteritemSpacing: 28,
-    minimumLineSpacing: 28,
-    sectionInset: .init(top: 28, left: 28, bottom: 28, right: 28))
-
-  lazy var collectionView = NSCollectionView(layout: gridLayout,
+  lazy var layoutFactory = LayoutFactory()
+  lazy var collectionView = NSCollectionView(layout: layoutFactory.createGridLayout(),
                                              register: ApplicationGridView.self)
 
   init(models: [Application] = []) {

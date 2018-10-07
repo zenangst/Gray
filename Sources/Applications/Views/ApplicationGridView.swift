@@ -24,31 +24,31 @@ class ApplicationGridView: NSCollectionViewItem {
     super.viewDidLoad()
 
     view.layer?.backgroundColor = NSColor.white.cgColor
-    view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
-    view.layer?.borderWidth = 1.5
-    view.layer?.cornerRadius = 28
+    view.layer?.cornerRadius = 20
     view.layer?.masksToBounds = true
 
     titleLabel.backgroundColor = .clear
     titleLabel.isBezeled = false
     titleLabel.isEditable = false
-    titleLabel.maximumNumberOfLines = 1
-    titleLabel.font = NSFont.boldSystemFont(ofSize: 18)
+    titleLabel.maximumNumberOfLines = 2
+    titleLabel.lineBreakMode = .byWordWrapping
+    titleLabel.font = NSFont.boldSystemFont(ofSize: 13)
 
     subtitleLabel.backgroundColor = .clear
     subtitleLabel.isBezeled = false
     subtitleLabel.isEditable = false
     subtitleLabel.maximumNumberOfLines = 1
+    subtitleLabel.font = NSFont.boldSystemFont(ofSize: 9)
 
     view.addSubviews(iconView, titleLabel, subtitleLabel)
 
-    let margin: CGFloat = 20
+    let margin: CGFloat = 14
 
     NSLayoutConstraint.constrain(
-      iconView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+      iconView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
       iconView.topAnchor.constraint(equalTo: view.topAnchor, constant: margin),
-      iconView.widthAnchor.constraint(equalToConstant: 50),
-      iconView.heightAnchor.constraint(equalToConstant: 50),
+      iconView.widthAnchor.constraint(equalToConstant: 28),
+      iconView.heightAnchor.constraint(equalToConstant: 28),
 
       titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin),
       titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin),
@@ -76,20 +76,24 @@ class ApplicationGridView: NSCollectionViewItem {
         context.duration = duration
         switch appearance {
         case .dark:
-          view.animator().layer?.backgroundColor = .black
+          view.animator().layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
           titleLabel.animator().textColor = .white
           subtitleLabel.animator().textColor = .controlAccentColor
           subtitleLabel.animator().stringValue = "Dark apperance"
+          view.layer?.borderWidth = 0.0
         case .system:
           view.animator().layer?.backgroundColor = NSColor.gray.cgColor
           titleLabel.animator().textColor = .white
           subtitleLabel.animator().textColor = .lightGray
           subtitleLabel.animator().stringValue = "System apperance"
+          view.layer?.borderWidth = 0.0
         case .light:
           view.animator().layer?.backgroundColor = .white
           titleLabel.animator().textColor = .black
           subtitleLabel.animator().textColor = .controlAccentColor
           subtitleLabel.animator().stringValue = "Light apperance"
+          view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
+          view.layer?.borderWidth = 1.5
         }
       }, completionHandler:{
         handler?()
@@ -97,25 +101,31 @@ class ApplicationGridView: NSCollectionViewItem {
     } else {
       switch appearance {
       case .dark:
-        view.layer?.backgroundColor = .black
-        titleLabel.animator().textColor = .white
+        view.layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
+        titleLabel.textColor = .white
         subtitleLabel.textColor = .controlAccentColor
         subtitleLabel.stringValue = "Dark apperance"
+        view.layer?.borderWidth = 0.0
       case .light:
-        view.layer?.backgroundColor = .white
+        view.layer?.backgroundColor = NSColor(named: "Light")?.cgColor
         titleLabel.textColor = .black
         subtitleLabel.textColor = .controlAccentColor
         subtitleLabel.stringValue = "Light apperance"
+        view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
+        view.layer?.borderWidth = 1.5
       case .system:
         switch view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) {
         case .darkAqua?:
-          view.layer?.backgroundColor = .black
-          titleLabel.animator().textColor = .white
+          view.layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
+          titleLabel.textColor = .white
           subtitleLabel.textColor = .lightGray
+          view.layer?.borderWidth = 0.0
         case .aqua?:
-          view.layer?.backgroundColor = .white
+          view.layer?.backgroundColor = NSColor(named: "Light")?.cgColor
           titleLabel.textColor = .black
           subtitleLabel.textColor = .controlAccentColor
+          view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
+          view.layer?.borderWidth = 1.5
         default:
           break
         }

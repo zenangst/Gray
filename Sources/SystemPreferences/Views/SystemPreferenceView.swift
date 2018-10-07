@@ -20,29 +20,30 @@ class SystemPreferenceView: NSCollectionViewItem {
     view.layer?.backgroundColor = NSColor.white.cgColor
     view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
     view.layer?.borderWidth = 1.5
-    view.layer?.cornerRadius = 28
+    view.layer?.cornerRadius = 20
     view.layer?.masksToBounds = true
 
     titleLabel.backgroundColor = .clear
     titleLabel.isBezeled = false
     titleLabel.isEditable = false
     titleLabel.maximumNumberOfLines = 2
-    titleLabel.font = NSFont.boldSystemFont(ofSize: 18)
+    titleLabel.font = NSFont.boldSystemFont(ofSize: 13)
 
     subtitleLabel.backgroundColor = .clear
     subtitleLabel.isBezeled = false
     subtitleLabel.isEditable = false
     subtitleLabel.maximumNumberOfLines = 1
+    subtitleLabel.font = NSFont.boldSystemFont(ofSize: 11)
 
     view.addSubviews(iconView, titleLabel, subtitleLabel)
 
-    let margin: CGFloat = 20
+    let margin: CGFloat = 18
 
     NSLayoutConstraint.constrain(
-      iconView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+      iconView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin),
       iconView.topAnchor.constraint(equalTo: view.topAnchor, constant: margin),
-      iconView.widthAnchor.constraint(equalToConstant: 50),
-      iconView.heightAnchor.constraint(equalToConstant: 50),
+      iconView.widthAnchor.constraint(equalToConstant: 20),
+      iconView.heightAnchor.constraint(equalToConstant: 20),
 
       titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin),
       titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin),
@@ -64,7 +65,7 @@ class SystemPreferenceView: NSCollectionViewItem {
   private func configureAppearance() {
     switch view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) {
     case .darkAqua?:
-      view.layer?.backgroundColor = .black
+      view.layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
       titleLabel.animator().textColor = .white
       subtitleLabel.textColor = .lightGray
     case .aqua?:

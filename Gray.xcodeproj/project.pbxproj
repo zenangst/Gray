@@ -10,7 +10,6 @@
 		2AECAC775C01910CCBFAD88E /* libPods-Gray.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C02BDE925690A5BBA8E6D44 /* libPods-Gray.a */; };
 		BD111046215CEB240002D537 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD111045215CEB240002D537 /* Shell.swift */; };
 		BD1BA9BE215E68840052633B /* IconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BA9BD215E68840052633B /* IconController.swift */; };
-		BD1BA9C0215E6DBB0052633B /* ApplicationGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BA9BF215E6DBB0052633B /* ApplicationGridView.swift */; };
 		BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1D9544215E435F003ABBCF /* VersionController.swift */; };
 		BD2AA1E62167A0E4000717B7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BD2AA1E52167A0E4000717B7 /* README.md */; };
 		BD30844A215C198D002A9349 /* ApplicationsLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD308449215C198D002A9349 /* ApplicationsLogicController.swift */; };
@@ -26,6 +25,9 @@
 		BD9F0C49216676AD00608FD9 /* SystemPreferenceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F0C48216676AD00608FD9 /* SystemPreferenceDataSource.swift */; };
 		BD9F0C4C2166773300608FD9 /* SystemPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F0C4B2166773300608FD9 /* SystemPreferenceView.swift */; };
 		BD9F0C4F21667BEB00608FD9 /* SystemLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F0C4E21667BEB00608FD9 /* SystemLogicController.swift */; };
+		BDAAC48E2168EC2B0093B27D /* LayoutFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAAC48D2168EC2B0093B27D /* LayoutFactory.swift */; };
+		BDAAC48F216A294A0093B27D /* ApplicationGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BA9BF215E6DBB0052633B /* ApplicationGridView.swift */; };
+		BDAAC492216A2A920093B27D /* LabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAAC491216A2A920093B27D /* LabelViewController.swift */; };
 		BDB20F262167A64100A72623 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F252167A64100A72623 /* Toolbar.swift */; };
 		BDB20F292167A73C00A72623 /* SearchToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F282167A73C00A72623 /* SearchToolbarItem.swift */; };
 		BDB20F2B2167A9DB00A72623 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F2A2167A9DB00A72623 /* SearchField.swift */; };
@@ -56,6 +58,8 @@
 		BD9F0C4B2166773300608FD9 /* SystemPreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPreferenceView.swift; sourceTree = "<group>"; };
 		BD9F0C4E21667BEB00608FD9 /* SystemLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLogicController.swift; sourceTree = "<group>"; };
 		BD9F0C532166997900608FD9 /* Gray.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gray.entitlements; sourceTree = "<group>"; };
+		BDAAC48D2168EC2B0093B27D /* LayoutFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutFactory.swift; sourceTree = "<group>"; };
+		BDAAC491216A2A920093B27D /* LabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelViewController.swift; sourceTree = "<group>"; };
 		BDB20F252167A64100A72623 /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		BDB20F282167A73C00A72623 /* SearchToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchToolbarItem.swift; sourceTree = "<group>"; };
 		BDB20F2A2167A9DB00A72623 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
@@ -95,11 +99,13 @@
 			children = (
 				BD67CE0D215BF15F00216FDB /* AppDelegate.swift */,
 				BD9D3D79215C2D3F00233333 /* Applications */,
+				BDAAC48D2168EC2B0093B27D /* LayoutFactory.swift */,
 				BD9F0C3F216675AB00608FD9 /* Main */,
+				BDAAC490216A2A810093B27D /* Shared */,
 				BD9F0C40216675D200608FD9 /* SystemPreferences */,
+				BDB20F272167A71300A72623 /* Toolbar */,
 				BD6F243621620A570032338F /* Utilities */,
 				BD6F243321620A370032338F /* Versions */,
-				BDB20F272167A71300A72623 /* Toolbar */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -264,6 +270,14 @@
 			path = Logic;
 			sourceTree = "<group>";
 		};
+		BDAAC490216A2A810093B27D /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				BDAAC491216A2A920093B27D /* LabelViewController.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		BDB20F272167A71300A72623 /* Toolbar */ = {
 			isa = PBXGroup;
 			children = (
@@ -405,18 +419,20 @@
 				BD9F0C49216676AD00608FD9 /* SystemPreferenceDataSource.swift in Sources */,
 				BD6F243221620A240032338F /* ApplicationsCollectionViewController.swift in Sources */,
 				BD750FDC215C1AC60024E70A /* Application.swift in Sources */,
+				BDAAC48E2168EC2B0093B27D /* LayoutFactory.swift in Sources */,
 				BD9D3D7B215C2D5C00233333 /* ApplicationsDataSource.swift in Sources */,
 				BD1BA9BE215E68840052633B /* IconController.swift in Sources */,
 				BD67CE1C215BF4FE00216FDB /* MainViewController.swift in Sources */,
 				BD67CE0E215BF15F00216FDB /* AppDelegate.swift in Sources */,
-				BD1BA9C0215E6DBB0052633B /* ApplicationGridView.swift in Sources */,
 				BD30844A215C198D002A9349 /* ApplicationsLogicController.swift in Sources */,
+				BDAAC492216A2A920093B27D /* LabelViewController.swift in Sources */,
 				BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */,
 				BD9F0C462166764E00608FD9 /* SystemPreference.swift in Sources */,
 				BDB20F262167A64100A72623 /* Toolbar.swift in Sources */,
 				BD9F0C4C2166773300608FD9 /* SystemPreferenceView.swift in Sources */,
 				BD9F0C43216675F300608FD9 /* SystemPreferenceCollectionViewController.swift in Sources */,
 				BD9F0C4F21667BEB00608FD9 /* SystemLogicController.swift in Sources */,
+				BDAAC48F216A294A0093B27D /* ApplicationGridView.swift in Sources */,
 				BD111046215CEB240002D537 /* Shell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
