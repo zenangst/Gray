@@ -2,7 +2,7 @@
 
 <img src="https://github.com/zenangst/Gray/blob/master/Resources/Assets.xcassets/AppIcon.appiconset/icon_256x256.png?raw=true" alt="Gray Icon" align="right" />
 
-Current version: 0.6.2 [[Download](https://github.com/zenangst/Gray/releases/download/0.6.2/Gray.zip)]
+Current version: 0.7.0 [[Download](https://github.com/zenangst/Gray/releases/download/0.7.0/Gray.zip)]
 
 Ever wanted to have light and dark apps live side-by-side in harmony? Well, now you can. With **Gray** you can pick between the light appearance and the dark appearance on a per-app basis with the click of a button.
 
