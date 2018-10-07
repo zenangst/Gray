@@ -10,13 +10,8 @@ protocol SystemPreferenceCollectionViewControllerDelegate: class {
 class SystemPreferenceCollectionViewController: NSViewController, NSCollectionViewDelegate {
   weak var delegate: SystemPreferenceCollectionViewControllerDelegate?
   let dataSource: SystemPreferenceDataSource
-  lazy var gridLayout = VerticalBlueprintLayout(
-    itemSize: .init(width: 157, height: 157),
-    minimumInteritemSpacing: 28,
-    minimumLineSpacing: 28,
-    sectionInset: .init(top: 28, left: 28, bottom: 28, right: 28))
-
-  lazy var collectionView = NSCollectionView(layout: gridLayout,
+  lazy var layoutFactory = LayoutFactory()
+  lazy var collectionView = NSCollectionView(layout: layoutFactory.createGridLayout(),
                                              register: SystemPreferenceView.self)
 
   init(models: [SystemPreference] = []) {
@@ -34,7 +29,10 @@ class SystemPreferenceCollectionViewController: NSViewController, NSCollectionVi
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView.backgroundColors = [NSColor.quaternaryLabelColor.withAlphaComponent(0.0)]
+    let backgroundView = NSView()
+    backgroundView.wantsLayer = true
+    backgroundView.layer?.backgroundColor = NSColor.quaternaryLabelColor.cgColor
+    collectionView.backgroundView = backgroundView
     collectionView.dataSource = dataSource
     collectionView.delegate = self
     collectionView.isSelectable = true

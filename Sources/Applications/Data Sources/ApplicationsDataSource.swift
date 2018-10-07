@@ -21,8 +21,8 @@ class ApplicationsDataSource: NSObject, NSCollectionViewDataSource {
     let manager = DiffManager()
     let changes = manager.diff(self.models, models)
     collectionView.reload(with: changes,
-                           updateDataSource: { self.models = models },
-                           completion: handler)
+                          updateDataSource: { self.models = models },
+                          completion: handler)
   }
 
   func model(at indexPath: IndexPath) -> Application {
