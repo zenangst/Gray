@@ -43,7 +43,7 @@ class SystemPreferenceDataSource: NSObject, NSCollectionViewDataSource {
       item.iconView.image = model.icon
       item.titleLabel.stringValue = model.name
       item.subtitleLabel.stringValue = item.view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-        ? "Dark apperance" : "Light apperance"
+        ? "Dark appearance" : "Light appearance"
     }
   }
 }
