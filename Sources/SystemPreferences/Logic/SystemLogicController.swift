@@ -74,8 +74,6 @@ class SystemLogicController {
            procNotFound:
         if retryOnInternalError {
           self.requestPermission(retryOnInternalError: false, then: process)
-        } else {
-
         }
       default:
         break

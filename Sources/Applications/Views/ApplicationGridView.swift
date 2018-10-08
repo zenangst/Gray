@@ -79,19 +79,16 @@ class ApplicationGridView: NSCollectionViewItem {
           view.animator().layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
           titleLabel.animator().textColor = .white
           subtitleLabel.animator().textColor = .controlAccentColor
-          subtitleLabel.animator().stringValue = "Dark appearance"
           view.layer?.borderWidth = 0.0
         case .system:
           view.animator().layer?.backgroundColor = NSColor.gray.cgColor
           titleLabel.animator().textColor = .white
           subtitleLabel.animator().textColor = .lightGray
-          subtitleLabel.animator().stringValue = "System appearance"
           view.layer?.borderWidth = 0.0
         case .light:
           view.animator().layer?.backgroundColor = .white
           titleLabel.animator().textColor = .black
           subtitleLabel.animator().textColor = .controlAccentColor
-          subtitleLabel.animator().stringValue = "Light appearance"
           view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
           view.layer?.borderWidth = 1.5
         }
@@ -104,13 +101,11 @@ class ApplicationGridView: NSCollectionViewItem {
         view.layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
         titleLabel.textColor = .white
         subtitleLabel.textColor = .controlAccentColor
-        subtitleLabel.stringValue = "Dark appearance"
         view.layer?.borderWidth = 0.0
       case .light:
         view.layer?.backgroundColor = NSColor(named: "Light")?.cgColor
         titleLabel.textColor = .black
         subtitleLabel.textColor = .controlAccentColor
-        subtitleLabel.stringValue = "Light appearance"
         view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
         view.layer?.borderWidth = 1.5
       case .system:
@@ -129,7 +124,6 @@ class ApplicationGridView: NSCollectionViewItem {
         default:
           break
         }
-        subtitleLabel.stringValue = "System appearance"
       }
     }
   }
