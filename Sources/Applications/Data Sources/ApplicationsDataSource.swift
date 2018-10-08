@@ -46,6 +46,19 @@ class ApplicationsDataSource: NSObject, NSCollectionViewDataSource {
       view.iconView.image = self.iconController.icon(for: model)
       view.titleLabel.stringValue = model.name
       view.update(with: model.appearance)
+
+      switch model.appearance {
+      case .dark:
+        view.subtitleLabel.stringValue = "Dark appearance"
+      case .light:
+        view.subtitleLabel.stringValue = "Light appearance"
+      case .system:
+        view.subtitleLabel.stringValue = "System appearance"
+      }
+
+      if model.restricted {
+        view.subtitleLabel.stringValue = "🔐 Locked"
+      }
     }
   }
 }

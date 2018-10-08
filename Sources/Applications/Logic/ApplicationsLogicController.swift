@@ -88,7 +88,8 @@ class ApplicationsLogicController {
 
   private func processApplications(_ appUrls: [URL], at directoryUrl: URL) throws -> [Application] {
     var applications = [Application]()
-
+    let shell = Shell()
+    let sip = shell.execute(command: "csrutil status").contains("enabled")
     let libraryDirectory = try FileManager.default.url(for: .libraryDirectory,
                                                        in: .userDomainMask,
                                                        appropriateFor: nil,
@@ -113,20 +114,25 @@ class ApplicationsLogicController {
       var resolvedAppPreferenceUrl = appPreferenceUrl
       var applicationPlist: NSDictionary? = nil
 
-      if let plist = NSDictionary.init(contentsOfFile: appContainerPreferenceUrl.path) {
+      if FileManager.default.fileExists(atPath: appContainerPreferenceUrl.path),
+        let plist = NSDictionary.init(contentsOfFile: appContainerPreferenceUrl.path) {
         applicationPlist = plist
         resolvedAppPreferenceUrl = appContainerPreferenceUrl
       } else if let plist = NSDictionary.init(contentsOfFile: appPreferenceUrl.path) {
         applicationPlist = plist
       }
 
-      guard let resolvedPlist = applicationPlist else { continue }
+      // Check if Gray has enough priviliges to change appearance for application
+      let restricted = sip &&
+        FileManager.default.fileExists(atPath: appContainerPreferenceUrl.path) &&
+        NSDictionary.init(contentsOfFile: appContainerPreferenceUrl.path) == nil
 
       let app = Application(bundleIdentifier: bundleIdentifier,
                             name: bundleName,
                             url: url,
                             preferencesUrl: resolvedAppPreferenceUrl,
-                            appearance: resolvedPlist.appearance())
+                            appearance: applicationPlist?.appearance() ?? .system,
+                            restricted: restricted)
       applications.append(app)
     }
     return applications.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })

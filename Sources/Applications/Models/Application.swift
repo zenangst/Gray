@@ -12,4 +12,5 @@ struct Application: Hashable {
   let url: URL
   let preferencesUrl: URL
   let appearance: Appearance
+  let restricted: Bool
 }
