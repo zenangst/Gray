@@ -2,18 +2,25 @@ import Blueprints
 import Cocoa
 import UserInterface
 
-protocol ApplicationsCollectionViewControllerDelegate: class {
-  func applicationCollectionViewController(_ controller: ApplicationsCollectionViewController,
-                                           toggleAppearance newAppearance: Application.Appearance,
-                                           application: Application)
+protocol ApplicationsViewControllerDelegate: class {
+  func applicationViewController(_ controller: ApplicationsViewController,
+                                 toggleAppearance newAppearance: Application.Appearance,
+                                 application: Application)
 }
 
-class ApplicationsCollectionViewController: NSViewController, NSCollectionViewDelegate {
-  weak var delegate: ApplicationsCollectionViewControllerDelegate?
+class ApplicationsViewController: NSViewController, NSCollectionViewDelegate {
+  enum State {
+    case view([Application])
+  }
+
+  weak var delegate: ApplicationsViewControllerDelegate?
   let dataSource: ApplicationsDataSource
+  let logicController = ApplicationsLogicController()
   lazy var layoutFactory = LayoutFactory()
   lazy var collectionView = NSCollectionView(layout: layoutFactory.createGridLayout(),
                                              register: ApplicationGridView.self)
+  var applicationCache = [Application]()
+  var query: String = ""
 
   init(models: [Application] = []) {
     self.dataSource = ApplicationsDataSource(models: models)
@@ -35,6 +42,38 @@ class ApplicationsCollectionViewController: NSViewController, NSCollectionViewDe
     collectionView.isSelectable = true
     collectionView.allowsMultipleSelection = false
     view.addSubview(collectionView, pin: true)
+  }
+
+  override func viewDidAppear() {
+    super.viewDidAppear()
+    logicController.load(then: render)
+  }
+
+  func toggle(newAppearance appearance: Application.Appearance, for application: Application) {
+    logicController.toggleAppearance(newAppearance: appearance, for: application, then: render)
+  }
+
+  func performSearch(with string: String) {
+    query = string
+    switch string.count {
+    case 0:
+      dataSource.reload(collectionView, with: applicationCache)
+    default:
+      let filtered = applicationCache.filter({ $0.name.lowercased().contains(string.lowercased()) })
+      dataSource.reload(collectionView, with: filtered)
+    }
+  }
+
+  private func render(_ newState: State) {
+    switch newState {
+    case .view(let applications):
+      applicationCache = applications
+      dataSource.reload(collectionView,
+                        with: applications) { [weak self] in
+                          guard let strongSelf = self else { return }
+                          strongSelf.performSearch(with: strongSelf.query)
+      }
+    }
   }
 
   private func showPermissionsDialog(for application: Application, handler completion : (Bool)->Void) {
@@ -91,7 +130,7 @@ class ApplicationsCollectionViewController: NSViewController, NSCollectionViewDe
         } else {
           item.update(with: newAppearance, duration: 0.5) { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.delegate?.applicationCollectionViewController(strongSelf,
+            strongSelf.delegate?.applicationViewController(strongSelf,
                                                                      toggleAppearance: newAppearance,
                                                                      application: application)
           }
