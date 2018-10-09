@@ -49,8 +49,8 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate {
     logicController.load(then: render)
   }
 
-  func toggle(newAppearance appearance: Application.Appearance, for application: Application) {
-    logicController.toggleAppearance(newAppearance: appearance, for: application, then: render)
+  func toggle(_ newAppearance: Application.Appearance, for application: Application) {
+    logicController.toggleAppearance(newAppearance, for: application, then: render)
   }
 
   func performSearch(with string: String) {

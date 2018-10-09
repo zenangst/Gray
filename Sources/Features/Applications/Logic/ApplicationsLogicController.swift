@@ -23,13 +23,13 @@ class ApplicationsLogicController {
     } catch {}
   }
 
-  func toggleAppearance(newAppearance appearance: Application.Appearance,
+  func toggleAppearance(_ newAppearance: Application.Appearance,
                         for application: Application,
                         then handler: @escaping (ApplicationsViewController.State) -> Void) {
     DispatchQueue.global(qos: .userInitiated).async { [weak self] in
       let shell = Shell()
       let newSetting: String
-      switch appearance {
+      switch newAppearance {
       case .light, .system:
         newSetting = "true"
       case .dark:
