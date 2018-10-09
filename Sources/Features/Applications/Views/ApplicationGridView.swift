@@ -15,9 +15,8 @@ class ApplicationGridView: NSCollectionViewItem {
   lazy var subtitleLabel: NSTextField = .init()
 
   override func loadView() {
-    let view = NSView()
-    view.wantsLayer = true
-    self.view = view
+    self.view = NSView()
+    self.view.wantsLayer = true
   }
 
   override func viewDidLoad() {
