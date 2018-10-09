@@ -2,17 +2,22 @@ import Blueprints
 import Cocoa
 import UserInterface
 
-protocol SystemPreferenceCollectionViewControllerDelegate: class {
-  func systemPreferenceCollectionViewController(_ controller: SystemPreferenceCollectionViewController,
-                                                toggleSystemPreference preference: SystemPreference)
+protocol SystemPreferenceViewControllerDelegate: class {
+  func systemPreferenceViewController(_ controller: SystemPreferenceViewController,
+                                      toggleSystemPreference preference: SystemPreference)
 }
 
-class SystemPreferenceCollectionViewController: NSViewController, NSCollectionViewDelegate {
-  weak var delegate: SystemPreferenceCollectionViewControllerDelegate?
-  let dataSource: SystemPreferenceDataSource
+class SystemPreferenceViewController: NSViewController, NSCollectionViewDelegate {
+  enum State {
+    case view([SystemPreference])
+  }
+
+  weak var delegate: SystemPreferenceViewControllerDelegate?
   lazy var layoutFactory = LayoutFactory()
   lazy var collectionView = NSCollectionView(layout: layoutFactory.createGridLayout(),
                                              register: SystemPreferenceView.self)
+  let dataSource: SystemPreferenceDataSource
+  let logicController = SystemLogicController()
 
   init(models: [SystemPreference] = []) {
     self.dataSource = SystemPreferenceDataSource(models: models)
@@ -40,11 +45,29 @@ class SystemPreferenceCollectionViewController: NSViewController, NSCollectionVi
     view.addSubview(collectionView, pin: true)
   }
 
+  override func viewDidAppear() {
+    super.viewDidAppear()
+    logicController.load(then: render)
+  }
+
+  func toggle(_ systemPreference: SystemPreference) {
+    logicController.toggleSystemPreference(systemPreference, then: render)
+  }
+
+  private func render(_ state: State) {
+    switch state {
+    case .view(let preferences):
+      dataSource.reload(collectionView, with: preferences)
+    }
+  }
+
+  // MARK: - NSCollectionViewDelegate
+
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
     guard let indexPath = indexPaths.first else { return }
 
     collectionView.deselectAll(nil)
     let model = dataSource.model(at: indexPath)
-    delegate?.systemPreferenceCollectionViewController(self, toggleSystemPreference: model)
+    delegate?.systemPreferenceViewController(self, toggleSystemPreference: model)
   }
 }

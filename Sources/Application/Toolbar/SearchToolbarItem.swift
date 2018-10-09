@@ -4,11 +4,7 @@ class SearchToolbarItem: NSToolbarItem, NSTextFieldDelegate {
   static var itemIdentifier: NSToolbarItem.Identifier = .init("Search")
 
   lazy var titleLabel = SearchField()
-  lazy var customView: NSView = {
-    let view = NSView()
-    view.wantsLayer = true
-    return view
-  }()
+  lazy var customView = NSView()
 
   init(text: String) {
     super.init(itemIdentifier: SearchToolbarItem.itemIdentifier)

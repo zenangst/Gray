@@ -20,12 +20,12 @@ class SystemLogicController {
     return systemPreferences
   }
 
-  func load(then handler: (MainViewController.State) -> Void) {
-    handler(.viewPreferences(readSystemPreferences()))
+  func load(then handler: (SystemPreferenceViewController.State) -> Void) {
+    handler(.view(readSystemPreferences()))
   }
 
   func toggleSystemPreference(_ systemPreference: SystemPreference,
-                              then handler: @escaping (MainViewController.State) -> Void) {
+                              then handler: @escaping (SystemPreferenceViewController.State) -> Void) {
     switch systemPreference.type {
     case .appleScript:
       var error: NSDictionary?
@@ -34,7 +34,7 @@ class SystemLogicController {
         requestPermission { (_) in }
       } else {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-          handler(.viewPreferences(self.readSystemPreferences()))
+          handler(.view(self.readSystemPreferences()))
         }
       }
     case .shellScript:
