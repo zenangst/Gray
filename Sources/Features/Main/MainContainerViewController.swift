@@ -55,15 +55,15 @@ class MainContainerViewController: FamilyViewController,
   // MARK: - ApplicationCollectionViewControllerDelegate
 
   func applicationViewController(_ controller: ApplicationsViewController,
-                                           toggleAppearance newAppearance: Application.Appearance,
-                                           application: Application) {
+                                 toggleAppearance newAppearance: Application.Appearance,
+                                 application: Application) {
     applicationsViewController.toggle(newAppearance, for: application)
   }
 
   // MARK: - SystemPreferenceCollectionViewControllerDelegate
 
   func systemPreferenceViewController(_ controller: SystemPreferenceViewController,
-                                                toggleSystemPreference preference: SystemPreference) {
+                                      toggleSystemPreference preference: SystemPreference) {
     preferencesViewController.toggle(preference)
   }
 }
