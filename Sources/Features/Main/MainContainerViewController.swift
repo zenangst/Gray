@@ -12,6 +12,7 @@ class MainContainerViewController: FamilyViewController,
 
   override func viewWillAppear() {
     super.viewWillAppear()
+    children.forEach { $0.removeFromParent(); $0.view.removeFromSuperview() }
     title = "Gray"
     applicationsViewController.delegate = self
     preferencesViewController.delegate = self
