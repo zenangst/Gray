@@ -31,12 +31,31 @@ class ApplicationsLogicController {
                         then handler: @escaping (ApplicationsViewController.State) -> Void) {
     queue.async { [weak self] in
       let shell = Shell()
-      let newSetting: String
+
+      // The cfprefsd is killed for the current user to avoid plist caching.
+      // PlistBuddy is used to set new values.
+      // Defaults is invoked in order to renew the cache.
+      // https://nethack.ch/2014/03/30/quick-tip-flush-os-x-mavericks-plist-file-cache/
+      let command: String
       switch newAppearance {
-      case .light, .system:
-        newSetting = "true"
+      case .light:
+        command = """
+        /usr/bin/killall -u $USER cfprefsd
+        defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool true
+        defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
+        """
       case .dark:
-        newSetting = "false"
+        command = """
+        /usr/bin/killall -u $USER cfprefsd
+        defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool false
+        defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
+        """
+      case .system:
+        command = """
+        /usr/bin/killall -u $USER cfprefsd
+        defaults delete \(application.bundleIdentifier) NSRequiresAquaSystemAppearance
+        defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
+        """
       }
 
       let runningApplication = NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).first
@@ -45,17 +64,7 @@ class ApplicationsLogicController {
         runningApplication?.terminate()
       }
 
-      // The cfprefsd is killed for the current user to avoid plist caching.
-      // PlistBuddy is used to set new values.
-      // Defaults is invoked in order to renew the cache.
-      // https://nethack.ch/2014/03/30/quick-tip-flush-os-x-mavericks-plist-file-cache/
-      let command = """
-      /usr/bin/killall -u $USER cfprefsd
-      defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)
-      defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
-      """
-
-      NSLog("New settings for \(application.name) = \(newSetting)")
+      NSLog("New settings for \(application.name) = \(newAppearance)")
       NSLog("command: \(command)")
       let output = shell.execute(command: command)
       NSLog("output: (\(output))")

@@ -2,7 +2,7 @@ import Cocoa
 import UserInterface
 
 protocol ApplicationGridViewDelegate: class {
-  func applicationView(_ view: ApplicationGridView, didClickSegmentedControl segmentedControl: NSSegmentedControl)
+  func applicationView(_ view: ApplicationGridView, didResetApplication currentAppearance: Application.Appearance?)
 }
 
 class ApplicationGridView: NSCollectionViewItem {
@@ -21,6 +21,10 @@ class ApplicationGridView: NSCollectionViewItem {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    let menu = NSMenu()
+    menu.addItem(NSMenuItem(title: "Reset", action: #selector(resetApplication), keyEquivalent: ""))
+    view.menu = menu
 
     view.layer?.backgroundColor = NSColor.white.cgColor
     view.layer?.cornerRadius = 20
@@ -64,6 +68,10 @@ class ApplicationGridView: NSCollectionViewItem {
 
     guard let currentAppearance = currentAppearance else { return }
     update(with: currentAppearance)
+  }
+
+  @objc func resetApplication() {
+    delegate?.applicationView(self, didResetApplication: currentAppearance)
   }
 
   func update(with appearance: Application.Appearance, duration: TimeInterval = 0, then handler: (() -> Void)? = nil) {
