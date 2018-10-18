@@ -71,12 +71,10 @@ class ApplicationsLogicController {
 
 
       if runningApplication != nil && !application.url.path.contains("CoreServices") {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
-          NSWorkspace.shared.launchApplication(withBundleIdentifier: application.bundleIdentifier,
-                                               options: [.withoutActivation, .async],
-                                               additionalEventParamDescriptor: nil,
-                                               launchIdentifier: nil)
-        })
+        NSWorkspace.shared.launchApplication(withBundleIdentifier: application.bundleIdentifier,
+                                             options: [.withoutActivation],
+                                             additionalEventParamDescriptor: nil,
+                                             launchIdentifier: nil)
       } else {
         let shell = Shell()
         shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
