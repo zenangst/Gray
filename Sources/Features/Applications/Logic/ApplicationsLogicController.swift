@@ -10,6 +10,7 @@ class ApplicationsLogicController {
 
   func load(then handler: (ApplicationsViewController.State) -> Void) {
     do {
+      let excludedBundles = ["com.vmware.fusion"]
       let applicationDirectory = try FileManager.default.url(for: .allApplicationsDirectory,
                                                              in: .localDomainMask,
                                                              appropriateFor: nil,
@@ -18,7 +19,7 @@ class ApplicationsLogicController {
                                                               includingPropertiesForKeys: nil,
                                                               options: .skipsHiddenFiles)
       urls.append(URL(string: "file:///System/Library/CoreServices/Finder.app")!)
-      let applications = try processApplications(urls, at: applicationDirectory)
+      let applications = try processApplications(urls, at: applicationDirectory, excludedBundles: excludedBundles)
       handler(.view(applications))
     } catch {}
   }
@@ -86,7 +87,7 @@ class ApplicationsLogicController {
     }
   }
 
-  private func processApplications(_ appUrls: [URL], at directoryUrl: URL) throws -> [Application] {
+  private func processApplications(_ appUrls: [URL], at directoryUrl: URL, excludedBundles: [String] = []) throws -> [Application] {
     var applications = [Application]()
     let shell = Shell()
     let sip = shell.execute(command: "csrutil status").contains("enabled")
@@ -100,7 +101,8 @@ class ApplicationsLogicController {
       guard FileManager.default.fileExists(atPath: infoPath),
         let plist = NSDictionary.init(contentsOfFile: infoPath),
         let bundleIdentifier = plist.value(forPlistKey: .bundleIdentifier),
-        let bundleName = plist.value(forPlistKey: .bundleName) else { continue }
+        let bundleName = plist.value(forPlistKey: .bundleName),
+        !excludedBundles.contains(bundleIdentifier) else { continue }
 
       // Exclude Electron apps
       let electronPath = "\(url.path)/Contents/Frameworks/Electron Framework.framework"

@@ -421,7 +421,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp -f -R ${BUILT_PRODUCTS_DIR}/${APPLICATION_NAME} /Applications\n";
+			shellScript = "cp -f -R ${CODESIGNING_FOLDER_PATH} /Applications\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
