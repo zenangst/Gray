@@ -2,6 +2,8 @@ import Foundation
 import Cocoa
 
 class ApplicationsLogicController {
+  let queue = DispatchQueue(label: "ApplicationQueue")
+
   enum PlistKey: String {
     case bundleName = "CFBundleName"
     case bundleIdentifier = "CFBundleIdentifier"
@@ -27,7 +29,7 @@ class ApplicationsLogicController {
   func toggleAppearance(_ newAppearance: Application.Appearance,
                         for application: Application,
                         then handler: @escaping (ApplicationsViewController.State) -> Void) {
-    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+    queue.async { [weak self] in
       let shell = Shell()
       let newSetting: String
       switch newAppearance {
@@ -43,32 +45,20 @@ class ApplicationsLogicController {
         runningApplication?.terminate()
       }
 
-      let command: String
-      if application.appearance == .system {
-        command = """
-        /usr/bin/killall -u $USER cfprefsd
-        /usr/libexec/PlistBuddy -c \"Add :NSRequiresAquaSystemAppearance \(newSetting)\" \(application.preferencesUrl.path)
-        defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)
-        defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
-        """
-      } else {
-        // The cfprefsd is killed for the current user to avoid plist caching.
-        // PlistBuddy is used to set new values.
-        // Defaults is invoked in order to renew the cache.
-        // https://nethack.ch/2014/03/30/quick-tip-flush-os-x-mavericks-plist-file-cache/
-        command = """
-        /usr/bin/killall -u $USER cfprefsd
-        /usr/libexec/PlistBuddy -c \"Set :NSRequiresAquaSystemAppearance \(newSetting)\" \(application.preferencesUrl.path)
-        defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
-        """
-      }
+      // The cfprefsd is killed for the current user to avoid plist caching.
+      // PlistBuddy is used to set new values.
+      // Defaults is invoked in order to renew the cache.
+      // https://nethack.ch/2014/03/30/quick-tip-flush-os-x-mavericks-plist-file-cache/
+      let command = """
+      /usr/bin/killall -u $USER cfprefsd
+      defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool \(newSetting)
+      defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
+      """
 
       NSLog("New settings for \(application.name) = \(newSetting)")
       NSLog("command: \(command)")
-
       let output = shell.execute(command: command)
       NSLog("output: (\(output))")
-
 
       if runningApplication != nil && !application.url.path.contains("CoreServices") {
         NSWorkspace.shared.launchApplication(withBundleIdentifier: application.bundleIdentifier,
