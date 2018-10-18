@@ -8,7 +8,7 @@ protocol ApplicationsViewControllerDelegate: class {
                                  application: Application)
 }
 
-class ApplicationsViewController: NSViewController, NSCollectionViewDelegate {
+class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, ApplicationGridViewDelegate {
   enum State {
     case view([Application])
   }
@@ -89,7 +89,20 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate {
     completion(alert.runModal() == .alertFirstButtonReturn)
   }
 
+  // MARK: - ApplicationGridViewDelegate
+
+  func applicationView(_ view: ApplicationGridView, didResetApplication currentAppearance: Application.Appearance?) {
+    guard let indexPath = collectionView.indexPath(for: view) else { return }
+
+    let application = dataSource.model(at: indexPath)
+    toggle(.system, for: application)
+  }
+
   // MARK: - NSCollectionViewDelegate
+
+  func collectionView(_ collectionView: NSCollectionView, willDisplay item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
+    (item as? ApplicationGridView)?.delegate = self
+  }
 
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
     guard let indexPath = indexPaths.first,
