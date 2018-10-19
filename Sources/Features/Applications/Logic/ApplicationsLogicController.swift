@@ -13,15 +13,19 @@ class ApplicationsLogicController {
   func load(then handler: (ApplicationsViewController.State) -> Void) {
     do {
       let excludedBundles = ["com.vmware.fusion"]
-      let applicationDirectory = try FileManager.default.url(for: .allApplicationsDirectory,
-                                                             in: .localDomainMask,
-                                                             appropriateFor: nil,
-                                                             create: false)
-      var urls = try FileManager.default.contentsOfDirectory(at: applicationDirectory,
-                                                              includingPropertiesForKeys: nil,
-                                                              options: .skipsHiddenFiles)
-      urls.append(URL(string: "file:///System/Library/CoreServices/Finder.app")!)
-      let applications = try processApplications(urls, at: applicationDirectory, excludedBundles: excludedBundles)
+
+      var applicationUrls = [URL]()
+      applicationUrls.append(URL(string: "file:///System/Library/CoreServices/Finder.app")!)
+      for url in try applicationLocations() {
+        guard FileManager.default.fileExists(atPath: url.path) else { continue }
+
+        let urls = try FileManager.default.contentsOfDirectory(at: url,
+                                                               includingPropertiesForKeys: nil,
+                                                               options: .skipsHiddenFiles)
+        applicationUrls.append(contentsOf: urls)
+      }
+
+      let applications = try parseApplicationUrls(applicationUrls, excludedBundles: excludedBundles)
       handler(.view(applications))
     } catch {}
   }
@@ -64,10 +68,10 @@ class ApplicationsLogicController {
         runningApplication?.terminate()
       }
 
-      NSLog("New settings for \(application.name) = \(newAppearance)")
-      NSLog("command: \(command)")
+      NSLog("Gray: New settings for \(application.name) = \(newAppearance)")
+      NSLog("Gray: Command: \(command)")
       let output = shell.execute(command: command)
-      NSLog("output: (\(output))")
+      NSLog("Gray: terminal output: (\(output))")
 
       if runningApplication != nil && !application.url.path.contains("CoreServices") {
         NSWorkspace.shared.launchApplication(withBundleIdentifier: application.bundleIdentifier,
@@ -84,7 +88,20 @@ class ApplicationsLogicController {
     }
   }
 
-  private func processApplications(_ appUrls: [URL], at directoryUrl: URL, excludedBundles: [String] = []) throws -> [Application] {
+  private func applicationLocations() throws -> [URL] {
+    var directories = [URL]()
+    let applicationDirectory = try FileManager.default.url(for: .allApplicationsDirectory,
+                                                           in: .localDomainMask,
+                                                           appropriateFor: nil,
+                                                           create: false)
+    directories.append(applicationDirectory)
+    directories.append(applicationDirectory.appendingPathComponent("Utilities"))
+    directories.append(applicationDirectory.appendingPathComponent("Xcode.app/Contents/Applications"))
+
+    return directories
+  }
+
+  private func parseApplicationUrls(_ appUrls: [URL], excludedBundles: [String] = []) throws -> [Application] {
     var applications = [Application]()
     let shell = Shell()
     let sip = shell.execute(command: "csrutil status").contains("enabled")
