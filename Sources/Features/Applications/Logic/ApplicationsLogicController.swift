@@ -18,11 +18,12 @@ class ApplicationsLogicController {
       applicationUrls.append(URL(string: "file:///System/Library/CoreServices/Finder.app")!)
       for url in try applicationLocations() {
         guard FileManager.default.fileExists(atPath: url.path) else { continue }
-
-        let urls = try FileManager.default.contentsOfDirectory(at: url,
-                                                               includingPropertiesForKeys: nil,
-                                                               options: .skipsHiddenFiles)
-        applicationUrls.append(contentsOf: urls)
+        do {
+          let urls = try FileManager.default.contentsOfDirectory(at: url,
+                                                                 includingPropertiesForKeys: nil,
+                                                                 options: .skipsHiddenFiles)
+          applicationUrls.append(contentsOf: urls)
+        } catch {}
       }
 
       let applications = try parseApplicationUrls(applicationUrls, excludedBundles: excludedBundles)
@@ -101,7 +102,8 @@ class ApplicationsLogicController {
     return directories
   }
 
-  private func parseApplicationUrls(_ appUrls: [URL], excludedBundles: [String] = []) throws -> [Application] {
+  private func parseApplicationUrls(_ appUrls: [URL],
+                                    excludedBundles: [String] = []) throws -> [Application] {
     var applications = [Application]()
     let shell = Shell()
     let sip = shell.execute(command: "csrutil status").contains("enabled")
@@ -144,8 +146,7 @@ class ApplicationsLogicController {
         NSDictionary.init(contentsOfFile: appContainerPreferenceUrl.path) == nil
 
       let app = Application(bundleIdentifier: bundleIdentifier,
-                            name: bundleName,
-                            url: url,
+                            name: bundleName, url: url,
                             preferencesUrl: resolvedAppPreferenceUrl,
                             appearance: applicationPlist?.appearance() ?? .system,
                             restricted: restricted)
