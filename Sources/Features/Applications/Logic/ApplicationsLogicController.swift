@@ -13,19 +13,11 @@ class ApplicationsLogicController {
   func load(then handler: (ApplicationsViewController.State) -> Void) {
     do {
       let excludedBundles = ["com.vmware.fusion"]
-
       var applicationUrls = [URL]()
-      applicationUrls.append(URL(string: "file:///System/Library/CoreServices/Finder.app")!)
-      for url in try applicationLocations() {
-        guard FileManager.default.fileExists(atPath: url.path) else { continue }
-        do {
-          let urls = try FileManager.default.contentsOfDirectory(at: url,
-                                                                 includingPropertiesForKeys: nil,
-                                                                 options: .skipsHiddenFiles)
-          applicationUrls.append(contentsOf: urls)
-        } catch {}
+      for path in try applicationLocations() {
+        applicationUrls.append(contentsOf: recursiveParse(at: path))
       }
-
+      applicationUrls.append(URL(string: "file:///System/Library/CoreServices/Finder.app")!)
       let applications = try parseApplicationUrls(applicationUrls, excludedBundles: excludedBundles)
       handler(.view(applications))
     } catch {}
@@ -96,10 +88,28 @@ class ApplicationsLogicController {
                                                            appropriateFor: nil,
                                                            create: false)
     directories.append(applicationDirectory)
-    directories.append(applicationDirectory.appendingPathComponent("Utilities"))
     directories.append(applicationDirectory.appendingPathComponent("Xcode.app/Contents/Applications"))
 
     return directories
+  }
+
+  private func recursiveParse(at url: URL) -> [URL] {
+    var result = [URL]()
+    guard FileManager.default.fileExists(atPath: url.path),
+      let contents = try? FileManager.default.contentsOfDirectory(at: url,
+                                                                  includingPropertiesForKeys: nil,
+                                                                  options: .skipsHiddenFiles) else { return [] }
+    for file in contents {
+      var isDirectory: ObjCBool = true
+      let isFolder = FileManager.default.fileExists(atPath: file.path, isDirectory: &isDirectory)
+      if isFolder && file.pathExtension != "app" {
+        result.append(contentsOf: recursiveParse(at: file))
+      } else {
+        result.append(file)
+      }
+    }
+
+    return result
   }
 
   private func parseApplicationUrls(_ appUrls: [URL],
