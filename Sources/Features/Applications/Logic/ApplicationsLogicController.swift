@@ -87,8 +87,26 @@ class ApplicationsLogicController {
                                                            in: .localDomainMask,
                                                            appropriateFor: nil,
                                                            create: false)
-    directories.append(applicationDirectory)
+    let applicationDirectoryU = try FileManager.default.url(for: .applicationDirectory,
+                                                           in: .userDomainMask,
+                                                           appropriateFor: nil,
+                                                           create: false)
+    let homeDirectory = FileManager.default.homeDirectoryForCurrentUser
+    
+    // macOS default Applications directories
+    directories.append(applicationDirectory) // including macOS default paths ./Utilities & ./Demos
+    directories.append(applicationDirectoryU) // including macOS default paths ./Utilities & ./Demos
+    directories.append(homeDirectory.appendingPathComponent("Developer/Applications"))
+    directories.append("/Developer/Applications")
+    directories.append("/Network/Applications") // including macOS default paths ./Utilities & ./Demos
+    directories.append("/Network/Developer/Applications")
+    
+    // other non-default application directories
+    directories.append("/System/Library/CoreServices") // Gray *hopefully* excludes any non-application bundles; this path will also include Finder, Stocks etc. and several miscellaneous system applications in subdirectory /System/Library/CoreServices/Applications
     directories.append(applicationDirectory.appendingPathComponent("Xcode.app/Contents/Applications"))
+    directories.append(applicationDirectory.appendingPathComponent("Xcode.app/Contents/Developer/Applications")
+    directories.append(homeDirectory.appendingPathComponent("Library/Developer/Xcode/DerivedData")) // default location for subdirectories containing applications freshly built with Xcode                 
+    directories.append("/Users/Shared/Applications")
 
     return directories
   }
