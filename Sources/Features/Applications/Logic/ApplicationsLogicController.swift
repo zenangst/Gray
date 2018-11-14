@@ -17,7 +17,6 @@ class ApplicationsLogicController {
       for path in try applicationLocations() {
         applicationUrls.append(contentsOf: recursiveParse(at: path))
       }
-      applicationUrls.append(URL(string: "file:///System/Library/CoreServices/Finder.app")!)
       let applications = try parseApplicationUrls(applicationUrls, excludedBundles: excludedBundles)
       handler(.view(applications))
     } catch {}
