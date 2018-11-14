@@ -126,7 +126,7 @@ class ApplicationsLogicController {
     for file in contents {
       var isDirectory: ObjCBool = true
       let isFolder = FileManager.default.fileExists(atPath: file.path, isDirectory: &isDirectory)
-      if isFolder && file.pathExtension != "app" {
+      if isFolder && file.pathExtension != "app" && url.path.contains("/Applications") {
         result.append(contentsOf: recursiveParse(at: file))
       } else {
         result.append(file)
