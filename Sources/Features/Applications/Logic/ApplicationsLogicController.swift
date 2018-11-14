@@ -6,7 +6,9 @@ class ApplicationsLogicController {
 
   enum PlistKey: String {
     case bundleName = "CFBundleName"
+    case iconFile = "CFBundleIconFile"
     case bundleIdentifier = "CFBundleIdentifier"
+    case applicationIsAgent = "LSUIElement"
     case requiresAquaSystemAppearance = "NSRequiresAquaSystemAppearance"
   }
 
@@ -152,11 +154,7 @@ class ApplicationsLogicController {
         let bundleName = plist.value(forPlistKey: .bundleName),
         !excludedBundles.contains(bundleIdentifier) else { continue }
 
-      // Exclude Electron apps
-      let electronPath = "\(url.path)/Contents/Frameworks/Electron Framework.framework"
-      if FileManager.default.fileExists(atPath: electronPath) {
-        continue
-      }
+      if shouldExcludeApplication(with: plist, applicationUrl: url) == true { continue }
 
       let suffix = "Preferences/\(bundleIdentifier).plist"
       let appPreferenceUrl = libraryDirectory.appendingPathComponent(suffix)
@@ -185,6 +183,39 @@ class ApplicationsLogicController {
       applications.append(app)
     }
     return applications.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
+  }
+
+  private func shouldExcludeApplication(with plist: NSDictionary, applicationUrl url: URL) -> Bool {
+    var shouldExcludeOnKeyword: Bool = false
+    // Exclude applications with certain keywords in their name.
+    let excludeKeywords = [
+      "handler", "agent", "migration",
+      "problem", "setup", "uiserver",
+      "install", "system image"]
+
+    for keyword in excludeKeywords {
+      if url.lastPathComponent.lowercased().contains(keyword) {
+        shouldExcludeOnKeyword = true
+        break
+      }
+    }
+
+    if shouldExcludeOnKeyword {
+      return true
+    }
+
+    // Exclude applications that don't have an icon file.
+    if plist.value(forPlistKey: .iconFile) == nil {
+      return true
+    }
+
+    // Exclude Electron apps
+    let electronPath = "\(url.path)/Contents/Frameworks/Electron Framework.framework"
+    if FileManager.default.fileExists(atPath: electronPath) {
+      return true
+    }
+
+    return false
   }
 }
 
