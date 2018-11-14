@@ -6,7 +6,9 @@ class ApplicationsLogicController {
 
   enum PlistKey: String {
     case bundleName = "CFBundleName"
+    case iconFile = "CFBundleIconFile"
     case bundleIdentifier = "CFBundleIdentifier"
+    case applicationIsAgent = "LSUIElement"
     case requiresAquaSystemAppearance = "NSRequiresAquaSystemAppearance"
   }
 
@@ -17,7 +19,6 @@ class ApplicationsLogicController {
       for path in try applicationLocations() {
         applicationUrls.append(contentsOf: recursiveParse(at: path))
       }
-      applicationUrls.append(URL(string: "file:///System/Library/CoreServices/Finder.app")!)
       let applications = try parseApplicationUrls(applicationUrls, excludedBundles: excludedBundles)
       handler(.view(applications))
     } catch {}
@@ -144,6 +145,7 @@ class ApplicationsLogicController {
                                                        in: .userDomainMask,
                                                        appropriateFor: nil,
                                                        create: false)
+    var addedApplicationNames = [String]()
     for url in appUrls {
       let path = url.path
       let infoPath = "\(path)/Contents/Info.plist"
@@ -151,13 +153,10 @@ class ApplicationsLogicController {
         let plist = NSDictionary.init(contentsOfFile: infoPath),
         let bundleIdentifier = plist.value(forPlistKey: .bundleIdentifier),
         let bundleName = plist.value(forPlistKey: .bundleName),
+        !addedApplicationNames.contains(bundleName),
         !excludedBundles.contains(bundleIdentifier) else { continue }
 
-      // Exclude Electron apps
-      let electronPath = "\(url.path)/Contents/Frameworks/Electron Framework.framework"
-      if FileManager.default.fileExists(atPath: electronPath) {
-        continue
-      }
+      if shouldExcludeApplication(with: plist, applicationUrl: url) == true { continue }
 
       let suffix = "Preferences/\(bundleIdentifier).plist"
       let appPreferenceUrl = libraryDirectory.appendingPathComponent(suffix)
@@ -184,8 +183,42 @@ class ApplicationsLogicController {
                             appearance: applicationPlist?.appearance() ?? .system,
                             restricted: restricted)
       applications.append(app)
+      addedApplicationNames.append(bundleName)
     }
     return applications.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
+  }
+
+  private func shouldExcludeApplication(with plist: NSDictionary, applicationUrl url: URL) -> Bool {
+    var shouldExcludeOnKeyword: Bool = false
+    // Exclude applications with certain keywords in their name.
+    let excludeKeywords = [
+      "handler", "agent", "migration",
+      "problem", "setup", "uiserver",
+      "install", "system image", "escrow"]
+
+    for keyword in excludeKeywords {
+      if url.lastPathComponent.lowercased().contains(keyword) {
+        shouldExcludeOnKeyword = true
+        break
+      }
+    }
+
+    if shouldExcludeOnKeyword {
+      return true
+    }
+
+    // Exclude applications that don't have an icon file.
+    if plist.value(forPlistKey: .iconFile) == nil && url.path.contains("CoreServices")  {
+      return true
+    }
+
+    // Exclude Electron apps
+    let electronPath = "\(url.path)/Contents/Frameworks/Electron Framework.framework"
+    if FileManager.default.fileExists(atPath: electronPath) {
+      return true
+    }
+
+    return false
   }
 }
 
