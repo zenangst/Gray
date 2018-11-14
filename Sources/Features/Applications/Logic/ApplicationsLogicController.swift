@@ -145,6 +145,7 @@ class ApplicationsLogicController {
                                                        in: .userDomainMask,
                                                        appropriateFor: nil,
                                                        create: false)
+    var addedApplicationNames = [String]()
     for url in appUrls {
       let path = url.path
       let infoPath = "\(path)/Contents/Info.plist"
@@ -152,6 +153,7 @@ class ApplicationsLogicController {
         let plist = NSDictionary.init(contentsOfFile: infoPath),
         let bundleIdentifier = plist.value(forPlistKey: .bundleIdentifier),
         let bundleName = plist.value(forPlistKey: .bundleName),
+        !addedApplicationNames.contains(bundleName),
         !excludedBundles.contains(bundleIdentifier) else { continue }
 
       if shouldExcludeApplication(with: plist, applicationUrl: url) == true { continue }
@@ -181,6 +183,7 @@ class ApplicationsLogicController {
                             appearance: applicationPlist?.appearance() ?? .system,
                             restricted: restricted)
       applications.append(app)
+      addedApplicationNames.append(bundleName)
     }
     return applications.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
   }
