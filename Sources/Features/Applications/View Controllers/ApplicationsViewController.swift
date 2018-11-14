@@ -22,8 +22,8 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
   var applicationCache = [Application]()
   var query: String = ""
 
-  init(models: [Application] = []) {
-    self.dataSource = ApplicationsDataSource(models: models)
+  init(iconStore: IconStore, models: [Application] = []) {
+    self.dataSource = ApplicationsDataSource(iconStore: iconStore, models: models)
     super.init(nibName: nil, bundle: nil)
   }
   

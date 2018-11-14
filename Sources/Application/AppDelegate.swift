@@ -23,7 +23,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
     self.window?.close()
     self.window = nil
 
-    let contentViewController = MainContainerViewController()
+    let dependencyContainer = DependencyContainer()
+    let contentViewController = MainContainerViewController(iconStore: dependencyContainer)
     let toolbar = Toolbar(identifier: .init("MainApplicationWindowToolbar"))
     toolbar.searchDelegate = contentViewController
     let windowSize = CGSize(width: 420, height: 640)

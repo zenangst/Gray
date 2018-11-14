@@ -7,8 +7,18 @@ class MainContainerViewController: FamilyViewController,
   ToolbarSearchDelegate {
 
   lazy var systemLabelController = LabelViewController(text: "System preferences")
-  lazy var preferencesViewController = SystemPreferenceViewController()
-  lazy var applicationsViewController = ApplicationsViewController()
+  let preferencesViewController: SystemPreferenceViewController
+  let applicationsViewController: ApplicationsViewController
+
+  init(iconStore: IconStore) {
+    self.preferencesViewController = SystemPreferenceViewController(iconStore: iconStore)
+    self.applicationsViewController = ApplicationsViewController(iconStore: iconStore)
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override func viewWillAppear() {
     super.viewWillAppear()
