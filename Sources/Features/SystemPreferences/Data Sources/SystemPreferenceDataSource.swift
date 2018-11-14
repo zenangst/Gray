@@ -4,11 +4,12 @@ import UserInterface
 
 class SystemPreferenceDataSource: NSObject, NSCollectionViewDataSource {
   private(set) var models: [SystemPreference]
-  let iconController = IconController()
+  let iconStore: IconStore
 
   // MARK: - Initializer
 
-  init(models: [SystemPreference] = []) {
+  init(iconStore: IconStore, models: [SystemPreference] = []) {
+    self.iconStore = iconStore
     self.models = models
     super.init()
   }

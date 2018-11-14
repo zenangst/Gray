@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2AECAC775C01910CCBFAD88E /* libPods-Gray.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C02BDE925690A5BBA8E6D44 /* libPods-Gray.a */; };
 		BD111046215CEB240002D537 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD111045215CEB240002D537 /* Shell.swift */; };
+		BD1A5590219CA170003C7D98 /* DepedencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A558F219CA170003C7D98 /* DepedencyContainer.swift */; };
 		BD1BA9BE215E68840052633B /* IconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BA9BD215E68840052633B /* IconController.swift */; };
 		BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1D9544215E435F003ABBCF /* VersionController.swift */; };
 		BD2AA1E62167A0E4000717B7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BD2AA1E52167A0E4000717B7 /* README.md */; };
@@ -38,6 +39,7 @@
 		8925482688825713455FEF24 /* Pods-Gray.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gray.release.xcconfig"; path = "Target Support Files/Pods-Gray/Pods-Gray.release.xcconfig"; sourceTree = "<group>"; };
 		9C02BDE925690A5BBA8E6D44 /* libPods-Gray.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Gray.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD111045215CEB240002D537 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
+		BD1A558F219CA170003C7D98 /* DepedencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepedencyContainer.swift; sourceTree = "<group>"; };
 		BD1BA9BD215E68840052633B /* IconController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconController.swift; sourceTree = "<group>"; };
 		BD1BA9BF215E6DBB0052633B /* ApplicationGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationGridView.swift; sourceTree = "<group>"; };
 		BD1D9544215E435F003ABBCF /* VersionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionController.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				BDB20F272167A71300A72623 /* Toolbar */,
 				BD67CE0D215BF15F00216FDB /* AppDelegate.swift */,
 				BDAAC48D2168EC2B0093B27D /* LayoutFactory.swift */,
+				BD1A558F219CA170003C7D98 /* DepedencyContainer.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				BD9F0C4F21667BEB00608FD9 /* SystemLogicController.swift in Sources */,
 				BDAAC48F216A294A0093B27D /* ApplicationGridView.swift in Sources */,
 				BD111046215CEB240002D537 /* Shell.swift in Sources */,
+				BD1A5590219CA170003C7D98 /* DepedencyContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

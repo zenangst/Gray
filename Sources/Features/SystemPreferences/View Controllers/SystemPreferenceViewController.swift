@@ -19,8 +19,9 @@ class SystemPreferenceViewController: NSViewController, NSCollectionViewDelegate
   let dataSource: SystemPreferenceDataSource
   let logicController = SystemLogicController()
 
-  init(models: [SystemPreference] = []) {
-    self.dataSource = SystemPreferenceDataSource(models: models)
+  init(iconStore: IconStore, models: [SystemPreference] = []) {
+    self.dataSource = SystemPreferenceDataSource(iconStore: iconStore,
+                                                 models: models)
     super.init(nibName: nil, bundle: nil)
   }
 

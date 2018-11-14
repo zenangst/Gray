@@ -4,11 +4,12 @@ import UserInterface
 
 class ApplicationsDataSource: NSObject, NSCollectionViewDataSource {
   private(set) var models: [Application]
-  let iconController = IconController()
+  let iconStore: IconStore
 
   // MARK: - Initializer
 
-  init(models: [Application] = []) {
+  init(iconStore: IconStore, models: [Application] = []) {
+    self.iconStore = iconStore
     self.models = models
     super.init()
   }
@@ -43,7 +44,9 @@ class ApplicationsDataSource: NSObject, NSCollectionViewDataSource {
                       itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
     return collectionView.dequeue(ApplicationGridView.self, with: model(at: indexPath), for: indexPath) {
       view, model in
-      view.iconView.image = self.iconController.icon(for: model)
+      self.iconStore.loadIcon(for: model, then: { image in
+        view.iconView.image = image
+      })
       view.titleLabel.stringValue = model.name
       view.update(with: model.appearance)
 
