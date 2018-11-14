@@ -194,7 +194,7 @@ class ApplicationsLogicController {
     let excludeKeywords = [
       "handler", "agent", "migration",
       "problem", "setup", "uiserver",
-      "install", "system image"]
+      "install", "system image", "escrow"]
 
     for keyword in excludeKeywords {
       if url.lastPathComponent.lowercased().contains(keyword) {
@@ -208,7 +208,7 @@ class ApplicationsLogicController {
     }
 
     // Exclude applications that don't have an icon file.
-    if plist.value(forPlistKey: .iconFile) == nil {
+    if plist.value(forPlistKey: .iconFile) == nil && url.path.contains("CoreServices")  {
       return true
     }
 
