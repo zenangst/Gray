@@ -2,7 +2,7 @@ import Foundation
 import Cocoa
 
 class ApplicationsLogicController {
-  let queue = DispatchQueue(label: "ApplicationQueue")
+  let queue = DispatchQueue(label: "ApplicationQueue", qos: .userInitiated)
 
   enum PlistKey: String {
     case bundleName = "CFBundleName"
