@@ -144,8 +144,8 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
           item.update(with: newAppearance, duration: 0.5) { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.applicationViewController(strongSelf,
-                                                                     toggleAppearance: newAppearance,
-                                                                     application: application)
+                                                           toggleAppearance: newAppearance,
+                                                           application: application)
           }
         }
       })
