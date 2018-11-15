@@ -1,9 +1,9 @@
 PODS:
   - Blueprints (0.8.0)
   - Differific (0.5.2)
-  - Family (0.6.4)
+  - Family (0.6.8)
   - UserInterface (0.5.0)
-  - Vaccine (0.12.2)
+  - Vaccine (0.15.0)
 
 DEPENDENCIES:
   - Blueprints
@@ -23,10 +23,10 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Blueprints: bd8e23ee3b1ee9faa751ddb6e9cd82fef862ce9a
   Differific: b26ecab6daa1a2a93efeee41cec5e9593ced09bc
-  Family: 12a880d35e1e26876f60af44f9fd38b87a498ce2
+  Family: 8a5b1abbbb7ff8d1dab471f082a6fd81a2c1c5e5
   UserInterface: 54e15db9aceaec2b9686d00f471adb15d2598ea3
-  Vaccine: a8ccb41c6b9aa93242560ceaa066040fa9e18b27
+  Vaccine: dcc3cb8a83d20ab1ab76f7324683b4d73079cda8
 
 PODFILE CHECKSUM: cc5e0a81b9c0eb7a8912c97a9ac152643c4403a3
 
-COCOAPODS: 1.6.0.beta.1
+COCOAPODS: 1.6.0.beta.2
