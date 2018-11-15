@@ -8,8 +8,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
   weak var window: NSWindow?
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
-    Injection.load(then: loadApplication)
+    Injection.load(then: self.loadApplication)
       .add(observer: self, with: #selector(injected(_:)))
+
     versionController.delegate = self
     checkForNewVersion(nil)
   }
@@ -57,6 +58,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
   // MARK: - Injection
 
   @objc open func injected(_ notification: Notification) {
+    guard Injection.objectWasInjected(self, in: notification) else { return }
     loadApplication()
   }
 
