@@ -12,16 +12,22 @@ class ApplicationsLogicController {
     case requiresAquaSystemAppearance = "NSRequiresAquaSystemAppearance"
   }
 
-  func load(then handler: (ApplicationsViewController.State) -> Void) {
-    do {
-      let excludedBundles = ["com.vmware.fusion"]
-      var applicationUrls = [URL]()
-      for path in try applicationLocations() {
-        applicationUrls.append(contentsOf: recursiveParse(at: path))
-      }
-      let applications = try parseApplicationUrls(applicationUrls, excludedBundles: excludedBundles)
-      handler(.view(applications))
-    } catch {}
+  func load(then handler: @escaping (ApplicationsViewController.State) -> Void) {
+    queue.async { [weak self] in
+      guard let strongSelf = self else { return }
+      do {
+        let excludedBundles = ["com.vmware.fusion"]
+        var applicationUrls = [URL]()
+        for path in try strongSelf.applicationLocations() {
+          applicationUrls.append(contentsOf: strongSelf.recursiveParse(at: path))
+        }
+        let applications = try strongSelf.parseApplicationUrls(applicationUrls,
+                                                               excludedBundles: excludedBundles)
+        DispatchQueue.main.async {
+          handler(.view(applications))
+        }
+      } catch {}
+    }
   }
 
   func toggleAppearance(_ newAppearance: Application.Appearance,
