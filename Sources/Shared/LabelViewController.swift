@@ -2,6 +2,7 @@ import Cocoa
 import UserInterface
 
 class LabelViewController: NSViewController {
+  lazy var customView = NSView()
   lazy var textField = NSTextField()
 
   init(text: String) {
@@ -14,18 +15,22 @@ class LabelViewController: NSViewController {
   }
 
   override func loadView() {
-    textField.isBezeled = false
-    textField.isBordered = false
-    textField.isEditable = false
-    textField.isSelectable = false
-    textField.drawsBackground = false
-    textField.font = NSFont.boldSystemFont(ofSize: 18)
-    view = NSView()
+    view = customView
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
     view.addSubview(textField)
     NSLayoutConstraint.constrain(
       textField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
       textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
       textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
     )
+    textField.isBezeled = false
+    textField.isBordered = false
+    textField.isEditable = false
+    textField.isSelectable = false
+    textField.drawsBackground = false
+    textField.font = NSFont.boldSystemFont(ofSize: 18)
   }
 }
