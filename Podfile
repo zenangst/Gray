@@ -7,6 +7,5 @@ pod 'Blueprints'
 pod 'Differific'
 pod 'Family'
 pod 'UserInterface'
-pod 'Vaccine'
 
 target 'Gray'
