@@ -1,5 +1,4 @@
 import Cocoa
-import Vaccine
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
@@ -8,9 +7,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
   weak var window: NSWindow?
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
-    Injection.load(then: self.loadApplication)
-      .add(observer: self, with: #selector(injected(_:)))
-
+    #if DEBUG
+      Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/macOSInjection10.bundle")?.load()
+    #endif
+    loadApplication()
     versionController.delegate = self
     checkForNewVersion(nil)
   }
@@ -57,8 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, VersionControllerDelegate {
 
   // MARK: - Injection
 
-  @objc open func injected(_ notification: Notification) {
-    guard Injection.objectWasInjected(self, in: notification) else { return }
+  @objc func injected() {
     loadApplication()
   }
 
