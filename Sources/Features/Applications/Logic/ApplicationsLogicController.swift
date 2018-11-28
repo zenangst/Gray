@@ -6,6 +6,7 @@ class ApplicationsLogicController {
 
   enum PlistKey: String {
     case bundleName = "CFBundleName"
+    case executableName = "CFBundleExecutable"
     case iconFile = "CFBundleIconFile"
     case bundleIdentifier = "CFBundleIdentifier"
     case applicationIsAgent = "LSUIElement"
@@ -160,7 +161,7 @@ class ApplicationsLogicController {
       guard FileManager.default.fileExists(atPath: infoPath),
         let plist = NSDictionary.init(contentsOfFile: infoPath),
         let bundleIdentifier = plist.value(forPlistKey: .bundleIdentifier),
-        let bundleName = plist.value(forPlistKey: .bundleName),
+        let bundleName = plist.value(forPlistKey: .bundleName) ?? plist.value(forPlistKey: .executableName),
         !addedApplicationNames.contains(bundleName),
         !excludedBundles.contains(bundleIdentifier) else { continue }
 
