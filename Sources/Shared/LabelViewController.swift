@@ -33,4 +33,8 @@ class LabelViewController: NSViewController {
     textField.drawsBackground = false
     textField.font = NSFont.boldSystemFont(ofSize: 18)
   }
+
+  func setText(_ text: String) {
+    self.textField.stringValue = text
+  }
 }

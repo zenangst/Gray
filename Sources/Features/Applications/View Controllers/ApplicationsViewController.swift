@@ -16,6 +16,8 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
   weak var delegate: ApplicationsViewControllerDelegate?
   let dataSource: ApplicationsDataSource
   let logicController = ApplicationsLogicController()
+  override func loadView() { self.view = baseView }
+  lazy var baseView = NSView()
   lazy var layoutFactory = LayoutFactory()
   lazy var collectionView = NSCollectionView(layout: layoutFactory.createGridLayout(),
                                              register: ApplicationGridView.self)
@@ -29,10 +31,6 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-  
-  override func loadView() {
-    self.view = NSView()
   }
 
   override func viewDidLoad() {
