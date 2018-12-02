@@ -7,6 +7,7 @@ class MainContainerViewController: FamilyViewController,
   ToolbarSearchDelegate {
 
   lazy var systemLabelController = LabelViewController(text: "System preferences")
+  lazy var applicationLabelController = LabelViewController(text: "Applications")
   let preferencesViewController: SystemPreferenceViewController
   let applicationsViewController: ApplicationsViewController
 
@@ -31,7 +32,7 @@ class MainContainerViewController: FamilyViewController,
 
     addChild(systemLabelController, height: 60)
     addChild(preferencesViewController, view: { $0.collectionView })
-    addChild(LabelViewController(text: "Applications"), height: 60)
+    addChild(applicationLabelController, height: 60)
     addChild(applicationsViewController, view: { $0.collectionView })
   }
 
@@ -41,16 +42,16 @@ class MainContainerViewController: FamilyViewController,
   }
 
   private func performSearch(with string: String) {
-    switch string.count {
-    case 0:
+    switch string.count > 0 {
+    case false:
       systemLabelController.view.animator().alphaValue = 1.0
       preferencesViewController.collectionView.animator().alphaValue = 1.0
+      applicationLabelController.setText("Applications")
       applicationsViewController.performSearch(with: string)
-    case 1:
+    case true:
       systemLabelController.view.animator().alphaValue = 0.0
       preferencesViewController.collectionView.animator().alphaValue = 0.0
-      fallthrough
-    default:
+      applicationLabelController.setText("Search results: \(string)")
       applicationsViewController.performSearch(with: string)
     }
   }
