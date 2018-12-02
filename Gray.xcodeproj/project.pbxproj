@@ -32,6 +32,7 @@
 		BDB20F262167A64100A72623 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F252167A64100A72623 /* Toolbar.swift */; };
 		BDB20F292167A73C00A72623 /* SearchToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F282167A73C00A72623 /* SearchToolbarItem.swift */; };
 		BDB20F2B2167A9DB00A72623 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F2A2167A9DB00A72623 /* SearchField.swift */; };
+		BDC14C6F21B4502900610983 /* AlertsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC14C6E21B4502900610983 /* AlertsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		BDB20F252167A64100A72623 /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		BDB20F282167A73C00A72623 /* SearchToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchToolbarItem.swift; sourceTree = "<group>"; };
 		BDB20F2A2167A9DB00A72623 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		BDC14C6E21B4502900610983 /* AlertsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		BD111047215CEB8E0002D537 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				BDC14C6D21B4501B00610983 /* Alerts */,
 				BD30ED4C216C011F00FD2D91 /* Application */,
 				BD30ED4B216C010400FD2D91 /* Features */,
 				BDAAC490216A2A810093B27D /* Shared */,
@@ -307,6 +310,14 @@
 			path = Toolbar;
 			sourceTree = "<group>";
 		};
+		BDC14C6D21B4501B00610983 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				BDC14C6E21B4502900610983 /* AlertsController.swift */,
+			);
+			path = Alerts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -447,6 +458,7 @@
 				BDAAC492216A2A920093B27D /* LabelViewController.swift in Sources */,
 				BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */,
 				BD9F0C462166764E00608FD9 /* SystemPreference.swift in Sources */,
+				BDC14C6F21B4502900610983 /* AlertsController.swift in Sources */,
 				BDB20F262167A64100A72623 /* Toolbar.swift in Sources */,
 				BD9F0C4C2166773300608FD9 /* SystemPreferenceView.swift in Sources */,
 				BD9F0C43216675F300608FD9 /* SystemPreferenceViewController.swift in Sources */,
