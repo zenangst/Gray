@@ -45,19 +45,16 @@ class ApplicationsLogicController {
       switch newAppearance {
       case .light:
         command = """
-        /usr/bin/killall -u $USER cfprefsd
         defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool true
         defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
         """
       case .dark:
         command = """
-        /usr/bin/killall -u $USER cfprefsd
         defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool false
         defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
         """
       case .system:
         command = """
-        /usr/bin/killall -u $USER cfprefsd
         defaults delete \(application.bundleIdentifier) NSRequiresAquaSystemAppearance
         defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
         """
@@ -75,7 +72,7 @@ class ApplicationsLogicController {
       NSLog("Gray: terminal output: (\(output))")
 
       if runningApplication != nil && !application.url.path.contains("CoreServices") {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
           NSWorkspace.shared.launchApplication(withBundleIdentifier: application.bundleIdentifier,
                                                options: [.withoutActivation],
                                                additionalEventParamDescriptor: nil,
