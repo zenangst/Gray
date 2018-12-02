@@ -1,7 +1,7 @@
 PODS:
-  - Blueprints (0.8.0)
+  - Blueprints (0.8.3)
   - Differific (0.5.2)
-  - Family (0.6.8)
+  - Family (0.7.1)
   - UserInterface (0.5.0)
 
 DEPENDENCIES:
@@ -18,11 +18,11 @@ SPEC REPOS:
     - UserInterface
 
 SPEC CHECKSUMS:
-  Blueprints: bd8e23ee3b1ee9faa751ddb6e9cd82fef862ce9a
+  Blueprints: da16684d7116d948844dc5430d316ffa80323783
   Differific: b26ecab6daa1a2a93efeee41cec5e9593ced09bc
-  Family: 8a5b1abbbb7ff8d1dab471f082a6fd81a2c1c5e5
+  Family: 325d287456d54928a5e3f231a1315b7e0a31e496
   UserInterface: 54e15db9aceaec2b9686d00f471adb15d2598ea3
 
-PODFILE CHECKSUM: 9b6f93d828aae511798d5dc18b356dca6da71a1a
+PODFILE CHECKSUM: 1923f1efa89392b6a022c0b1d5e0ea7a00317602
 
 COCOAPODS: 1.6.0.beta.2

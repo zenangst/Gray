@@ -46,14 +46,12 @@ class MainContainerViewController: FamilyViewController,
       systemLabelController.view.animator().alphaValue = 1.0
       preferencesViewController.collectionView.animator().alphaValue = 1.0
       applicationsViewController.performSearch(with: string)
-      scrollView.layoutViews(withDuration: 0.15, excludeOffscreenViews: false)
     case 1:
       systemLabelController.view.animator().alphaValue = 0.0
       preferencesViewController.collectionView.animator().alphaValue = 0.0
       fallthrough
     default:
       applicationsViewController.performSearch(with: string)
-      scrollView.layoutViews(withDuration: 0.15, excludeOffscreenViews: false)
     }
   }
 
