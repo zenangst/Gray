@@ -34,6 +34,9 @@ class MainContainerViewController: FamilyViewController,
     addChild(preferencesViewController, view: { $0.collectionView })
     addChild(applicationLabelController, height: 60)
     addChild(applicationsViewController, view: { $0.collectionView })
+
+    systemLabelController.view.enclosingScrollView?.drawsBackground = true
+    applicationLabelController.view.enclosingScrollView?.drawsBackground = true
   }
 
   override func viewDidAppear() {

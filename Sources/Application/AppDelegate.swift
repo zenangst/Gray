@@ -9,7 +9,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     #if DEBUG
-      Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/macOSInjection10.bundle")?.load()
+    Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/macOSInjection10.bundle")?.load()
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(injected),
+      name: NSNotification.Name(rawValue: "INJECTION_BUNDLE_NOTIFICATION"),
+      object: nil
+    )
     #endif
     versionController.delegate = alertsController
     loadApplication()

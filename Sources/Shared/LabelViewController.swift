@@ -2,7 +2,8 @@ import Cocoa
 import UserInterface
 
 class LabelViewController: NSViewController {
-  lazy var customView = NSView()
+  override func loadView() { view = baseView }
+  lazy var baseView = NSView()
   lazy var textField = NSTextField()
 
   init(text: String) {
@@ -12,10 +13,6 @@ class LabelViewController: NSViewController {
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  override func loadView() {
-    view = customView
   }
 
   override func viewDidLoad() {

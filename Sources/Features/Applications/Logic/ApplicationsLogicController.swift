@@ -162,7 +162,12 @@ class ApplicationsLogicController {
         !addedApplicationNames.contains(bundleName),
         !excludedBundles.contains(bundleIdentifier) else { continue }
 
-      if shouldExcludeApplication(with: plist, applicationUrl: url) == true { continue }
+      // Make an exception for VSCode
+      // https://github.com/zenangst/Gray/issues/66
+      if bundleIdentifier != "com.microsoft.VSCode" &&
+        shouldExcludeApplication(with: plist, applicationUrl: url) == true {
+        continue
+      }
 
       let suffix = "Preferences/\(bundleIdentifier).plist"
       let appPreferenceUrl = libraryDirectory.appendingPathComponent(suffix)
