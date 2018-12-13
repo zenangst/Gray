@@ -6,6 +6,7 @@ protocol ApplicationGridViewDelegate: class {
 }
 
 class ApplicationGridView: NSCollectionViewItem {
+  lazy var baseView = NSView()
   weak var delegate: ApplicationGridViewDelegate?
 
   var currentAppearance: Application.Appearance?
@@ -15,7 +16,7 @@ class ApplicationGridView: NSCollectionViewItem {
   lazy var subtitleLabel: NSTextField = .init()
 
   override func loadView() {
-    self.view = NSView()
+    self.view = baseView
     self.view.wantsLayer = true
   }
 
