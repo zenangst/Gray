@@ -23,6 +23,7 @@ class ApplicationsLogicController {
           applicationUrls.append(contentsOf: strongSelf.recursiveParse(at: path))
         }
         let applications = try strongSelf.parseApplicationUrls(applicationUrls,
+                                                               handler: handler,
                                                                excludedBundles: excludedBundles)
         DispatchQueue.main.async {
           handler(.view(applications))
@@ -143,6 +144,7 @@ class ApplicationsLogicController {
   }
 
   private func parseApplicationUrls(_ appUrls: [URL],
+                                    handler: @escaping (ApplicationsViewController.State) -> Void,
                                     excludedBundles: [String] = []) throws -> [Application] {
     var applications = [Application]()
     let shell = Shell()
@@ -152,7 +154,8 @@ class ApplicationsLogicController {
                                                        appropriateFor: nil,
                                                        create: false)
     var addedApplicationNames = [String]()
-    for url in appUrls {
+    let total = appUrls.count
+    for (offset, url) in appUrls.enumerated() {
       let path = url.path
       let infoPath = "\(path)/Contents/Info.plist"
       guard FileManager.default.fileExists(atPath: infoPath),
@@ -193,6 +196,10 @@ class ApplicationsLogicController {
                             preferencesUrl: resolvedAppPreferenceUrl,
                             appearance: applicationPlist?.appearance() ?? .system,
                             restricted: restricted)
+      DispatchQueue.main.async {
+        handler(.loading(application: app, offset: offset, total: total))
+      }
+
       applications.append(app)
       addedApplicationNames.append(bundleName)
     }

@@ -5,9 +5,9 @@ class MainContainerViewController: FamilyViewController,
   ApplicationsViewControllerDelegate,
   SystemPreferenceViewControllerDelegate,
   ToolbarSearchDelegate {
-
   lazy var systemLabelController = LabelViewController(text: "System preferences")
   lazy var applicationLabelController = LabelViewController(text: "Applications")
+  lazy var loadingLabelController = ApplicationsLoadingViewController(text: "Loading...")
   let preferencesViewController: SystemPreferenceViewController
   let applicationsViewController: ApplicationsViewController
 
@@ -33,10 +33,14 @@ class MainContainerViewController: FamilyViewController,
     addChild(systemLabelController, height: 60)
     addChild(preferencesViewController, view: { $0.collectionView })
     addChild(applicationLabelController, height: 60)
+    addChild(loadingLabelController)
     addChild(applicationsViewController, view: { $0.collectionView })
+
+    loadingLabelController.view.frame.size.height = 60 + 120 + 120 + 20 + scrollView.contentInsets.top
 
     systemLabelController.view.enclosingScrollView?.drawsBackground = true
     applicationLabelController.view.enclosingScrollView?.drawsBackground = true
+    loadingLabelController.view.enclosingScrollView?.drawsBackground = true
   }
 
   override func viewDidAppear() {
@@ -66,6 +70,17 @@ class MainContainerViewController: FamilyViewController,
   }
 
   // MARK: - ApplicationCollectionViewControllerDelegate
+
+  func applicationViewController(_ controller: ApplicationsViewController, finishedLoading: Bool) {
+    loadingLabelController.view.alphaValue = 0.0
+  }
+
+  func applicationViewController(_ controller: ApplicationsViewController,
+                                 didLoad application: Application, offset: Int, total: Int) {
+    let progress = Double(offset + 1) / Double(total) * Double(100)
+    loadingLabelController.progress.doubleValue = floor(progress)
+    loadingLabelController.textField.stringValue = "Loading (\(offset)/\(total)): \(application.name)"
+  }
 
   func applicationViewController(_ controller: ApplicationsViewController,
                                  toggleAppearance newAppearance: Application.Appearance,

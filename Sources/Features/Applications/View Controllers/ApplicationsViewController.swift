@@ -4,12 +4,19 @@ import UserInterface
 
 protocol ApplicationsViewControllerDelegate: class {
   func applicationViewController(_ controller: ApplicationsViewController,
+                                 finishedLoading: Bool)
+  func applicationViewController(_ controller: ApplicationsViewController,
+                                 didLoad application: Application,
+                                 offset: Int,
+                                 total: Int)
+  func applicationViewController(_ controller: ApplicationsViewController,
                                  toggleAppearance newAppearance: Application.Appearance,
                                  application: Application)
 }
 
 class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, ApplicationGridViewDelegate {
   enum State {
+    case loading(application: Application, offset: Int, total: Int)
     case view([Application])
   }
 
@@ -64,7 +71,10 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
 
   private func render(_ newState: State) {
     switch newState {
+    case .loading(let application, let offset, let total):
+      delegate?.applicationViewController(self, didLoad: application, offset: offset, total: total)
     case .view(let applications):
+      delegate?.applicationViewController(self, finishedLoading: true)
       applicationCache = applications
       dataSource.reload(collectionView,
                         with: applications) { [weak self] in

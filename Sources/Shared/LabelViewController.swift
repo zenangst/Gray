@@ -20,8 +20,8 @@ class LabelViewController: NSViewController {
     view.addSubview(textField)
     NSLayoutConstraint.constrain(
       textField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-      textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-      textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+      textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+      textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)
     )
     textField.isBezeled = false
     textField.isBordered = false

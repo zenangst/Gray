@@ -98,7 +98,7 @@ class ApplicationGridView: NSCollectionViewItem {
           titleLabel.animator().textColor = .black
           subtitleLabel.animator().textColor = .controlAccentColor
           view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
-          view.layer?.borderWidth = 1.5
+          view.layer?.borderWidth = 0
         }
       }, completionHandler:{
         handler?()
@@ -115,7 +115,7 @@ class ApplicationGridView: NSCollectionViewItem {
         titleLabel.textColor = .black
         subtitleLabel.textColor = .controlAccentColor
         view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
-        view.layer?.borderWidth = 1.5
+        view.layer?.borderWidth = 0
       case .system:
         switch view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) {
         case .darkAqua?:
@@ -128,7 +128,7 @@ class ApplicationGridView: NSCollectionViewItem {
           titleLabel.textColor = .black
           subtitleLabel.textColor = .controlAccentColor
           view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
-          view.layer?.borderWidth = 1.5
+          view.layer?.borderWidth = 0
         default:
           break
         }
