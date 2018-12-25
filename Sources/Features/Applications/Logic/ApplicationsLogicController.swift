@@ -165,10 +165,7 @@ class ApplicationsLogicController {
         !addedApplicationNames.contains(bundleName),
         !excludedBundles.contains(bundleIdentifier) else { continue }
 
-      // Make an exception for VSCode
-      // https://github.com/zenangst/Gray/issues/66
-      if bundleIdentifier != "com.microsoft.VSCode" &&
-        shouldExcludeApplication(with: plist, applicationUrl: url) == true {
+      if shouldExcludeApplication(with: plist, applicationUrl: url) == true {
         continue
       }
 
@@ -227,12 +224,6 @@ class ApplicationsLogicController {
 
     // Exclude applications that don't have an icon file.
     if plist.value(forPlistKey: .iconFile) == nil && url.path.contains("CoreServices")  {
-      return true
-    }
-
-    // Exclude Electron apps
-    let electronPath = "\(url.path)/Contents/Frameworks/Electron Framework.framework"
-    if FileManager.default.fileExists(atPath: electronPath) {
       return true
     }
 
