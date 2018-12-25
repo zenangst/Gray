@@ -32,6 +32,7 @@
 		BDB20F262167A64100A72623 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F252167A64100A72623 /* Toolbar.swift */; };
 		BDB20F292167A73C00A72623 /* SearchToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F282167A73C00A72623 /* SearchToolbarItem.swift */; };
 		BDB20F2B2167A9DB00A72623 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F2A2167A9DB00A72623 /* SearchField.swift */; };
+		BDBFB09421D0DDB20086F697 /* ApplicationsLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBFB09321D0DDB20086F697 /* ApplicationsLoadingViewController.swift */; };
 		BDC14C6F21B4502900610983 /* AlertsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC14C6E21B4502900610983 /* AlertsController.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		BDB20F252167A64100A72623 /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		BDB20F282167A73C00A72623 /* SearchToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchToolbarItem.swift; sourceTree = "<group>"; };
 		BDB20F2A2167A9DB00A72623 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		BDBFB09321D0DDB20086F697 /* ApplicationsLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsLoadingViewController.swift; sourceTree = "<group>"; };
 		BDC14C6E21B4502900610983 /* AlertsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				BD9D3D7E215C30B000233333 /* ApplicationsViewController.swift */,
+				BDBFB09321D0DDB20086F697 /* ApplicationsLoadingViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				BD750FDC215C1AC60024E70A /* Application.swift in Sources */,
 				BDAAC48E2168EC2B0093B27D /* LayoutFactory.swift in Sources */,
 				BD9D3D7B215C2D5C00233333 /* ApplicationsDataSource.swift in Sources */,
+				BDBFB09421D0DDB20086F697 /* ApplicationsLoadingViewController.swift in Sources */,
 				BD1BA9BE215E68840052633B /* IconController.swift in Sources */,
 				BD67CE1C215BF4FE00216FDB /* MainContainerViewController.swift in Sources */,
 				BD67CE0E215BF15F00216FDB /* AppDelegate.swift in Sources */,

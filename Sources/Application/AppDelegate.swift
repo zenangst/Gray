@@ -35,10 +35,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let contentViewController = MainContainerViewController(iconStore: dependencyContainer)
     let toolbar = Toolbar(identifier: .init("MainApplicationWindowToolbar"))
     toolbar.searchDelegate = contentViewController
-    let windowSize = CGSize(width: 420, height: 640)
+    let windowSize = CGSize(width: 400, height: 640)
     let window = NSWindow(contentViewController: contentViewController)
     window.setFrameAutosaveName(NSWindow.FrameAutosaveName.init("MainApplicationWindow"))
-    window.styleMask = [.closable, .miniaturizable, .titled,
+    window.styleMask = [.closable, .miniaturizable, .resizable, .titled,
                         .fullSizeContentView, .unifiedTitleAndToolbar]
     window.titleVisibility = .hidden
     window.toolbar = toolbar
@@ -55,7 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     window.minSize = windowSize
-    window.maxSize = windowSize
+    window.resizeIncrements = .init(width: 120 + 10, height: 1)
     window.setFrame(NSRect.init(origin: window.frame.origin, size: windowSize), display: true)
     window.makeKeyAndOrderFront(nil)
     self.window = window
