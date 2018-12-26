@@ -19,7 +19,7 @@ class SystemPreferenceView: NSCollectionViewItem {
 
     view.layer?.backgroundColor = NSColor.white.cgColor
     view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
-    view.layer?.borderWidth = 1.5
+    view.layer?.borderWidth = 1.0
     view.layer?.cornerRadius = 20
     view.layer?.masksToBounds = true
 

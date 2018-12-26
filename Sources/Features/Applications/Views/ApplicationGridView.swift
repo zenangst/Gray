@@ -115,7 +115,7 @@ class ApplicationGridView: NSCollectionViewItem {
         titleLabel.textColor = .black
         subtitleLabel.textColor = .controlAccentColor
         view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
-        view.layer?.borderWidth = 0
+        view.layer?.borderWidth = 1.0
       case .system:
         switch view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) {
         case .darkAqua?:
@@ -128,7 +128,7 @@ class ApplicationGridView: NSCollectionViewItem {
           titleLabel.textColor = .black
           subtitleLabel.textColor = .controlAccentColor
           view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
-          view.layer?.borderWidth = 0
+          view.layer?.borderWidth = 1.0
         default:
           break
         }
