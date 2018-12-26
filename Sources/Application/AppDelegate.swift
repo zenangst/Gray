@@ -56,7 +56,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     window.minSize = windowSize
     window.resizeIncrements = .init(width: 120 + 10, height: 1)
-    window.setFrame(NSRect.init(origin: window.frame.origin, size: windowSize), display: true)
     window.makeKeyAndOrderFront(nil)
     self.window = window
     self.toolbar = toolbar
