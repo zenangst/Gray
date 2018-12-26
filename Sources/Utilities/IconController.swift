@@ -7,19 +7,32 @@ class IconController {
     if let image = cache.object(forKey: application.url.path as NSString) {
       return image
     }
-    
-    let image = NSWorkspace.shared.icon(forFile: application.url.path)
+
+    var image: NSImage
+    if let cachedImage = loadImageFromDisk(for: application) {
+      image = cachedImage
+      return image
+    } else {
+      image = NSWorkspace.shared.icon(forFile: application.url.path)
+      var imageRect: CGRect = .init(origin: .zero, size: CGSize(width: 32, height: 32))
+      let imageRef = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
+      if let imageRef = imageRef {
+        image = NSImage(cgImage: imageRef, size: imageRect.size)
+      }
+    }
+
+    saveImageToDisk(image, application: application)
     cache.setObject(image, forKey: application.url.path as NSString)
     return image
   }
 
-  func loadImageFromDisk(for application: Application) throws -> NSImage? {
-    let applicationFile = try applicationCacheDirectory()
-      .appendingPathComponent("\(application.bundleIdentifier).tiff")
-
-    if FileManager.default.fileExists(atPath: applicationFile.path) {
-      let image = NSImage.init(contentsOf: applicationFile)
-      return image
+  func loadImageFromDisk(for application: Application) -> NSImage? {
+    if let applicationFile = try? applicationCacheDirectory()
+      .appendingPathComponent("\(application.bundleIdentifier).tiff") {
+      if FileManager.default.fileExists(atPath: applicationFile.path) {
+        let image = NSImage.init(contentsOf: applicationFile)
+        return image
+      }
     }
 
     return nil
@@ -53,8 +66,8 @@ class IconController {
 
     if !FileManager.default.fileExists(atPath: url.path) {
       try FileManager.default.createDirectory(at: url,
-                                          withIntermediateDirectories: false,
-                                          attributes: nil)
+                                              withIntermediateDirectories: false,
+                                              attributes: nil)
     }
 
     return url
