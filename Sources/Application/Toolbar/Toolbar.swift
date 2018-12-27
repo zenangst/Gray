@@ -11,7 +11,7 @@ class Toolbar: NSToolbar, NSToolbarDelegate {
   override init(identifier: NSToolbar.Identifier) {
     super.init(identifier: identifier)
     allowsUserCustomization = true
-    showsBaselineSeparator = false
+    showsBaselineSeparator = true
     delegate = self
   }
 
@@ -25,7 +25,6 @@ class Toolbar: NSToolbar, NSToolbarDelegate {
 
   func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
     return [
-      NSToolbarItem.Identifier.space,
       NSToolbarItem.Identifier.flexibleSpace,
       SearchToolbarItem.itemIdentifier
     ]
