@@ -64,8 +64,9 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
     case 0:
       dataSource.reload(collectionView, with: applicationCache)
     default:
-      let filtered = applicationCache.filter({ $0.name.lowercased().contains(string.lowercased()) })
-      dataSource.reload(collectionView, with: filtered)
+      let predicate = NSPredicate(format: "name CONTAINS[c] %@", string)
+      let results = applicationCache.filter({ predicate.evaluate(with: $0) })
+      dataSource.reload(collectionView, with: results)
     }
   }
 
