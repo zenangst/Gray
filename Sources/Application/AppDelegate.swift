@@ -28,6 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   @objc private func loadApplication() {
+    let previousFrame = self.window?.frame
     self.window?.close()
     self.window = nil
 
@@ -43,7 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     window.titleVisibility = .hidden
     window.toolbar = toolbar
     if window.frame.size.width == 0 {
-      window.setFrame(NSRect.init(origin: .zero, size: .init(width: 200, height: 200)),
+      window.setFrame(NSRect.init(origin: .zero, size: windowSize),
                       display: false)
     }
 
@@ -52,6 +53,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                            y: screen.frame.height / 2 - window.frame.size.height / 2)
       window.setFrame(NSRect.init(origin: origin, size: windowSize),
                       display: true)
+    }
+
+    if let previousFrame = previousFrame {
+      window.setFrame(previousFrame, display: true)
     }
 
     window.minSize = windowSize

@@ -1,5 +1,14 @@
 # Gray
 
+<div align="center">
+
+[![CI Status](https://travis-ci.com/zenangst/Gray.svg?branch=master)](https://travis-ci.com/zenangst/Gray)
+![Swift](https://img.shields.io/badge/%20in-swift%204.2-orange.svg)
+[![macOS](https://img.shields.io/badge/macOS-10.14-green.svg)](https://www.apple.com/macos/mojave/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+</div>
+
 <img src="https://github.com/zenangst/Gray/blob/master/Resources/Assets.xcassets/AppIcon.appiconset/icon_256x256.png?raw=true" alt="Gray Icon" align="right" />
 
 Current version: 0.9.10 [[Download](https://github.com/zenangst/Gray/releases/download/0.9.10/Gray.zip)]
