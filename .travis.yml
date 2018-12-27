@@ -2,12 +2,12 @@ osx_image: xcode10
 language: objective-c
 
 before_install:
-  - gem install cocoapods --pre
+  - bundle install
   - pod repo update
   - pod install
 
 script:
-  - set -o pipefail && xcodebuild -workspace Gray.xcworkspace -scheme "Gray" -sdk macosx clean build | xcpretty
+  - set -o pipefail && xcodebuild -workspace Gray.xcworkspace -scheme "Gray" -sdk macosx clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
