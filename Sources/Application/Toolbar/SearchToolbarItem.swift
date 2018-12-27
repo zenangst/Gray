@@ -1,6 +1,6 @@
 import Cocoa
 
-class SearchToolbarItem: NSToolbarItem, NSTextFieldDelegate {
+class SearchToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
   static var itemIdentifier: NSToolbarItem.Identifier = .init("Search")
 
   lazy var titleLabel = SearchField()
@@ -13,8 +13,8 @@ class SearchToolbarItem: NSToolbarItem, NSTextFieldDelegate {
     customView.frame = titleLabel.frame
     customView.addSubview(titleLabel)
     view = customView
-    minSize = .init(width: 200, height: 25)
-    maxSize = .init(width: 200, height: 25)
+    minSize = .init(width: 175, height: 25)
+    maxSize = .init(width: 175, height: 25)
     setupConstraints()
   }
 
