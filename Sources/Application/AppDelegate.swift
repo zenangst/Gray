@@ -43,23 +43,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         .fullSizeContentView, .unifiedTitleAndToolbar]
     window.titleVisibility = .hidden
     window.toolbar = toolbar
-    if window.frame.size.width == 0 {
+
+    window.minSize = windowSize
+    window.maxSize = CGSize(width: 790, height: 1280)
+
+    if window.frame.size.width < windowSize.width || window.frame.size.width > window.maxSize.width {
       window.setFrame(NSRect.init(origin: .zero, size: windowSize),
                       display: false)
-    }
-
-    if let screen = NSScreen.main, window.frame.origin == .zero {
-      let origin = NSPoint(x: screen.frame.width / 2 - window.frame.size.width / 2,
-                           y: screen.frame.height / 2 - window.frame.size.height / 2)
-      window.setFrame(NSRect.init(origin: origin, size: windowSize),
-                      display: true)
     }
 
     if let previousFrame = previousFrame {
       window.setFrame(previousFrame, display: true)
     }
 
-    window.minSize = windowSize
     window.resizeIncrements = .init(width: 120 + 10, height: 1)
     window.makeKeyAndOrderFront(nil)
     self.window = window
