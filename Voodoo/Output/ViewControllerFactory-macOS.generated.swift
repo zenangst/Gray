@@ -9,5 +9,9 @@ class ViewControllerFactory {
     let viewController = ApplicationGridViewController(layout: layout)
     return viewController
   }
+  public func createSystemPreferenceViewController(layout: NSCollectionViewFlowLayout) -> SystemPreferenceViewController {
+    let viewController = SystemPreferenceViewController(layout: layout)
+    return viewController
+  }
 }
 
