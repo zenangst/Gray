@@ -1,11 +1,15 @@
 import Cocoa
 import UserInterface
 
-class SystemPreferenceView: NSCollectionViewItem {
+// sourcery: let preference = SystemPreference
+class SystemPreferenceView: NSCollectionViewItem, CollectionViewItemComponent {
   weak var delegate: ApplicationGridViewDelegate?
 
+  // sourcery: let icon: NSImage = "iconView.image = model.icon"
   lazy var iconView: NSImageView = .init()
+  // sourcery: let title: String = "titleLabel.stringValue = model.title"
   lazy var titleLabel: NSTextField = .init()
+  // sourcery: let subtitle: String = "subtitleLabel.stringValue = model.subtitle"
   lazy var subtitleLabel: NSTextField = .init()
 
   override func loadView() {

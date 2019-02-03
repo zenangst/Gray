@@ -1,31 +1,40 @@
 import Cocoa
 
 class SystemLogicController {
-  func readSystemPreferences() -> [SystemPreference] {
-    let systemPreferences = [
-      SystemPreference(icon: NSImage(named: .init("System Appearance"))!,
-                       name: "System",
-                       bundleIdentifier: "com.apple.dock",
-                       value: true,
-                       type: .appleScript,
-                       script: """
+  func readSystemPreferences() -> [SystemPreferenceViewModel] {
+    let icon = NSImage(named: .init("System Appearance"))!
+    let preference = SystemPreference(icon: icon,
+                                      name: "System",
+                                      bundleIdentifier: "com.apple.dock",
+                                      value: true,
+                                      type: .appleScript,
+                                      script: """
         tell application "System Events"
           tell appearance preferences
             set dark mode to not dark mode
           end tell
         end tell
         """)
+
+    let subtitle = NSApplication.shared.mainWindow?.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+      ? "Dark appearance" : "Light appearance"
+
+    let systemPreferences = [
+      SystemPreferenceViewModel(icon: icon,
+                                title: preference.name,
+                                subtitle: subtitle,
+                                preference: preference)
     ]
 
     return systemPreferences
   }
 
-  func load(then handler: (SystemPreferenceViewController.State) -> Void) {
+  func load(then handler: (SystemPreferenceFeatureViewController.State) -> Void) {
     handler(.view(readSystemPreferences()))
   }
 
   func toggleSystemPreference(_ systemPreference: SystemPreference,
-                              then handler: @escaping (SystemPreferenceViewController.State) -> Void) {
+                              then handler: @escaping (SystemPreferenceFeatureViewController.State) -> Void) {
     switch systemPreference.type {
     case .appleScript:
       var error: NSDictionary?

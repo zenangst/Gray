@@ -3,17 +3,17 @@ import Family
 
 class MainContainerViewController: FamilyViewController,
   ApplicationsFeatureViewControllerDelegate,
-  SystemPreferenceViewControllerDelegate,
+  SystemPreferenceFeatureViewControllerDelegate,
   ToolbarSearchDelegate {
   lazy var systemLabelController = LabelViewController(text: "System preferences")
   lazy var applicationLabelController = LabelViewController(text: "Applications")
   lazy var loadingLabelController = ApplicationsLoadingViewController(text: "Loading...")
-  let preferencesViewController: SystemPreferenceViewController
+  let preferencesViewController: SystemPreferenceFeatureViewController
   let applicationsViewController: ApplicationsFeatureViewController
   let applicationLogicController = ApplicationsLogicController()
 
   init(iconStore: IconStore) {
-    self.preferencesViewController = SystemPreferenceViewController(iconStore: iconStore)
+    self.preferencesViewController = SystemPreferenceFeatureViewController(iconStore: iconStore)
     self.applicationsViewController = ApplicationsFeatureViewController(iconStore: iconStore)
     super.init(nibName: nil, bundle: nil)
   }
@@ -33,7 +33,7 @@ class MainContainerViewController: FamilyViewController,
     systemLabelController.view.layer?.backgroundColor = NSColor.quaternaryLabelColor.cgColor
 
     addChild(systemLabelController, height: 60)
-    addChild(preferencesViewController, view: { $0.collectionView })
+    addChild(preferencesViewController)
     addChild(applicationLabelController, height: 60)
     addChild(loadingLabelController)
     addChild(applicationsViewController)
@@ -54,12 +54,12 @@ class MainContainerViewController: FamilyViewController,
     switch string.count > 0 {
     case false:
       systemLabelController.view.animator().alphaValue = 1.0
-      preferencesViewController.collectionView.animator().alphaValue = 1.0
+      preferencesViewController.component.collectionView.animator().alphaValue = 1.0
       applicationLabelController.setText("Applications")
       applicationsViewController.performSearch(with: string)
     case true:
       systemLabelController.view.animator().alphaValue = 0.0
-      preferencesViewController.collectionView.animator().alphaValue = 0.0
+      preferencesViewController.component.collectionView.animator().alphaValue = 0.0
       applicationLabelController.setText("Search results: \(string)")
       applicationsViewController.performSearch(with: string)
     }
@@ -92,8 +92,8 @@ class MainContainerViewController: FamilyViewController,
 
   // MARK: - SystemPreferenceCollectionViewControllerDelegate
 
-  func systemPreferenceViewController(_ controller: SystemPreferenceViewController,
-                                      toggleSystemPreference preference: SystemPreference) {
-    preferencesViewController.toggle(preference)
+  func systemPreferenceViewController(_ controller: SystemPreferenceFeatureViewController,
+                                      toggleSystemPreference model: SystemPreferenceViewModel) {
+    preferencesViewController.toggle(model.preference)
   }
 }
