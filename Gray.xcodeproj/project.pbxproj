@@ -12,15 +12,23 @@
 		BD1A5590219CA170003C7D98 /* DepedencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A558F219CA170003C7D98 /* DepedencyContainer.swift */; };
 		BD1BA9BE215E68840052633B /* IconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BA9BD215E68840052633B /* IconController.swift */; };
 		BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1D9544215E435F003ABBCF /* VersionController.swift */; };
+		BD23491D220743E70047F910 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = BD234919220743E70047F910 /* .gitignore */; };
+		BD23491E220743E70047F910 /* .sourcery.yml in Resources */ = {isa = PBXBuildFile; fileRef = BD23491A220743E70047F910 /* .sourcery.yml */; };
+		BD23491F220743E70047F910 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = BD23491B220743E70047F910 /* .travis.yml */; };
+		BD234920220743E70047F910 /* .current-version in Resources */ = {isa = PBXBuildFile; fileRef = BD23491C220743E70047F910 /* .current-version */; };
+		BD23492D220744330047F910 /* ViewControllerFactory-macOS.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2349232207442A0047F910 /* ViewControllerFactory-macOS.generated.swift */; };
+		BD23492E220744330047F910 /* CollectionViewItemComponent-macOS.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2349242207442A0047F910 /* CollectionViewItemComponent-macOS.generated.swift */; };
+		BD23492F220744330047F910 /* StatefulItem-macOS.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2349252207442A0047F910 /* StatefulItem-macOS.generated.swift */; };
+		BD2349302207446D0047F910 /* CollectionViewItemComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD23492B2207442A0047F910 /* CollectionViewItemComponent.swift */; };
+		BD2349312207446D0047F910 /* StatefulItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD23492C2207442A0047F910 /* StatefulItem.swift */; };
 		BD2AA1E62167A0E4000717B7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BD2AA1E52167A0E4000717B7 /* README.md */; };
 		BD30844A215C198D002A9349 /* ApplicationsLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD308449215C198D002A9349 /* ApplicationsLogicController.swift */; };
 		BD67CE0E215BF15F00216FDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CE0D215BF15F00216FDB /* AppDelegate.swift */; };
 		BD67CE10215BF16100216FDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD67CE0F215BF16100216FDB /* Assets.xcassets */; };
 		BD67CE13215BF16100216FDB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD67CE11215BF16100216FDB /* MainMenu.xib */; };
 		BD67CE1C215BF4FE00216FDB /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CE1B215BF4FE00216FDB /* MainContainerViewController.swift */; };
-		BD6F243221620A240032338F /* ApplicationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7E215C30B000233333 /* ApplicationsViewController.swift */; };
+		BD6F243221620A240032338F /* ApplicationsFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7E215C30B000233333 /* ApplicationsFeatureViewController.swift */; };
 		BD750FDC215C1AC60024E70A /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD750FDB215C1AC60024E70A /* Application.swift */; };
-		BD9D3D7B215C2D5C00233333 /* ApplicationsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7A215C2D5C00233333 /* ApplicationsDataSource.swift */; };
 		BD9F0C43216675F300608FD9 /* SystemPreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F0C42216675F300608FD9 /* SystemPreferenceViewController.swift */; };
 		BD9F0C462166764E00608FD9 /* SystemPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F0C452166764E00608FD9 /* SystemPreference.swift */; };
 		BD9F0C49216676AD00608FD9 /* SystemPreferenceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F0C48216676AD00608FD9 /* SystemPreferenceDataSource.swift */; };
@@ -45,6 +53,18 @@
 		BD1BA9BD215E68840052633B /* IconController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconController.swift; sourceTree = "<group>"; };
 		BD1BA9BF215E6DBB0052633B /* ApplicationGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationGridView.swift; sourceTree = "<group>"; };
 		BD1D9544215E435F003ABBCF /* VersionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionController.swift; sourceTree = "<group>"; };
+		BD234919220743E70047F910 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		BD23491A220743E70047F910 /* .sourcery.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .sourcery.yml; sourceTree = "<group>"; };
+		BD23491B220743E70047F910 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		BD23491C220743E70047F910 /* .current-version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".current-version"; sourceTree = "<group>"; };
+		BD2349232207442A0047F910 /* ViewControllerFactory-macOS.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewControllerFactory-macOS.generated.swift"; sourceTree = "<group>"; };
+		BD2349242207442A0047F910 /* CollectionViewItemComponent-macOS.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionViewItemComponent-macOS.generated.swift"; sourceTree = "<group>"; };
+		BD2349252207442A0047F910 /* StatefulItem-macOS.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatefulItem-macOS.generated.swift"; sourceTree = "<group>"; };
+		BD2349272207442A0047F910 /* StatefulItem-macOS.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = "StatefulItem-macOS.stencil"; sourceTree = "<group>"; };
+		BD2349282207442A0047F910 /* CollectionViewItemComponent-macOS.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = "CollectionViewItemComponent-macOS.stencil"; sourceTree = "<group>"; };
+		BD2349292207442A0047F910 /* ViewControllerFactory-macOS.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ViewControllerFactory-macOS.stencil"; sourceTree = "<group>"; };
+		BD23492B2207442A0047F910 /* CollectionViewItemComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewItemComponent.swift; sourceTree = "<group>"; };
+		BD23492C2207442A0047F910 /* StatefulItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulItem.swift; sourceTree = "<group>"; };
 		BD2AA1E52167A0E4000717B7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BD308449215C198D002A9349 /* ApplicationsLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsLogicController.swift; sourceTree = "<group>"; };
 		BD67CE0A215BF15F00216FDB /* Gray.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gray.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,8 +74,7 @@
 		BD67CE14215BF16100216FDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD67CE1B215BF4FE00216FDB /* MainContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerViewController.swift; sourceTree = "<group>"; };
 		BD750FDB215C1AC60024E70A /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
-		BD9D3D7A215C2D5C00233333 /* ApplicationsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsDataSource.swift; sourceTree = "<group>"; };
-		BD9D3D7E215C30B000233333 /* ApplicationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsViewController.swift; sourceTree = "<group>"; };
+		BD9D3D7E215C30B000233333 /* ApplicationsFeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsFeatureViewController.swift; sourceTree = "<group>"; };
 		BD9F0C42216675F300608FD9 /* SystemPreferenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPreferenceViewController.swift; sourceTree = "<group>"; };
 		BD9F0C452166764E00608FD9 /* SystemPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPreference.swift; sourceTree = "<group>"; };
 		BD9F0C48216676AD00608FD9 /* SystemPreferenceDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPreferenceDataSource.swift; sourceTree = "<group>"; };
@@ -113,6 +132,45 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		BD2349212207442A0047F910 /* Voodoo */ = {
+			isa = PBXGroup;
+			children = (
+				BD2349222207442A0047F910 /* Output */,
+				BD2349262207442A0047F910 /* Templates */,
+				BD23492A2207442A0047F910 /* Protocols */,
+			);
+			path = Voodoo;
+			sourceTree = "<group>";
+		};
+		BD2349222207442A0047F910 /* Output */ = {
+			isa = PBXGroup;
+			children = (
+				BD2349232207442A0047F910 /* ViewControllerFactory-macOS.generated.swift */,
+				BD2349242207442A0047F910 /* CollectionViewItemComponent-macOS.generated.swift */,
+				BD2349252207442A0047F910 /* StatefulItem-macOS.generated.swift */,
+			);
+			path = Output;
+			sourceTree = "<group>";
+		};
+		BD2349262207442A0047F910 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				BD2349272207442A0047F910 /* StatefulItem-macOS.stencil */,
+				BD2349282207442A0047F910 /* CollectionViewItemComponent-macOS.stencil */,
+				BD2349292207442A0047F910 /* ViewControllerFactory-macOS.stencil */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		BD23492A2207442A0047F910 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				BD23492B2207442A0047F910 /* CollectionViewItemComponent.swift */,
+				BD23492C2207442A0047F910 /* StatefulItem.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		BD30ED4B216C010400FD2D91 /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,13 +195,18 @@
 		BD67CE01215BF15F00216FDB = {
 			isa = PBXGroup;
 			children = (
-				BD2AA1E52167A0E4000717B7 /* README.md */,
+				BD23491C220743E70047F910 /* .current-version */,
+				BD234919220743E70047F910 /* .gitignore */,
 				BD9F0C532166997900608FD9 /* Gray.entitlements */,
-				BD111047215CEB8E0002D537 /* Sources */,
-				BD67CE0C215BF15F00216FDB /* Resources */,
-				BD67CE0B215BF15F00216FDB /* Products */,
-				2BDBAD01D91A4C1D34A2CF51 /* Pods */,
+				BD2AA1E52167A0E4000717B7 /* README.md */,
+				BD23491A220743E70047F910 /* .sourcery.yml */,
+				BD23491B220743E70047F910 /* .travis.yml */,
 				51ECBFF6FC2844F14E1FF8D9 /* Frameworks */,
+				2BDBAD01D91A4C1D34A2CF51 /* Pods */,
+				BD67CE0B215BF15F00216FDB /* Products */,
+				BD67CE0C215BF15F00216FDB /* Resources */,
+				BD111047215CEB8E0002D537 /* Sources */,
+				BD2349212207442A0047F910 /* Voodoo */,
 			);
 			sourceTree = "<group>";
 		};
@@ -163,14 +226,6 @@
 				BD67CE14215BF16100216FDB /* Info.plist */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		BD6F242D216209BF0032338F /* Data Sources */ = {
-			isa = PBXGroup;
-			children = (
-				BD9D3D7A215C2D5C00233333 /* ApplicationsDataSource.swift */,
-			);
-			path = "Data Sources";
 			sourceTree = "<group>";
 		};
 		BD6F242E216209C50032338F /* Views */ = {
@@ -200,7 +255,7 @@
 		BD6F2431216209E50032338F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BD9D3D7E215C30B000233333 /* ApplicationsViewController.swift */,
+				BD9D3D7E215C30B000233333 /* ApplicationsFeatureViewController.swift */,
 				BDBFB09321D0DDB20086F697 /* ApplicationsLoadingViewController.swift */,
 			);
 			path = "View Controllers";
@@ -226,7 +281,6 @@
 		BD9D3D79215C2D3F00233333 /* Applications */ = {
 			isa = PBXGroup;
 			children = (
-				BD6F242D216209BF0032338F /* Data Sources */,
 				BD6F2430216209DE0032338F /* Logic */,
 				BD6F242F216209CC0032338F /* Models */,
 				BD6F2431216209E50032338F /* View Controllers */,
@@ -329,6 +383,7 @@
 			buildConfigurationList = BD67CE18215BF16100216FDB /* Build configuration list for PBXNativeTarget "Gray" */;
 			buildPhases = (
 				1194A1027641BF72A4DF5C52 /* [CP] Check Pods Manifest.lock */,
+				BD234932220744A60047F910 /* Voodoo */,
 				BD67CE06215BF15F00216FDB /* Sources */,
 				BD67CE07215BF15F00216FDB /* Frameworks */,
 				BD67CE08215BF15F00216FDB /* Resources */,
@@ -392,9 +447,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD23491F220743E70047F910 /* .travis.yml in Resources */,
+				BD23491D220743E70047F910 /* .gitignore in Resources */,
+				BD234920220743E70047F910 /* .current-version in Resources */,
 				BD2AA1E62167A0E4000717B7 /* README.md in Resources */,
 				BD67CE10215BF16100216FDB /* Assets.xcassets in Resources */,
 				BD67CE13215BF16100216FDB /* MainMenu.xib in Resources */,
+				BD23491E220743E70047F910 /* .sourcery.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +482,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BD234932220744A60047F910 /* Voodoo */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Voodoo;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$PODS_ROOT/Sourcery/bin/sourcery\n";
+		};
 		BD9F0C50216683B600608FD9 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -447,16 +524,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD2349312207446D0047F910 /* StatefulItem.swift in Sources */,
 				BDB20F2B2167A9DB00A72623 /* SearchField.swift in Sources */,
 				BDB20F292167A73C00A72623 /* SearchToolbarItem.swift in Sources */,
+				BD23492D220744330047F910 /* ViewControllerFactory-macOS.generated.swift in Sources */,
 				BD9F0C49216676AD00608FD9 /* SystemPreferenceDataSource.swift in Sources */,
-				BD6F243221620A240032338F /* ApplicationsViewController.swift in Sources */,
+				BD6F243221620A240032338F /* ApplicationsFeatureViewController.swift in Sources */,
 				BD750FDC215C1AC60024E70A /* Application.swift in Sources */,
 				BDAAC48E2168EC2B0093B27D /* LayoutFactory.swift in Sources */,
-				BD9D3D7B215C2D5C00233333 /* ApplicationsDataSource.swift in Sources */,
 				BDBFB09421D0DDB20086F697 /* ApplicationsLoadingViewController.swift in Sources */,
 				BD1BA9BE215E68840052633B /* IconController.swift in Sources */,
 				BD67CE1C215BF4FE00216FDB /* MainContainerViewController.swift in Sources */,
+				BD23492E220744330047F910 /* CollectionViewItemComponent-macOS.generated.swift in Sources */,
 				BD67CE0E215BF15F00216FDB /* AppDelegate.swift in Sources */,
 				BD30844A215C198D002A9349 /* ApplicationsLogicController.swift in Sources */,
 				BDAAC492216A2A920093B27D /* LabelViewController.swift in Sources */,
@@ -466,6 +545,8 @@
 				BDB20F262167A64100A72623 /* Toolbar.swift in Sources */,
 				BD9F0C4C2166773300608FD9 /* SystemPreferenceView.swift in Sources */,
 				BD9F0C43216675F300608FD9 /* SystemPreferenceViewController.swift in Sources */,
+				BD23492F220744330047F910 /* StatefulItem-macOS.generated.swift in Sources */,
+				BD2349302207446D0047F910 /* CollectionViewItemComponent.swift in Sources */,
 				BD9F0C4F21667BEB00608FD9 /* SystemLogicController.swift in Sources */,
 				BDAAC48F216A294A0093B27D /* ApplicationGridView.swift in Sources */,
 				BD111046215CEB240002D537 /* Shell.swift in Sources */,
