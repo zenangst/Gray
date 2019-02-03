@@ -13,7 +13,7 @@ class ApplicationsLogicController {
     case requiresAquaSystemAppearance = "NSRequiresAquaSystemAppearance"
   }
 
-  func load(then handler: @escaping (ApplicationsViewController.State) -> Void) {
+  func load(then handler: @escaping (ApplicationsFeatureViewController.State) -> Void) {
     queue.async { [weak self] in
       guard let strongSelf = self else { return }
       do {
@@ -34,7 +34,7 @@ class ApplicationsLogicController {
 
   func toggleAppearance(_ newAppearance: Application.Appearance,
                         for application: Application,
-                        then handler: @escaping (ApplicationsViewController.State) -> Void) {
+                        then handler: @escaping (ApplicationsFeatureViewController.State) -> Void) {
     queue.async { [weak self] in
       let shell = Shell()
 
@@ -144,9 +144,9 @@ class ApplicationsLogicController {
   }
 
   private func parseApplicationUrls(_ appUrls: [URL],
-                                    handler: @escaping (ApplicationsViewController.State) -> Void,
-                                    excludedBundles: [String] = []) throws -> [Application] {
-    var applications = [Application]()
+                                    handler: @escaping (ApplicationsFeatureViewController.State) -> Void,
+                                    excludedBundles: [String] = []) throws -> [ApplicationGridViewModel] {
+    var applications = [ApplicationGridViewModel]()
     let shell = Shell()
     let sip = shell.execute(command: "csrutil status").contains("enabled")
     let libraryDirectory = try FileManager.default.url(for: .libraryDirectory,
@@ -188,11 +188,29 @@ class ApplicationsLogicController {
         FileManager.default.fileExists(atPath: appContainerPreferenceUrl.path) &&
         NSDictionary.init(contentsOfFile: appContainerPreferenceUrl.path) == nil
 
-      let app = Application(bundleIdentifier: bundleIdentifier,
-                            name: bundleName, url: url,
-                            preferencesUrl: resolvedAppPreferenceUrl,
-                            appearance: applicationPlist?.appearance() ?? .system,
-                            restricted: restricted)
+      let application = Application(bundleIdentifier: bundleIdentifier,
+                                 name: bundleName, url: url,
+                                 preferencesUrl: resolvedAppPreferenceUrl,
+                                 appearance: applicationPlist?.appearance() ?? .system,
+                                 restricted: restricted)
+      var subtitle: String
+      switch application.appearance {
+      case .dark:
+        subtitle = "Dark appearance"
+      case .light:
+        subtitle = "Light appearance"
+      case .system:
+        subtitle = "System appearance"
+      }
+
+      if application.restricted {
+        subtitle = "🔐 Locked"
+      }
+
+      let app = ApplicationGridViewModel(
+        title: bundleName,
+        subtitle: subtitle,
+        application: application)
       DispatchQueue.main.async {
         handler(.loading(application: app, offset: offset, total: total))
       }
@@ -200,7 +218,7 @@ class ApplicationsLogicController {
       applications.append(app)
       addedApplicationNames.append(bundleName)
     }
-    return applications.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
+    return applications.sorted(by: { $0.application.name.lowercased() < $1.application.name.lowercased() })
   }
 
   private func shouldExcludeApplication(with plist: NSDictionary, applicationUrl url: URL) -> Bool {

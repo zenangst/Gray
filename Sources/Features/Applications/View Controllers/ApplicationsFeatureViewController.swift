@@ -2,37 +2,35 @@ import Blueprints
 import Cocoa
 import UserInterface
 
-protocol ApplicationsViewControllerDelegate: class {
-  func applicationViewController(_ controller: ApplicationsViewController,
+protocol ApplicationsFeatureViewControllerDelegate: class {
+  func applicationViewController(_ controller: ApplicationsFeatureViewController,
                                  finishedLoading: Bool)
-  func applicationViewController(_ controller: ApplicationsViewController,
+  func applicationViewController(_ controller: ApplicationsFeatureViewController,
                                  didLoad application: Application,
                                  offset: Int,
                                  total: Int)
-  func applicationViewController(_ controller: ApplicationsViewController,
+  func applicationViewController(_ controller: ApplicationsFeatureViewController,
                                  toggleAppearance newAppearance: Application.Appearance,
                                  application: Application)
 }
 
-class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, ApplicationGridViewDelegate {
+class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDelegate, ApplicationGridViewDelegate {
   enum State {
-    case loading(application: Application, offset: Int, total: Int)
-    case view([Application])
+    case loading(application: ApplicationGridViewModel, offset: Int, total: Int)
+    case view([ApplicationGridViewModel])
   }
 
-  weak var delegate: ApplicationsViewControllerDelegate?
-  let dataSource: ApplicationsDataSource
+  weak var delegate: ApplicationsFeatureViewControllerDelegate?
+  let component: ApplicationGridViewController
   let logicController = ApplicationsLogicController()
-  override func loadView() { self.view = baseView }
-  lazy var baseView = NSView()
-  lazy var layoutFactory = LayoutFactory()
-  lazy var collectionView = NSCollectionView(layout: layoutFactory.createGridLayout(),
-                                             register: ApplicationGridView.self)
-  var applicationCache = [Application]()
+  let iconStore: IconStore
+  var applicationCache = [ApplicationGridViewModel]()
   var query: String = ""
 
   init(iconStore: IconStore, models: [Application] = []) {
-    self.dataSource = ApplicationsDataSource(iconStore: iconStore, models: models)
+    let layoutFactory = LayoutFactory()
+    self.iconStore = iconStore
+    self.component = ApplicationGridViewController(layout: layoutFactory.createGridLayout())
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -40,13 +38,15 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
     fatalError("init(coder:) has not been implemented")
   }
 
+  override func loadView() {
+    self.view = component.view
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView.dataSource = dataSource
-    collectionView.delegate = self
-    collectionView.isSelectable = true
-    collectionView.allowsMultipleSelection = false
-    view.addSubview(collectionView, pin: true)
+    component.collectionView.delegate = self
+    component.collectionView.isSelectable = true
+    component.collectionView.allowsMultipleSelection = false
   }
 
   override func viewDidAppear() {
@@ -62,25 +62,24 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
     query = string
     switch string.count {
     case 0:
-      dataSource.reload(collectionView, with: applicationCache)
+      component.reload(with: applicationCache)
     default:
-      let predicate = NSPredicate(format: "name CONTAINS[c] %@", string)
-      let results = applicationCache.filter({ predicate.evaluate(with: $0) })
-      dataSource.reload(collectionView, with: results)
+      // This can be improved!
+      let results = applicationCache.filter({ $0.application.name.contains(query) })
+      component.reload(with: results)
     }
   }
 
   private func render(_ newState: State) {
     switch newState {
-    case .loading(let application, let offset, let total):
-      delegate?.applicationViewController(self, didLoad: application, offset: offset, total: total)
+    case .loading(let model, let offset, let total):
+      delegate?.applicationViewController(self, didLoad: model.application, offset: offset, total: total)
     case .view(let applications):
       delegate?.applicationViewController(self, finishedLoading: true)
       applicationCache = applications
-      dataSource.reload(collectionView,
-                        with: applications) { [weak self] in
-                          guard let strongSelf = self else { return }
-                          strongSelf.performSearch(with: strongSelf.query)
+      component.reload(with: applications) { [weak self] in
+        guard let strongSelf = self else { return }
+        strongSelf.performSearch(with: strongSelf.query)
       }
     }
   }
@@ -101,16 +100,19 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
   // MARK: - ApplicationGridViewDelegate
 
   func applicationView(_ view: ApplicationGridView, didResetApplication currentAppearance: Application.Appearance?) {
-    guard let indexPath = collectionView.indexPath(for: view) else { return }
+    guard let indexPath = component.indexPath(for: view) else { return }
 
-    let application = dataSource.model(at: indexPath)
-    toggle(.system, for: application)
+    let model = component.model(at: indexPath)
+    toggle(.system, for: model.application)
   }
 
   // MARK: - NSCollectionViewDelegate
 
   func collectionView(_ collectionView: NSCollectionView, willDisplay item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
-    (item as? ApplicationGridView)?.delegate = self
+    if let view = item as? ApplicationGridView {
+      view.delegate = self
+      iconStore.loadIcon(for: component.model(at: indexPath).application) { image in view.iconView.image = image }
+    }
   }
 
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
@@ -121,8 +123,8 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
 
     collectionView.deselectAll(nil)
 
-    let application = dataSource.model(at: indexPath)
-    let newAppearance: Application.Appearance = application.appearance == .light
+    let model = component.model(at: indexPath)
+    let newAppearance: Application.Appearance = model.application.appearance == .light
       ? .dark
       : .light
     let duration: TimeInterval = 0.15
@@ -143,8 +145,8 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
         context.allowsImplicitAnimation = true
         item.view.animator().layer?.setAffineTransform(.identity)
       }, completionHandler: {
-        if application.restricted {
-          self.showPermissionsDialog(for: application) { result in
+        if model.application.restricted {
+          self.showPermissionsDialog(for: model.application) { result in
             guard result else { return }
             let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")!
             NSWorkspace.shared.open(url)
@@ -154,7 +156,7 @@ class ApplicationsViewController: NSViewController, NSCollectionViewDelegate, Ap
             guard let strongSelf = self else { return }
             strongSelf.delegate?.applicationViewController(strongSelf,
                                                            toggleAppearance: newAppearance,
-                                                           application: application)
+                                                           application: model.application)
           }
         }
       })

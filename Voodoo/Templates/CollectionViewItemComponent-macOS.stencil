@@ -1,0 +1,121 @@
+import Cocoa
+import Differific
+
+{% for type in types.implementing.CollectionViewItemComponent %}
+class {{type.name|replace:"View",""}}ViewController: NSViewController {
+  private let layout: NSCollectionViewFlowLayout
+  private let dataSource: {{type.name|replace:"View",""}}DataSource
+  let collectionView: NSCollectionView
+
+  init(layout: NSCollectionViewFlowLayout,
+       collectionView: NSCollectionView? = nil) {
+    self.layout = layout
+    self.dataSource = {{type.name|replace:"View",""}}DataSource()
+    if let collectionView = collectionView {
+      self.collectionView = collectionView
+    } else {
+      self.collectionView = NSCollectionView()
+    }
+    self.collectionView.collectionViewLayout = layout
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - View lifecycle
+
+  override func loadView() {
+    self.view = collectionView
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    collectionView.dataSource = dataSource
+    let identifier = NSUserInterfaceItemIdentifier.init("{{type.name}}")
+    collectionView.register({{type.name}}.self, forItemWithIdentifier: identifier)
+  }
+
+  // MARK: - Public API
+
+  func indexPath(for item: NSCollectionViewItem) -> IndexPath? {
+    return collectionView.indexPath(for: item)
+  }
+
+  func model(at indexPath: IndexPath) -> {{type.name}}Model {
+    return dataSource.model(at: indexPath)
+  }
+
+  func reload(with models: [{{type.name}}Model], completion: (() -> Void)? = nil) {
+    dataSource.reload(collectionView, with: models, then: completion)
+  }
+}
+
+class {{type.name|replace:"View",""}}DataSource: NSObject, NSCollectionViewDataSource {
+
+  private var models = [{{type.name}}Model]()
+
+  init(models: [{{type.name}}Model] = []) {
+    self.models = models
+    super.init()
+  }
+
+  // MARK: - Public API
+
+  func model(at indexPath: IndexPath) -> {{type.name}}Model {
+    return models[indexPath.item]
+  }
+
+  func reload(_ collectionView: NSCollectionView,
+              with models: [{{type.name}}Model],
+              then handler: (() -> Void)? = nil) {
+    let manager = DiffManager()
+    let changes = manager.diff(self.models, models)
+    collectionView.reload(with: changes,
+                          updateDataSource: { self.models = models },
+                          completion: handler)
+  }
+
+  // MARK: - NSCollectionViewDataSource
+
+  func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    return models.count
+  }
+
+  func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+    let identifier = NSUserInterfaceItemIdentifier.init("{{type.name}}")
+    let item = collectionView.makeItem(withIdentifier: identifier, for: indexPath)
+    let model = self.model(at: indexPath)
+
+    if let view = item as? {{type.name}} {
+      {% for variable in type.variables %}
+      {% for key, value in variable.annotations %}
+        {% if value.length > 0 %}
+          view.{{key}} = {{value}}
+        {% else %}
+          {% for variableType in value %}
+          view.{{variable.annotations[key][variableType]}}
+        {% endfor %}
+        {% endif %}
+      {% endfor %}
+      {% endfor %}
+    }
+
+    return item
+  }
+}
+
+struct {{type.name}}Model: Hashable {
+  {% for variable in type.variables %}
+  {% for key, value in variable.annotations %}
+    {% for variableType in variable.annotations[key] %}
+  {{key}}: {{variableType}}
+    {% endfor %}
+  {% endfor %}
+  {% endfor %}
+  {% for key in type.annotations %}
+  {{key}}: {{type.annotations[key]}}
+  {% endfor %}
+}
+{% endfor %}

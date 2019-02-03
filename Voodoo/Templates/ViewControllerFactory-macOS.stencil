@@ -1,0 +1,28 @@
+import Cocoa
+
+class ViewControllerFactory {
+  {% for type in types.implementing.StatefulItem %}
+  public func create{{type.name}}StateController(layout: NSCollectionViewFlowLayout,
+                                          initialViewController: NSViewController = .init(),
+                                          loadingViewController: NSViewController = .init(),
+                                          failureViewController: {{type.name}}StateController.ErrorViewControllerType) -> {{type.name}}StateController {
+    let viewController = create{{type.name|replace:"View",""}}ViewController(layout: layout)
+    let stateController = {{type.name}}StateController(
+      initialViewController: initialViewController,
+      loadingViewController: loadingViewController,
+      failureViewController: failureViewController,
+      successController: viewController
+    )
+
+    return stateController
+  }
+  {% endfor %}
+
+  {% for type in types.implementing.CollectionViewItemComponent %}
+  public func create{{type.name|replace:"View",""}}ViewController(layout: NSCollectionViewFlowLayout) -> {{type.name|replace:"View",""}}ViewController {
+    let viewController = {{type.name|replace:"View",""}}ViewController(layout: layout)
+    return viewController
+  }
+  {% endfor %}
+}
+

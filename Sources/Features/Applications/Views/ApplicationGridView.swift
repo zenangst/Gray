@@ -5,14 +5,24 @@ protocol ApplicationGridViewDelegate: class {
   func applicationView(_ view: ApplicationGridView, didResetApplication currentAppearance: Application.Appearance?)
 }
 
-class ApplicationGridView: NSCollectionViewItem {
+// sourcery: let application = Application
+class ApplicationGridView: NSCollectionViewItem, CollectionViewItemComponent {
   lazy var baseView = NSView()
   weak var delegate: ApplicationGridViewDelegate?
 
-  var currentAppearance: Application.Appearance?
+  // sourcery: currentAppearance = model.application.appearance
+  var currentAppearance: Application.Appearance? {
+    didSet {
+        if let currentAppearance = self.currentAppearance {
+        update(with: currentAppearance)
+      }
+    }
+  }
 
   lazy var iconView: NSImageView = .init()
+  // sourcery: let title: String = "titleLabel.stringValue = model.title"
   lazy var titleLabel: NSTextField = .init()
+  // sourcery: let subtitle: String = "subtitleLabel.stringValue = model.subtitle"
   lazy var subtitleLabel: NSTextField = .init()
 
   override func loadView() {
@@ -76,8 +86,6 @@ class ApplicationGridView: NSCollectionViewItem {
   }
 
   func update(with appearance: Application.Appearance, duration: TimeInterval = 0, then handler: (() -> Void)? = nil) {
-    currentAppearance = appearance
-
     if duration > 0 {
       NSAnimationContext.current.allowsImplicitAnimation = true
       NSAnimationContext.runAnimationGroup({ (context) in

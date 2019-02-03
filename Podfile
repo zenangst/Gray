@@ -6,5 +6,6 @@ pod 'Blueprints'
 pod 'Differific'
 pod 'Family'
 pod 'UserInterface'
+pod 'Sourcery'
 
 target 'Gray'

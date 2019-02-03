@@ -1,0 +1,7 @@
+sources:
+  - Voodoo/Protocols
+  - Sources
+templates:
+  - Voodoo/Templates
+output:
+  Voodoo/Output
