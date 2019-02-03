@@ -36,11 +36,6 @@ class MainContainerViewController: FamilyViewController,
     loadingLabelController.view.enclosingScrollView?.drawsBackground = true
   }
 
-  override func viewDidAppear() {
-    super.viewDidAppear()
-    children.forEach { $0.viewDidAppear() }
-  }
-
   private func performSearch(with string: String) {
     let header = applicationsViewController.component.collectionView.supplementaryView(forElementKind: NSCollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0)) as? CollectionViewHeader
     switch string.count > 0 {
