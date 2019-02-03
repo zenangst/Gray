@@ -35,7 +35,7 @@
 		BD9F0C4F21667BEB00608FD9 /* SystemLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F0C4E21667BEB00608FD9 /* SystemLogicController.swift */; };
 		BDAAC48E2168EC2B0093B27D /* LayoutFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAAC48D2168EC2B0093B27D /* LayoutFactory.swift */; };
 		BDAAC48F216A294A0093B27D /* ApplicationGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BA9BF215E6DBB0052633B /* ApplicationGridView.swift */; };
-		BDAAC492216A2A920093B27D /* LabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAAC491216A2A920093B27D /* LabelViewController.swift */; };
+		BDAAC492216A2A920093B27D /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAAC491216A2A920093B27D /* CollectionViewHeader.swift */; };
 		BDB20F262167A64100A72623 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F252167A64100A72623 /* Toolbar.swift */; };
 		BDB20F292167A73C00A72623 /* SearchToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F282167A73C00A72623 /* SearchToolbarItem.swift */; };
 		BDB20F2B2167A9DB00A72623 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F2A2167A9DB00A72623 /* SearchField.swift */; };
@@ -80,7 +80,7 @@
 		BD9F0C4E21667BEB00608FD9 /* SystemLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLogicController.swift; sourceTree = "<group>"; };
 		BD9F0C532166997900608FD9 /* Gray.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gray.entitlements; sourceTree = "<group>"; };
 		BDAAC48D2168EC2B0093B27D /* LayoutFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutFactory.swift; sourceTree = "<group>"; };
-		BDAAC491216A2A920093B27D /* LabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelViewController.swift; sourceTree = "<group>"; };
+		BDAAC491216A2A920093B27D /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
 		BDB20F252167A64100A72623 /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		BDB20F282167A73C00A72623 /* SearchToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchToolbarItem.swift; sourceTree = "<group>"; };
 		BDB20F2A2167A9DB00A72623 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
@@ -341,7 +341,7 @@
 		BDAAC490216A2A810093B27D /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				BDAAC491216A2A920093B27D /* LabelViewController.swift */,
+				BDAAC491216A2A920093B27D /* CollectionViewHeader.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -526,7 +526,7 @@
 				BD23492E220744330047F910 /* CollectionViewItemComponent-macOS.generated.swift in Sources */,
 				BD67CE0E215BF15F00216FDB /* AppDelegate.swift in Sources */,
 				BD30844A215C198D002A9349 /* ApplicationsLogicController.swift in Sources */,
-				BDAAC492216A2A920093B27D /* LabelViewController.swift in Sources */,
+				BDAAC492216A2A920093B27D /* CollectionViewHeader.swift in Sources */,
 				BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */,
 				BD9F0C462166764E00608FD9 /* SystemPreference.swift in Sources */,
 				BDC14C6F21B4502900610983 /* AlertsController.swift in Sources */,

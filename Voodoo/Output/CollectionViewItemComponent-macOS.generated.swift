@@ -9,10 +9,11 @@ class ApplicationGridViewController: NSViewController {
   private let dataSource: ApplicationGridDataSource
   let collectionView: NSCollectionView
 
-  init(layout: NSCollectionViewFlowLayout,
+  init(title: String? = nil,
+       layout: NSCollectionViewFlowLayout,
        collectionView: NSCollectionView? = nil) {
     self.layout = layout
-    self.dataSource = ApplicationGridDataSource()
+    self.dataSource = ApplicationGridDataSource(title: title)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -20,6 +21,7 @@ class ApplicationGridViewController: NSViewController {
     }
     self.collectionView.collectionViewLayout = layout
     super.init(nibName: nil, bundle: nil)
+    self.title = title
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -35,8 +37,16 @@ class ApplicationGridViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.dataSource = dataSource
-    let identifier = NSUserInterfaceItemIdentifier.init("ApplicationGridView")
-    collectionView.register(ApplicationGridView.self, forItemWithIdentifier: identifier)
+    let headerIdentifier = NSUserInterfaceItemIdentifier.init("ApplicationGridViewHeader")
+    collectionView.register(CollectionViewHeader.self,
+                            forSupplementaryViewOfKind: NSCollectionView.elementKindSectionHeader,
+                            withIdentifier: headerIdentifier)
+    let itemIdentifier = NSUserInterfaceItemIdentifier.init("ApplicationGridView")
+    collectionView.register(ApplicationGridView.self, forItemWithIdentifier: itemIdentifier)
+
+    if title != nil {
+      layout.headerReferenceSize.height = 60
+    }
   }
 
   // MARK: - Public API
@@ -56,9 +66,11 @@ class ApplicationGridViewController: NSViewController {
 
 class ApplicationGridDataSource: NSObject, NSCollectionViewDataSource {
 
+  private var title: String?
   private var models = [ApplicationGridViewModel]()
 
-  init(models: [ApplicationGridViewModel] = []) {
+  init(title: String? = nil, models: [ApplicationGridViewModel] = []) {
+    self.title = title
     self.models = models
     super.init()
   }
@@ -83,6 +95,20 @@ class ApplicationGridDataSource: NSObject, NSCollectionViewDataSource {
 
   func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
     return models.count
+  }
+
+  func collectionView(_ collectionView: NSCollectionView,
+                      viewForSupplementaryElementOfKind kind: NSCollectionView.SupplementaryElementKind,
+                      at indexPath: IndexPath) -> NSView {
+    let identifier = NSUserInterfaceItemIdentifier.init("ApplicationGridViewHeader")
+    let item = collectionView.makeSupplementaryView(ofKind: NSCollectionView.elementKindSectionHeader,
+                                                    withIdentifier: identifier, for: indexPath)
+
+    if let title = title, let header = item as? CollectionViewHeader {
+      header.setText(title)
+    }
+
+    return item
   }
 
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
@@ -110,10 +136,11 @@ class SystemPreferenceViewController: NSViewController {
   private let dataSource: SystemPreferenceDataSource
   let collectionView: NSCollectionView
 
-  init(layout: NSCollectionViewFlowLayout,
+  init(title: String? = nil,
+       layout: NSCollectionViewFlowLayout,
        collectionView: NSCollectionView? = nil) {
     self.layout = layout
-    self.dataSource = SystemPreferenceDataSource()
+    self.dataSource = SystemPreferenceDataSource(title: title)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -121,6 +148,7 @@ class SystemPreferenceViewController: NSViewController {
     }
     self.collectionView.collectionViewLayout = layout
     super.init(nibName: nil, bundle: nil)
+    self.title = title
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -136,8 +164,16 @@ class SystemPreferenceViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.dataSource = dataSource
-    let identifier = NSUserInterfaceItemIdentifier.init("SystemPreferenceView")
-    collectionView.register(SystemPreferenceView.self, forItemWithIdentifier: identifier)
+    let headerIdentifier = NSUserInterfaceItemIdentifier.init("SystemPreferenceViewHeader")
+    collectionView.register(CollectionViewHeader.self,
+                            forSupplementaryViewOfKind: NSCollectionView.elementKindSectionHeader,
+                            withIdentifier: headerIdentifier)
+    let itemIdentifier = NSUserInterfaceItemIdentifier.init("SystemPreferenceView")
+    collectionView.register(SystemPreferenceView.self, forItemWithIdentifier: itemIdentifier)
+
+    if title != nil {
+      layout.headerReferenceSize.height = 60
+    }
   }
 
   // MARK: - Public API
@@ -157,9 +193,11 @@ class SystemPreferenceViewController: NSViewController {
 
 class SystemPreferenceDataSource: NSObject, NSCollectionViewDataSource {
 
+  private var title: String?
   private var models = [SystemPreferenceViewModel]()
 
-  init(models: [SystemPreferenceViewModel] = []) {
+  init(title: String? = nil, models: [SystemPreferenceViewModel] = []) {
+    self.title = title
     self.models = models
     super.init()
   }
@@ -184,6 +222,20 @@ class SystemPreferenceDataSource: NSObject, NSCollectionViewDataSource {
 
   func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
     return models.count
+  }
+
+  func collectionView(_ collectionView: NSCollectionView,
+                      viewForSupplementaryElementOfKind kind: NSCollectionView.SupplementaryElementKind,
+                      at indexPath: IndexPath) -> NSView {
+    let identifier = NSUserInterfaceItemIdentifier.init("SystemPreferenceViewHeader")
+    let item = collectionView.makeSupplementaryView(ofKind: NSCollectionView.elementKindSectionHeader,
+                                                    withIdentifier: identifier, for: indexPath)
+
+    if let title = title, let header = item as? CollectionViewHeader {
+      header.setText(title)
+    }
+
+    return item
   }
 
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
