@@ -30,7 +30,7 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
   init(iconStore: IconStore, models: [Application] = []) {
     let layoutFactory = LayoutFactory()
     self.iconStore = iconStore
-    self.component = ApplicationGridViewController(layout: layoutFactory.createGridLayout())
+    self.component = ApplicationGridViewController(title: "Applications", layout: layoutFactory.createGridLayout())
     super.init(nibName: nil, bundle: nil)
   }
   

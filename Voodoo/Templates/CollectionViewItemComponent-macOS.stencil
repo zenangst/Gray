@@ -7,10 +7,11 @@ class {{type.name|replace:"View",""}}ViewController: NSViewController {
   private let dataSource: {{type.name|replace:"View",""}}DataSource
   let collectionView: NSCollectionView
 
-  init(layout: NSCollectionViewFlowLayout,
+  init(title: String? = nil,
+       layout: NSCollectionViewFlowLayout,
        collectionView: NSCollectionView? = nil) {
     self.layout = layout
-    self.dataSource = {{type.name|replace:"View",""}}DataSource()
+    self.dataSource = {{type.name|replace:"View",""}}DataSource(title: title)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -18,6 +19,7 @@ class {{type.name|replace:"View",""}}ViewController: NSViewController {
     }
     self.collectionView.collectionViewLayout = layout
     super.init(nibName: nil, bundle: nil)
+    self.title = title
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -33,8 +35,16 @@ class {{type.name|replace:"View",""}}ViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.dataSource = dataSource
-    let identifier = NSUserInterfaceItemIdentifier.init("{{type.name}}")
-    collectionView.register({{type.name}}.self, forItemWithIdentifier: identifier)
+    let headerIdentifier = NSUserInterfaceItemIdentifier.init("{{type.name}}Header")
+    collectionView.register(CollectionViewHeader.self,
+                            forSupplementaryViewOfKind: NSCollectionView.elementKindSectionHeader,
+                            withIdentifier: headerIdentifier)
+    let itemIdentifier = NSUserInterfaceItemIdentifier.init("{{type.name}}")
+    collectionView.register({{type.name}}.self, forItemWithIdentifier: itemIdentifier)
+
+    if title != nil {
+      layout.headerReferenceSize.height = 60
+    }
   }
 
   // MARK: - Public API
@@ -54,9 +64,11 @@ class {{type.name|replace:"View",""}}ViewController: NSViewController {
 
 class {{type.name|replace:"View",""}}DataSource: NSObject, NSCollectionViewDataSource {
 
+  private var title: String?
   private var models = [{{type.name}}Model]()
 
-  init(models: [{{type.name}}Model] = []) {
+  init(title: String? = nil, models: [{{type.name}}Model] = []) {
+    self.title = title
     self.models = models
     super.init()
   }
@@ -81,6 +93,20 @@ class {{type.name|replace:"View",""}}DataSource: NSObject, NSCollectionViewDataS
 
   func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
     return models.count
+  }
+
+  func collectionView(_ collectionView: NSCollectionView,
+                      viewForSupplementaryElementOfKind kind: NSCollectionView.SupplementaryElementKind,
+                      at indexPath: IndexPath) -> NSView {
+    let identifier = NSUserInterfaceItemIdentifier.init("{{type.name}}Header")
+    let item = collectionView.makeSupplementaryView(ofKind: NSCollectionView.elementKindSectionHeader,
+                                                    withIdentifier: identifier, for: indexPath)
+
+    if let title = title, let header = item as? CollectionViewHeader {
+      header.setText(title)
+    }
+
+    return item
   }
 
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
