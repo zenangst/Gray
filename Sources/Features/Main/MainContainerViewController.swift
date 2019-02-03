@@ -42,13 +42,16 @@ class MainContainerViewController: FamilyViewController,
   }
 
   private func performSearch(with string: String) {
+    let header = applicationsViewController.component.collectionView.supplementaryView(forElementKind: NSCollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0)) as? CollectionViewHeader
     switch string.count > 0 {
     case false:
       preferencesViewController.component.collectionView.animator().alphaValue = 1.0
       applicationsViewController.performSearch(with: string)
+      header?.setText("Applications")
     case true:
       preferencesViewController.component.collectionView.animator().alphaValue = 0.0
       applicationsViewController.performSearch(with: string)
+      header?.setText("Search results: \(string)")
     }
   }
 
