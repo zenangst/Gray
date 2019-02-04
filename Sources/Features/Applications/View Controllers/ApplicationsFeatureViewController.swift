@@ -59,13 +59,13 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
   }
 
   func performSearch(with string: String) {
-    query = string
+    query = string.lowercased()
     switch string.count {
     case 0:
       component.reload(with: applicationCache)
     default:
       // This can be improved!
-      let results = applicationCache.filter({ $0.application.name.contains(query) })
+      let results = applicationCache.filter({ $0.application.name.lowercased().contains(query) })
       component.reload(with: results)
     }
   }
