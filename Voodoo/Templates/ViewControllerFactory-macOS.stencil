@@ -19,8 +19,8 @@ class ViewControllerFactory {
   {% endfor %}
 
   {% for type in types.implementing.CollectionViewItemComponent %}
-  public func create{{type.name|replace:"View",""}}ViewController(layout: NSCollectionViewFlowLayout) -> {{type.name|replace:"View",""}}ViewController {
-    let viewController = {{type.name|replace:"View",""}}ViewController(layout: layout)
+  public func create{{type.name|replace:"View",""}}ViewController(layout: NSCollectionViewFlowLayout, iconStore: IconStore) -> {{type.name|replace:"View",""}}ViewController {
+    let viewController = {{type.name|replace:"View",""}}ViewController(layout: layout, iconStore: iconStore)
     return viewController
   }
   {% endfor %}
