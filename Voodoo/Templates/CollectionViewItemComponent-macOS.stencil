@@ -143,11 +143,13 @@ class {{type.name|replace:"View",""}}DataSource: NSObject, NSCollectionViewDataS
 
 struct {{type.name}}Model: Hashable {
   {% for variable in type.variables %}
+  {% ifnot variable|annotated:"$RawBinding" %}
   {% for key, value in variable.annotations %}
     {% for variableType in variable.annotations[key] %}
   {{key}}: {{variableType}}
     {% endfor %}
   {% endfor %}
+  {% endif %}
   {% endfor %}
   {% for key in type.annotations %}
   {{key}}: {{type.annotations[key]}}
