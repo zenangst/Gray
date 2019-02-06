@@ -7,11 +7,7 @@ protocol SystemPreferenceFeatureViewControllerDelegate: class {
                                       toggleSystemPreference model: SystemPreferenceViewModel)
 }
 
-class SystemPreferenceFeatureViewController: NSViewController, NSCollectionViewDelegate {
-  enum State {
-    case view([SystemPreferenceViewModel])
-  }
-
+class SystemPreferenceFeatureViewController: NSViewController, NSCollectionViewDelegate, SystemLogicControllerDelegate {
   weak var delegate: SystemPreferenceFeatureViewControllerDelegate?
   let logicController = SystemLogicController()
   let iconStore: IconStore
@@ -21,7 +17,8 @@ class SystemPreferenceFeatureViewController: NSViewController, NSCollectionViewD
     let layoutFactory = LayoutFactory()
     self.iconStore = iconStore
     self.component = SystemPreferenceViewController(title: "Preferences",
-                                                    layout: layoutFactory.createGridLayout())
+                                                    layout: layoutFactory.createGridLayout(),
+                                                    iconStore: iconStore)
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -35,6 +32,7 @@ class SystemPreferenceFeatureViewController: NSViewController, NSCollectionViewD
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    logicController.delegate = self
     let backgroundView = NSView()
     backgroundView.wantsLayer = true
     backgroundView.layer?.backgroundColor = NSColor.quaternaryLabelColor.cgColor
@@ -46,18 +44,17 @@ class SystemPreferenceFeatureViewController: NSViewController, NSCollectionViewD
 
   override func viewDidAppear() {
     super.viewDidAppear()
-    logicController.load(then: render)
+    logicController.load()
   }
 
   func toggle(_ systemPreference: SystemPreference) {
-    logicController.toggleSystemPreference(systemPreference, then: render)
+    logicController.toggleSystemPreference(systemPreference)
   }
 
-  private func render(_ state: State) {
-    switch state {
-    case .view(let preferences):
-      component.reload(with: preferences)
-    }
+  // MARK: - SystemLogicControllerDelegate
+
+  func systemLogicController(_ controller: SystemLogicController, didLoadPreferences preferences: [SystemPreferenceViewModel]) {
+    component.reload(with: preferences)
   }
 
   // MARK: - NSCollectionViewDelegate

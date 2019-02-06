@@ -1,7 +1,15 @@
 import Foundation
 import Cocoa
 
+protocol ApplicationsLogicControllerDelegate: class {
+  func applicationsLogicController(_ controller: ApplicationsLogicController,
+                                   didLoadApplication application: ApplicationGridViewModel,
+                                   offset: Int, total: Int)
+  func applicationsLogicController(_ controller: ApplicationsLogicController, didLoadApplications applications: [ApplicationGridViewModel])
+}
+
 class ApplicationsLogicController {
+  weak var delegate: ApplicationsLogicControllerDelegate?
   let queue = DispatchQueue(label: "ApplicationQueue", qos: .userInitiated)
 
   enum PlistKey: String {
@@ -13,7 +21,7 @@ class ApplicationsLogicController {
     case requiresAquaSystemAppearance = "NSRequiresAquaSystemAppearance"
   }
 
-  func load(then handler: @escaping (ApplicationsFeatureViewController.State) -> Void) {
+  func load() {
     queue.async { [weak self] in
       guard let strongSelf = self else { return }
       do {
@@ -22,21 +30,20 @@ class ApplicationsLogicController {
         for path in try strongSelf.applicationLocations() {
           applicationUrls.append(contentsOf: strongSelf.recursiveParse(at: path))
         }
-        let applications = try strongSelf.parseApplicationUrls(applicationUrls,
-                                                               handler: handler,
-                                                               excludedBundles: excludedBundles)
-        DispatchQueue.main.async {
-          handler(.view(applications))
+        let applications = try strongSelf.parseApplicationUrls(applicationUrls, excludedBundles: excludedBundles)
+        DispatchQueue.main.async { [weak self] in
+          guard let strongSelf = self else { return }
+          strongSelf.delegate?.applicationsLogicController(strongSelf, didLoadApplications: applications)
         }
       } catch {}
     }
   }
 
   func toggleAppearance(_ newAppearance: Application.Appearance,
-                        for application: Application,
-                        then handler: @escaping (ApplicationsFeatureViewController.State) -> Void) {
+                        for model: ApplicationGridViewModel) {
     queue.async { [weak self] in
       let shell = Shell()
+      let application = model.application
 
       // The cfprefsd is killed for the current user to avoid plist caching.
       // PlistBuddy is used to set new values.
@@ -83,8 +90,8 @@ class ApplicationsLogicController {
         let shell = Shell()
         shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
       }
-      DispatchQueue.main.async {
-        self?.load(then: handler)
+      DispatchQueue.main.async { [weak self] in
+        self?.load()
       }
     }
   }
@@ -144,7 +151,6 @@ class ApplicationsLogicController {
   }
 
   private func parseApplicationUrls(_ appUrls: [URL],
-                                    handler: @escaping (ApplicationsFeatureViewController.State) -> Void,
                                     excludedBundles: [String] = []) throws -> [ApplicationGridViewModel] {
     var applications = [ApplicationGridViewModel]()
     let shell = Shell()
@@ -211,8 +217,9 @@ class ApplicationsLogicController {
         title: bundleName,
         subtitle: subtitle,
         application: application)
-      DispatchQueue.main.async {
-        handler(.loading(application: app, offset: offset, total: total))
+      DispatchQueue.main.async { [weak self] in
+        guard let strongSelf = self else { return }
+        strongSelf.delegate?.applicationsLogicController(strongSelf, didLoadApplication: app, offset: offset, total: total)
       }
 
       applications.append(app)

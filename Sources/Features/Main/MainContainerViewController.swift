@@ -4,7 +4,7 @@ import Family
 class MainContainerViewController: FamilyViewController,
   ApplicationsFeatureViewControllerDelegate,
   SystemPreferenceFeatureViewControllerDelegate,
-  ToolbarSearchDelegate {
+ToolbarSearchDelegate {
   lazy var loadingLabelController = ApplicationsLoadingViewController(text: "Loading...")
   let preferencesViewController: SystemPreferenceFeatureViewController
   let applicationsViewController: ApplicationsFeatureViewController
@@ -66,7 +66,8 @@ class MainContainerViewController: FamilyViewController,
   }
 
   func applicationViewController(_ controller: ApplicationsFeatureViewController,
-                                 didLoad application: Application, offset: Int, total: Int) {
+                                 didLoad application: ApplicationGridViewModel, offset: Int, total: Int) {
+    let application = application.application
     let progress = Double(offset + 1) / Double(total) * Double(100)
     loadingLabelController.progress.doubleValue = floor(progress)
     loadingLabelController.textField.stringValue = "Loading (\(offset)/\(total)): \(application.name)"
@@ -74,7 +75,7 @@ class MainContainerViewController: FamilyViewController,
 
   func applicationViewController(_ controller: ApplicationsFeatureViewController,
                                  toggleAppearance newAppearance: Application.Appearance,
-                                 application: Application) {
+                                 application: ApplicationGridViewModel) {
     applicationsViewController.toggle(newAppearance, for: application)
   }
 

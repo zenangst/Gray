@@ -1,6 +1,13 @@
 import Cocoa
 
+protocol SystemLogicControllerDelegate: class {
+  func systemLogicController(_ controller: SystemLogicController,
+                             didLoadPreferences preferences: [SystemPreferenceViewModel])
+}
+
 class SystemLogicController {
+  weak var delegate: SystemLogicControllerDelegate?
+
   func readSystemPreferences() -> [SystemPreferenceViewModel] {
     let icon = NSImage(named: .init("System Appearance"))!
     let preference = SystemPreference(icon: icon,
@@ -29,12 +36,11 @@ class SystemLogicController {
     return systemPreferences
   }
 
-  func load(then handler: (SystemPreferenceFeatureViewController.State) -> Void) {
-    handler(.view(readSystemPreferences()))
+  func load() {
+    delegate?.systemLogicController(self, didLoadPreferences: readSystemPreferences())
   }
 
-  func toggleSystemPreference(_ systemPreference: SystemPreference,
-                              then handler: @escaping (SystemPreferenceFeatureViewController.State) -> Void) {
+  func toggleSystemPreference(_ systemPreference: SystemPreference) {
     switch systemPreference.type {
     case .appleScript:
       var error: NSDictionary?
@@ -42,8 +48,9 @@ class SystemLogicController {
       if error != nil {
         requestPermission { (_) in }
       } else {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-          handler(.view(self.readSystemPreferences()))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+          guard let strongSelf = self else { return }
+          strongSelf.delegate?.systemLogicController(strongSelf, didLoadPreferences: strongSelf.readSystemPreferences())
         }
       }
     case .shellScript:

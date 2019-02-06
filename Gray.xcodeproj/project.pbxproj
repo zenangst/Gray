@@ -226,39 +226,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		BD6F242E216209C50032338F /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				BD1BA9BF215E6DBB0052633B /* ApplicationGridView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		BD6F242F216209CC0032338F /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				BD750FDB215C1AC60024E70A /* Application.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		BD6F2430216209DE0032338F /* Logic */ = {
-			isa = PBXGroup;
-			children = (
-				BD308449215C198D002A9349 /* ApplicationsLogicController.swift */,
-			);
-			path = Logic;
-			sourceTree = "<group>";
-		};
-		BD6F2431216209E50032338F /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				BD9D3D7E215C30B000233333 /* ApplicationsFeatureViewController.swift */,
-				BDBFB09321D0DDB20086F697 /* ApplicationsLoadingViewController.swift */,
-			);
-			path = "View Controllers";
-			sourceTree = "<group>";
-		};
 		BD6F243321620A370032338F /* Versions */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,10 +246,11 @@
 		BD9D3D79215C2D3F00233333 /* Applications */ = {
 			isa = PBXGroup;
 			children = (
-				BD6F2430216209DE0032338F /* Logic */,
-				BD6F242F216209CC0032338F /* Models */,
-				BD6F2431216209E50032338F /* View Controllers */,
-				BD6F242E216209C50032338F /* Views */,
+				BD750FDB215C1AC60024E70A /* Application.swift */,
+				BD1BA9BF215E6DBB0052633B /* ApplicationGridView.swift */,
+				BD9D3D7E215C30B000233333 /* ApplicationsFeatureViewController.swift */,
+				BDBFB09321D0DDB20086F697 /* ApplicationsLoadingViewController.swift */,
+				BD308449215C198D002A9349 /* ApplicationsLogicController.swift */,
 			);
 			path = Applications;
 			sourceTree = "<group>";
@@ -298,44 +266,12 @@
 		BD9F0C40216675D200608FD9 /* SystemPreferences */ = {
 			isa = PBXGroup;
 			children = (
-				BD9F0C4D21667BDF00608FD9 /* Logic */,
-				BD9F0C442166763D00608FD9 /* Models */,
-				BD9F0C41216675E400608FD9 /* View Controllers */,
-				BD9F0C4A2166770800608FD9 /* Views */,
-			);
-			path = SystemPreferences;
-			sourceTree = "<group>";
-		};
-		BD9F0C41216675E400608FD9 /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				BD9F0C42216675F300608FD9 /* SystemPreferenceFeatureViewController.swift */,
-			);
-			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		BD9F0C442166763D00608FD9 /* Models */ = {
-			isa = PBXGroup;
-			children = (
 				BD9F0C452166764E00608FD9 /* SystemPreference.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		BD9F0C4A2166770800608FD9 /* Views */ = {
-			isa = PBXGroup;
-			children = (
+				BD9F0C42216675F300608FD9 /* SystemPreferenceFeatureViewController.swift */,
+				BD9F0C4E21667BEB00608FD9 /* SystemLogicController.swift */,
 				BD9F0C4B2166773300608FD9 /* SystemPreferenceView.swift */,
 			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		BD9F0C4D21667BDF00608FD9 /* Logic */ = {
-			isa = PBXGroup;
-			children = (
-				BD9F0C4E21667BEB00608FD9 /* SystemLogicController.swift */,
-			);
-			path = Logic;
+			path = SystemPreferences;
 			sourceTree = "<group>";
 		};
 		BDAAC490216A2A810093B27D /* Shared */ = {
