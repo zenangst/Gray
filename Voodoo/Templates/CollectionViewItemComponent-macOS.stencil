@@ -9,9 +9,10 @@ class {{type.name|replace:"View",""}}ViewController: NSViewController {
 
   init(title: String? = nil,
        layout: NSCollectionViewFlowLayout,
+       iconStore: IconStore,
        collectionView: NSCollectionView? = nil) {
     self.layout = layout
-    self.dataSource = {{type.name|replace:"View",""}}DataSource(title: title)
+    self.dataSource = {{type.name|replace:"View",""}}DataSource(title: title, iconStore: iconStore)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -66,10 +67,14 @@ class {{type.name|replace:"View",""}}DataSource: NSObject, NSCollectionViewDataS
 
   private var title: String?
   private var models = [{{type.name}}Model]()
+  private let iconStore: IconStore
 
-  init(title: String? = nil, models: [{{type.name}}Model] = []) {
+  init(title: String? = nil,
+       models: [{{type.name}}Model] = [],
+       iconStore: IconStore) {
     self.title = title
     self.models = models
+    self.iconStore = iconStore
     super.init()
   }
 
@@ -117,13 +122,17 @@ class {{type.name|replace:"View",""}}DataSource: NSObject, NSCollectionViewDataS
     if let view = item as? {{type.name}} {
       {% for variable in type.variables %}
       {% for key, value in variable.annotations %}
+      {% ifnot variable|annotated:"$RawBinding" %}
         {% if value.length > 0 %}
           view.{{key}} = {{value}}
         {% else %}
           {% for variableType in value %}
           view.{{variable.annotations[key][variableType]}}
-        {% endfor %}
+          {% endfor %}
         {% endif %}
+      {% else %}
+          {{ value }}
+      {% endif %}
       {% endfor %}
       {% endfor %}
     }
@@ -134,11 +143,13 @@ class {{type.name|replace:"View",""}}DataSource: NSObject, NSCollectionViewDataS
 
 struct {{type.name}}Model: Hashable {
   {% for variable in type.variables %}
+  {% ifnot variable|annotated:"$RawBinding" %}
   {% for key, value in variable.annotations %}
     {% for variableType in variable.annotations[key] %}
   {{key}}: {{variableType}}
     {% endfor %}
   {% endfor %}
+  {% endif %}
   {% endfor %}
   {% for key in type.annotations %}
   {{key}}: {{type.annotations[key]}}

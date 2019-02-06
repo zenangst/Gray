@@ -11,9 +11,10 @@ class ApplicationGridViewController: NSViewController {
 
   init(title: String? = nil,
        layout: NSCollectionViewFlowLayout,
+       iconStore: IconStore,
        collectionView: NSCollectionView? = nil) {
     self.layout = layout
-    self.dataSource = ApplicationGridDataSource(title: title)
+    self.dataSource = ApplicationGridDataSource(title: title, iconStore: iconStore)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -68,10 +69,14 @@ class ApplicationGridDataSource: NSObject, NSCollectionViewDataSource {
 
   private var title: String?
   private var models = [ApplicationGridViewModel]()
+  private let iconStore: IconStore
 
-  init(title: String? = nil, models: [ApplicationGridViewModel] = []) {
+  init(title: String? = nil,
+       models: [ApplicationGridViewModel] = [],
+       iconStore: IconStore) {
     self.title = title
     self.models = models
+    self.iconStore = iconStore
     super.init()
   }
 
@@ -118,6 +123,7 @@ class ApplicationGridDataSource: NSObject, NSCollectionViewDataSource {
 
     if let view = item as? ApplicationGridView {
           view.currentAppearance = model.application.appearance
+          iconStore.loadIcon(for: model.application) { image in view.iconView.image = image }
           view.titleLabel.stringValue = model.title
           view.subtitleLabel.stringValue = model.subtitle
     }
@@ -138,9 +144,10 @@ class SystemPreferenceViewController: NSViewController {
 
   init(title: String? = nil,
        layout: NSCollectionViewFlowLayout,
+       iconStore: IconStore,
        collectionView: NSCollectionView? = nil) {
     self.layout = layout
-    self.dataSource = SystemPreferenceDataSource(title: title)
+    self.dataSource = SystemPreferenceDataSource(title: title, iconStore: iconStore)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -195,10 +202,14 @@ class SystemPreferenceDataSource: NSObject, NSCollectionViewDataSource {
 
   private var title: String?
   private var models = [SystemPreferenceViewModel]()
+  private let iconStore: IconStore
 
-  init(title: String? = nil, models: [SystemPreferenceViewModel] = []) {
+  init(title: String? = nil,
+       models: [SystemPreferenceViewModel] = [],
+       iconStore: IconStore) {
     self.title = title
     self.models = models
+    self.iconStore = iconStore
     super.init()
   }
 

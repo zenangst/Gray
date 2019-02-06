@@ -6,15 +6,16 @@ protocol ApplicationsFeatureViewControllerDelegate: class {
   func applicationViewController(_ controller: ApplicationsFeatureViewController,
                                  finishedLoading: Bool)
   func applicationViewController(_ controller: ApplicationsFeatureViewController,
-                                 didLoad application: Application,
+                                 didLoad application: ApplicationGridViewModel,
                                  offset: Int,
                                  total: Int)
   func applicationViewController(_ controller: ApplicationsFeatureViewController,
                                  toggleAppearance newAppearance: Application.Appearance,
-                                 application: Application)
+                                 application: ApplicationGridViewModel)
 }
 
-class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDelegate, ApplicationGridViewDelegate {
+class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDelegate,
+  ApplicationGridViewDelegate, ApplicationsLogicControllerDelegate {
   enum State {
     case loading(application: ApplicationGridViewModel, offset: Int, total: Int)
     case view([ApplicationGridViewModel])
@@ -30,7 +31,9 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
   init(iconStore: IconStore, models: [Application] = []) {
     let layoutFactory = LayoutFactory()
     self.iconStore = iconStore
-    self.component = ApplicationGridViewController(title: "Applications", layout: layoutFactory.createGridLayout())
+    self.component = ApplicationGridViewController(title: "Applications",
+                                                   layout: layoutFactory.createGridLayout(),
+                                                   iconStore: iconStore)
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -44,6 +47,7 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    logicController.delegate = self
     component.collectionView.delegate = self
     component.collectionView.isSelectable = true
     component.collectionView.allowsMultipleSelection = false
@@ -51,11 +55,11 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
 
   override func viewDidAppear() {
     super.viewDidAppear()
-    logicController.load(then: render)
+    logicController.load()
   }
 
-  func toggle(_ newAppearance: Application.Appearance, for application: Application) {
-    logicController.toggleAppearance(newAppearance, for: application, then: render)
+  func toggle(_ newAppearance: Application.Appearance, for model: ApplicationGridViewModel) {
+    logicController.toggleAppearance(newAppearance, for: model)
   }
 
   func performSearch(with string: String) {
@@ -73,7 +77,7 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
   private func render(_ newState: State) {
     switch newState {
     case .loading(let model, let offset, let total):
-      delegate?.applicationViewController(self, didLoad: model.application, offset: offset, total: total)
+      delegate?.applicationViewController(self, didLoad: model, offset: offset, total: total)
     case .view(let applications):
       delegate?.applicationViewController(self, finishedLoading: true)
       applicationCache = applications
@@ -97,13 +101,23 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
     completion(alert.runModal() == .alertFirstButtonReturn)
   }
 
+  // MARK: - ApplicationsLogicControllerDelegate
+
+  func applicationsLogicController(_ controller: ApplicationsLogicController, didLoadApplication application: ApplicationGridViewModel, offset: Int, total: Int) {
+    render(.loading(application: application, offset: offset, total: total))
+  }
+
+  func applicationsLogicController(_ controller: ApplicationsLogicController, didLoadApplications applications: [ApplicationGridViewModel]) {
+    render(.view(applications))
+  }
+
   // MARK: - ApplicationGridViewDelegate
 
   func applicationView(_ view: ApplicationGridView, didResetApplication currentAppearance: Application.Appearance?) {
     guard let indexPath = component.indexPath(for: view) else { return }
 
     let model = component.model(at: indexPath)
-    toggle(.system, for: model.application)
+    toggle(.system, for: model)
   }
 
   // MARK: - NSCollectionViewDelegate
@@ -111,7 +125,6 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
   func collectionView(_ collectionView: NSCollectionView, willDisplay item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
     if let view = item as? ApplicationGridView {
       view.delegate = self
-      iconStore.loadIcon(for: component.model(at: indexPath).application) { image in view.iconView.image = image }
     }
   }
 
@@ -156,7 +169,7 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
             guard let strongSelf = self else { return }
             strongSelf.delegate?.applicationViewController(strongSelf,
                                                            toggleAppearance: newAppearance,
-                                                           application: model.application)
+                                                           application: model)
           }
         }
       })

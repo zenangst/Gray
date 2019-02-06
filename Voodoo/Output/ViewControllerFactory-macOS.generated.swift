@@ -5,12 +5,12 @@ import Cocoa
 
 class ViewControllerFactory {
 
-  public func createApplicationGridViewController(layout: NSCollectionViewFlowLayout) -> ApplicationGridViewController {
-    let viewController = ApplicationGridViewController(layout: layout)
+  public func createApplicationGridViewController(layout: NSCollectionViewFlowLayout, iconStore: IconStore) -> ApplicationGridViewController {
+    let viewController = ApplicationGridViewController(layout: layout, iconStore: iconStore)
     return viewController
   }
-  public func createSystemPreferenceViewController(layout: NSCollectionViewFlowLayout) -> SystemPreferenceViewController {
-    let viewController = SystemPreferenceViewController(layout: layout)
+  public func createSystemPreferenceViewController(layout: NSCollectionViewFlowLayout, iconStore: IconStore) -> SystemPreferenceViewController {
+    let viewController = SystemPreferenceViewController(layout: layout, iconStore: iconStore)
     return viewController
   }
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-class Application: NSObject {
+struct Application: Hashable {
   enum Appearance: String, Hashable, CaseIterable {
     case light = "Light"
     case dark = "Dark"
@@ -8,7 +8,7 @@ class Application: NSObject {
   }
 
   let bundleIdentifier: String
-  @objc dynamic let name: String
+  let name: String
   let url: URL
   let preferencesUrl: URL
   let appearance: Appearance
