@@ -8,7 +8,7 @@ PODS:
 DEPENDENCIES:
   - Blueprints
   - Differific
-  - Family
+  - Family (from `_pods/Family`)
   - Sourcery
   - UserInterface
 
@@ -16,9 +16,12 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Blueprints
     - Differific
-    - Family
     - Sourcery
     - UserInterface
+
+EXTERNAL SOURCES:
+  Family:
+    :path: _pods/Family
 
 SPEC CHECKSUMS:
   Blueprints: 6dea8aa1e682d4ee405b83502569011e8640f394
@@ -27,6 +30,6 @@ SPEC CHECKSUMS:
   Sourcery: 5895672cae353cdbfa95f3f4aaeb75a664d76f6a
   UserInterface: 54e15db9aceaec2b9686d00f471adb15d2598ea3
 
-PODFILE CHECKSUM: 9a4a4208e8595d7fa51cbc758521284dec9359cc
+PODFILE CHECKSUM: 5860d322941de887dd5e7287667d76345e73097d
 
-COCOAPODS: 1.6.0.rc.2
+COCOAPODS: 1.6.0

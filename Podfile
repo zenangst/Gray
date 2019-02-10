@@ -4,7 +4,7 @@ platform :macos, '10.14'
 # Frameworks
 pod 'Blueprints'
 pod 'Differific'
-pod 'Family'
+pod 'Family', path: '_pods/Family'
 pod 'UserInterface'
 pod 'Sourcery'
 

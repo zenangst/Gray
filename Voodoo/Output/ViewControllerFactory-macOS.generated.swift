@@ -9,6 +9,10 @@ class ViewControllerFactory {
     let viewController = ApplicationGridViewController(layout: layout, iconStore: iconStore)
     return viewController
   }
+  public func createApplicationListViewController(layout: NSCollectionViewFlowLayout, iconStore: IconStore) -> ApplicationListViewController {
+    let viewController = ApplicationListViewController(layout: layout, iconStore: iconStore)
+    return viewController
+  }
   public func createSystemPreferenceViewController(layout: NSCollectionViewFlowLayout, iconStore: IconStore) -> SystemPreferenceViewController {
     let viewController = SystemPreferenceViewController(layout: layout, iconStore: iconStore)
     return viewController

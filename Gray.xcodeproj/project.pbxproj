@@ -41,6 +41,11 @@
 		BDB20F2B2167A9DB00A72623 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB20F2A2167A9DB00A72623 /* SearchField.swift */; };
 		BDBFB09421D0DDB20086F697 /* ApplicationsLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBFB09321D0DDB20086F697 /* ApplicationsLoadingViewController.swift */; };
 		BDC14C6F21B4502900610983 /* AlertsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC14C6E21B4502900610983 /* AlertsController.swift */; };
+		BDE5736022105FDF0065597B /* ApplicationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE5735F22105FDF0065597B /* ApplicationListView.swift */; };
+		BDE57364221093440065597B /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE57363221093440065597B /* Component.swift */; };
+		BDE57366221098170065597B /* ViewToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE57365221098170065597B /* ViewToolbarItem.swift */; };
+		BDE573682210A2CB0065597B /* AppearanceAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE573672210A2CB0065597B /* AppearanceAware.swift */; };
+		BDE5736D2210A9850065597B /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE5736C2210A9850065597B /* UserDefaults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +91,11 @@
 		BDB20F2A2167A9DB00A72623 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		BDBFB09321D0DDB20086F697 /* ApplicationsLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsLoadingViewController.swift; sourceTree = "<group>"; };
 		BDC14C6E21B4502900610983 /* AlertsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsController.swift; sourceTree = "<group>"; };
+		BDE5735F22105FDF0065597B /* ApplicationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListView.swift; sourceTree = "<group>"; };
+		BDE57363221093440065597B /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		BDE57365221098170065597B /* ViewToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewToolbarItem.swift; sourceTree = "<group>"; };
+		BDE573672210A2CB0065597B /* AppearanceAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceAware.swift; sourceTree = "<group>"; };
+		BDE5736C2210A9850065597B /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +132,7 @@
 			children = (
 				BDC14C6D21B4501B00610983 /* Alerts */,
 				BD30ED4C216C011F00FD2D91 /* Application */,
+				BDE5736B2210A9780065597B /* Extensions */,
 				BD30ED4B216C010400FD2D91 /* Features */,
 				BDAAC490216A2A810093B27D /* Shared */,
 				BD6F243621620A570032338F /* Utilities */,
@@ -246,11 +257,14 @@
 		BD9D3D79215C2D3F00233333 /* Applications */ = {
 			isa = PBXGroup;
 			children = (
+				BDE573672210A2CB0065597B /* AppearanceAware.swift */,
 				BD750FDB215C1AC60024E70A /* Application.swift */,
 				BD1BA9BF215E6DBB0052633B /* ApplicationGridView.swift */,
+				BDE5735F22105FDF0065597B /* ApplicationListView.swift */,
 				BD9D3D7E215C30B000233333 /* ApplicationsFeatureViewController.swift */,
 				BDBFB09321D0DDB20086F697 /* ApplicationsLoadingViewController.swift */,
 				BD308449215C198D002A9349 /* ApplicationsLogicController.swift */,
+				BDE57363221093440065597B /* Component.swift */,
 			);
 			path = Applications;
 			sourceTree = "<group>";
@@ -288,6 +302,7 @@
 				BDB20F252167A64100A72623 /* Toolbar.swift */,
 				BDB20F282167A73C00A72623 /* SearchToolbarItem.swift */,
 				BDB20F2A2167A9DB00A72623 /* SearchField.swift */,
+				BDE57365221098170065597B /* ViewToolbarItem.swift */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";
@@ -298,6 +313,14 @@
 				BDC14C6E21B4502900610983 /* AlertsController.swift */,
 			);
 			path = Alerts;
+			sourceTree = "<group>";
+		};
+		BDE5736B2210A9780065597B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BDE5736C2210A9850065597B /* UserDefaults.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -450,6 +473,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD2349312207446D0047F910 /* StatefulItem.swift in Sources */,
+				BDE57364221093440065597B /* Component.swift in Sources */,
 				BDB20F2B2167A9DB00A72623 /* SearchField.swift in Sources */,
 				BDB20F292167A73C00A72623 /* SearchToolbarItem.swift in Sources */,
 				BD23492D220744330047F910 /* ViewControllerFactory-macOS.generated.swift in Sources */,
@@ -461,13 +485,17 @@
 				BD67CE1C215BF4FE00216FDB /* MainContainerViewController.swift in Sources */,
 				BD23492E220744330047F910 /* CollectionViewItemComponent-macOS.generated.swift in Sources */,
 				BD67CE0E215BF15F00216FDB /* AppDelegate.swift in Sources */,
+				BDE57366221098170065597B /* ViewToolbarItem.swift in Sources */,
 				BD30844A215C198D002A9349 /* ApplicationsLogicController.swift in Sources */,
 				BDAAC492216A2A920093B27D /* CollectionViewHeader.swift in Sources */,
 				BD1D9545215E435F003ABBCF /* VersionController.swift in Sources */,
+				BDE5736022105FDF0065597B /* ApplicationListView.swift in Sources */,
 				BD9F0C462166764E00608FD9 /* SystemPreference.swift in Sources */,
 				BDC14C6F21B4502900610983 /* AlertsController.swift in Sources */,
 				BDB20F262167A64100A72623 /* Toolbar.swift in Sources */,
+				BDE5736D2210A9850065597B /* UserDefaults.swift in Sources */,
 				BD9F0C4C2166773300608FD9 /* SystemPreferenceView.swift in Sources */,
+				BDE573682210A2CB0065597B /* AppearanceAware.swift in Sources */,
 				BD9F0C43216675F300608FD9 /* SystemPreferenceFeatureViewController.swift in Sources */,
 				BD23492F220744330047F910 /* StatefulItem-macOS.generated.swift in Sources */,
 				BD2349302207446D0047F910 /* CollectionViewItemComponent.swift in Sources */,

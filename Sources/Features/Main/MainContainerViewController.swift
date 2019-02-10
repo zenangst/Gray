@@ -4,7 +4,7 @@ import Family
 class MainContainerViewController: FamilyViewController,
   ApplicationsFeatureViewControllerDelegate,
   SystemPreferenceFeatureViewControllerDelegate,
-ToolbarSearchDelegate {
+ToolbarDelegate {
   lazy var loadingLabelController = ApplicationsLoadingViewController(text: "Loading...")
   let preferencesViewController: SystemPreferenceFeatureViewController
   let applicationsViewController: ApplicationsFeatureViewController
@@ -12,7 +12,8 @@ ToolbarSearchDelegate {
 
   init(iconStore: IconStore) {
     self.preferencesViewController = SystemPreferenceFeatureViewController(iconStore: iconStore)
-    self.applicationsViewController = ApplicationsFeatureViewController(iconStore: iconStore)
+    self.applicationsViewController = ApplicationsFeatureViewController(iconStore: iconStore,
+                                                                        mode: UserDefaults.standard.featureViewControllerMode)
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -59,6 +60,16 @@ ToolbarSearchDelegate {
     performSearch(with: string)
   }
 
+  func toolbar(_ toolbar: Toolbar, didChangeMode mode: String) {
+    guard let mode = ApplicationsFeatureViewController.Mode.init(rawValue: mode) else {
+      return
+    }
+    UserDefaults.standard.featureViewControllerMode = mode
+    applicationsViewController.mode = mode
+    applicationsViewController.removeFromParent()
+    addChild(applicationsViewController)
+  }
+
   // MARK: - ApplicationCollectionViewControllerDelegate
 
   func applicationViewController(_ controller: ApplicationsFeatureViewController, finishedLoading: Bool) {
@@ -66,8 +77,7 @@ ToolbarSearchDelegate {
   }
 
   func applicationViewController(_ controller: ApplicationsFeatureViewController,
-                                 didLoad application: ApplicationGridViewModel, offset: Int, total: Int) {
-    let application = application.application
+                                 didLoad application: Application, offset: Int, total: Int) {
     let progress = Double(offset + 1) / Double(total) * Double(100)
     loadingLabelController.progress.doubleValue = floor(progress)
     loadingLabelController.textField.stringValue = "Loading (\(offset)/\(total)): \(application.name)"
@@ -75,7 +85,7 @@ ToolbarSearchDelegate {
 
   func applicationViewController(_ controller: ApplicationsFeatureViewController,
                                  toggleAppearance newAppearance: Application.Appearance,
-                                 application: ApplicationGridViewModel) {
+                                 application: Application) {
     applicationsViewController.toggle(newAppearance, for: application)
   }
 

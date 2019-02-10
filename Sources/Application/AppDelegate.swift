@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let dependencyContainer = DependencyContainer()
     let contentViewController = MainContainerViewController(iconStore: dependencyContainer)
     let toolbar = Toolbar(identifier: .init("MainApplicationWindowToolbar"))
-    toolbar.searchDelegate = contentViewController
+    toolbar.toolbarDelegate = contentViewController
     let windowSize = CGSize(width: 400, height: 640)
     let window = NSWindow(contentViewController: contentViewController)
     window.setFrameAutosaveName(NSWindow.FrameAutosaveName.init("MainApplicationWindow"))
@@ -63,6 +63,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   // MARK: - Actions
+
+  @IBAction func switchToGrid(_ sender: Any?) {
+    guard let toolbar = window?.toolbar as? Toolbar else { return }
+    (window?.contentViewController as? MainContainerViewController)?.toolbar(toolbar,
+                                                                             didChangeMode: ApplicationsFeatureViewController.Mode.grid.rawValue)
+    NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "featureViewControllerMode"), object: nil)
+  }
+
+  @IBAction func switchToList(_ sender: Any?) {
+    guard let toolbar = window?.toolbar as? Toolbar else { return }
+    (window?.contentViewController as? MainContainerViewController)?.toolbar(toolbar,
+                                                                             didChangeMode: ApplicationsFeatureViewController.Mode.list.rawValue)
+    NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "featureViewControllerMode"), object: nil)
+  }
 
   @IBAction func search(_ sender: Any?) {
     toolbar?.searchField?.becomeFirstResponder()
