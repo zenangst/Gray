@@ -79,7 +79,7 @@ class ApplicationsLogicController {
       NSLog("Gray: terminal output: (\(output))")
 
       if runningApplication != nil && !application.url.path.contains("CoreServices") {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+        self?.queue.asyncAfter(deadline: .now() + 0.5, execute: {
           NSWorkspace.shared.launchApplication(withBundleIdentifier: application.bundleIdentifier,
                                                options: [.withoutActivation],
                                                additionalEventParamDescriptor: nil,
@@ -89,9 +89,8 @@ class ApplicationsLogicController {
         let shell = Shell()
         shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
       }
-      DispatchQueue.main.async { [weak self] in
-        self?.load()
-      }
+
+      self?.load()
     }
   }
 
