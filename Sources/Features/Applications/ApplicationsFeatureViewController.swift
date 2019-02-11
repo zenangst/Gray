@@ -6,34 +6,74 @@ protocol ApplicationsFeatureViewControllerDelegate: class {
   func applicationViewController(_ controller: ApplicationsFeatureViewController,
                                  finishedLoading: Bool)
   func applicationViewController(_ controller: ApplicationsFeatureViewController,
-                                 didLoad application: ApplicationGridViewModel,
+                                 didLoad application: Application,
                                  offset: Int,
                                  total: Int)
   func applicationViewController(_ controller: ApplicationsFeatureViewController,
                                  toggleAppearance newAppearance: Application.Appearance,
-                                 application: ApplicationGridViewModel)
+                                 application: Application)
 }
 
 class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDelegate,
-  ApplicationGridViewDelegate, ApplicationsLogicControllerDelegate {
+ApplicationGridViewDelegate, ApplicationsLogicControllerDelegate, ApplicationListViewDelegate {
+  enum Mode: String, CaseIterable {
+    case grid = "Grid"
+    case list = "List"
+
+    var image: NSImage {
+      switch self {
+      case .grid:
+        return NSImage.init(named: "Grid")!
+      case .list:
+        return NSImage.init(named: "List")!
+      }
+    }
+  }
+
   enum State {
-    case loading(application: ApplicationGridViewModel, offset: Int, total: Int)
-    case view([ApplicationGridViewModel])
+    case loading(application: Application, offset: Int, total: Int)
+    case view([Application])
   }
 
   weak var delegate: ApplicationsFeatureViewControllerDelegate?
-  let component: ApplicationGridViewController
+  let listComponent: ApplicationListViewController
+  let gridComponent: ApplicationGridViewController
   let logicController = ApplicationsLogicController()
   let iconStore: IconStore
-  var applicationCache = [ApplicationGridViewModel]()
+  var mode: Mode {
+    didSet {
+      switch mode {
+      case .grid:
+        self.component = gridComponent
+      case .list:
+        self.component = listComponent
+      }
+      self.view = component.view
+      configureComponent()
+    }
+  }
+  var component: Component
+  var applicationCache = [Application]()
   var query: String = ""
 
-  init(iconStore: IconStore, models: [Application] = []) {
+  init(iconStore: IconStore, mode: Mode?, models: [Application] = []) {
     let layoutFactory = LayoutFactory()
     self.iconStore = iconStore
-    self.component = ApplicationGridViewController(title: "Applications",
-                                                   layout: layoutFactory.createGridLayout(),
-                                                   iconStore: iconStore)
+    self.mode = mode ?? .grid
+    self.gridComponent = ApplicationGridViewController(title: "Applications",
+                                                       layout: layoutFactory.createGridLayout(),
+                                                       iconStore: iconStore)
+    self.listComponent = ApplicationListViewController(title: "Applications",
+                                                       layout: layoutFactory.createListLayout(),
+                                                       iconStore: iconStore)
+
+    switch self.mode {
+    case .grid:
+      self.component = gridComponent
+    case .list:
+      self.component = listComponent
+    }
+
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -48,9 +88,7 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
   override func viewDidLoad() {
     super.viewDidLoad()
     logicController.delegate = self
-    component.collectionView.delegate = self
-    component.collectionView.isSelectable = true
-    component.collectionView.allowsMultipleSelection = false
+    configureComponent()
   }
 
   override func viewDidAppear() {
@@ -58,20 +96,44 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
     logicController.load()
   }
 
-  func toggle(_ newAppearance: Application.Appearance, for model: ApplicationGridViewModel) {
+  func configureComponent() {
+    component.collectionView.delegate = self
+    component.collectionView.isSelectable = true
+    component.collectionView.allowsMultipleSelection = false
+  }
+
+  func toggle(_ newAppearance: Application.Appearance, for model: Application) {
     logicController.toggleAppearance(newAppearance, for: model)
   }
 
   func performSearch(with string: String) {
     query = string.lowercased()
+    let filtered: [Application]
     switch string.count {
     case 0:
-      component.reload(with: applicationCache)
+      filtered = applicationCache
     default:
-      // This can be improved!
-      let results = applicationCache.filter({ $0.application.name.lowercased().contains(query) })
-      component.reload(with: results)
+      filtered = applicationCache.filter({ $0.name.lowercased().contains(query) })
     }
+
+    switch mode {
+    case .grid:
+      gridComponent.reload(with: gridModels(from: filtered))
+    case .list:
+      listComponent.reload(with: listModels(from: filtered))
+    }
+  }
+
+  private func listModels(from applications: [Application]) -> [ApplicationListViewModel] {
+    return applications.compactMap({
+      ApplicationListViewModel(title: $0.name, subtitle: $0.metadata, application: $0)
+    })
+  }
+
+  private func gridModels(from applications: [Application]) -> [ApplicationGridViewModel] {
+    return applications.compactMap({
+      ApplicationGridViewModel(title: $0.name, subtitle: $0.metadata, application: $0)
+    })
   }
 
   private func render(_ newState: State) {
@@ -81,9 +143,17 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
     case .view(let applications):
       delegate?.applicationViewController(self, finishedLoading: true)
       applicationCache = applications
-      component.reload(with: applications) { [weak self] in
+
+      let completion = { [weak self] in
         guard let strongSelf = self else { return }
         strongSelf.performSearch(with: strongSelf.query)
+      }
+
+      switch mode {
+      case .grid:
+        gridComponent.reload(with: gridModels(from: applications), completion: completion)
+      case .list:
+        listComponent.reload(with: listModels(from: applications), completion: completion)
       }
     }
   }
@@ -103,21 +173,28 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
 
   // MARK: - ApplicationsLogicControllerDelegate
 
-  func applicationsLogicController(_ controller: ApplicationsLogicController, didLoadApplication application: ApplicationGridViewModel, offset: Int, total: Int) {
+  func applicationsLogicController(_ controller: ApplicationsLogicController, didLoadApplication application: Application, offset: Int, total: Int) {
     render(.loading(application: application, offset: offset, total: total))
   }
 
-  func applicationsLogicController(_ controller: ApplicationsLogicController, didLoadApplications applications: [ApplicationGridViewModel]) {
+  func applicationsLogicController(_ controller: ApplicationsLogicController, didLoadApplications applications: [Application]) {
     render(.view(applications))
   }
 
   // MARK: - ApplicationGridViewDelegate
 
   func applicationView(_ view: ApplicationGridView, didResetApplication currentAppearance: Application.Appearance?) {
-    guard let indexPath = component.indexPath(for: view) else { return }
+    guard let indexPath = component.collectionView.indexPath(for: view) else { return }
+    let model = gridComponent.model(at: indexPath)
+    toggle(.system, for: model.application)
+  }
 
-    let model = component.model(at: indexPath)
-    toggle(.system, for: model)
+  // MARK: - ApplicationListViewDelegate
+
+  func applicationView(_ view: ApplicationListView, didResetApplication currentAppearance: Application.Appearance?) {
+    guard let indexPath = component.collectionView.indexPath(for: view) else { return }
+    let model = gridComponent.model(at: indexPath)
+    toggle(.system, for: model.application)
   }
 
   // MARK: - NSCollectionViewDelegate
@@ -126,20 +203,38 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
     if let view = item as? ApplicationGridView {
       view.delegate = self
     }
+
+    if let view = item as? ApplicationListView {
+      view.delegate = self
+    }
   }
 
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
-    guard let indexPath = indexPaths.first,
-      let item = collectionView.item(at: indexPath) as? ApplicationGridView else {
-        return
-    }
+    guard let indexPath = indexPaths.first else { return }
+    guard let item: NSCollectionViewItem = collectionView.item(at: indexPath) else { return }
 
     collectionView.deselectAll(nil)
 
-    let model = component.model(at: indexPath)
-    let newAppearance: Application.Appearance = model.application.appearance == .light
-      ? .dark
-      : .light
+    let restricted: Bool
+    let application: Application
+    let newAppearance: Application.Appearance
+
+    if collectionView.item(at: indexPath) is ApplicationGridView {
+      let model = gridComponent.model(at: indexPath)
+      restricted = model.application.restricted
+      application = model.application
+      newAppearance = model.application.appearance == .light
+        ? .dark
+        : .light
+    } else if collectionView.item(at: indexPath) is ApplicationListView {
+      let model = listComponent.model(at: indexPath)
+      restricted = model.application.restricted
+      application = model.application
+      newAppearance = model.application.appearance == .light
+        ? .dark
+        : .light
+    } else { return }
+
     let duration: TimeInterval = 0.15
 
     NSAnimationContext.runAnimationGroup({ (context) in
@@ -158,18 +253,18 @@ class ApplicationsFeatureViewController: NSViewController, NSCollectionViewDeleg
         context.allowsImplicitAnimation = true
         item.view.animator().layer?.setAffineTransform(.identity)
       }, completionHandler: {
-        if model.application.restricted {
-          self.showPermissionsDialog(for: model.application) { result in
+        if restricted {
+          self.showPermissionsDialog(for: application) { result in
             guard result else { return }
             let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")!
             NSWorkspace.shared.open(url)
           }
         } else {
-          item.update(with: newAppearance, duration: 0.5) { [weak self] in
+          (item as? AppearanceAware)?.update(with: newAppearance, duration: 0.5) { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.applicationViewController(strongSelf,
                                                            toggleAppearance: newAppearance,
-                                                           application: model)
+                                                           application: application)
           }
         }
       })

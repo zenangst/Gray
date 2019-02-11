@@ -6,8 +6,8 @@ protocol ApplicationGridViewDelegate: class {
 }
 
 // sourcery: let application = Application
-class ApplicationGridView: NSCollectionViewItem, CollectionViewItemComponent {
-  override func loadView() { self.view = NSView(); self.view.wantsLayer = true }
+class ApplicationGridView: NSCollectionViewItem, CollectionViewItemComponent, AppearanceAware {
+  lazy var baseView = NSView()
   weak var delegate: ApplicationGridViewDelegate?
 
   // sourcery: currentAppearance = model.application.appearance
@@ -25,6 +25,11 @@ class ApplicationGridView: NSCollectionViewItem, CollectionViewItemComponent {
   lazy var titleLabel = NSTextField()
   // sourcery: let subtitle: String = "subtitleLabel.stringValue = model.subtitle"
   lazy var subtitleLabel = NSTextField()
+
+  override func loadView() {
+    self.view = baseView
+    baseView.wantsLayer = true
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -79,65 +84,6 @@ class ApplicationGridView: NSCollectionViewItem, CollectionViewItemComponent {
 
   @objc func resetApplication() {
     delegate?.applicationView(self, didResetApplication: currentAppearance)
-  }
-
-  func update(with appearance: Application.Appearance, duration: TimeInterval = 0, then handler: (() -> Void)? = nil) {
-    if duration > 0 {
-      NSAnimationContext.current.allowsImplicitAnimation = true
-      NSAnimationContext.runAnimationGroup({ (context) in
-        context.duration = duration
-        switch appearance {
-        case .dark:
-          view.animator().layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
-          titleLabel.animator().textColor = .white
-          subtitleLabel.animator().textColor = .controlAccentColor
-          view.layer?.borderWidth = 0.0
-        case .system:
-          view.animator().layer?.backgroundColor = NSColor.gray.cgColor
-          titleLabel.animator().textColor = .white
-          subtitleLabel.animator().textColor = .lightGray
-          view.layer?.borderWidth = 0.0
-        case .light:
-          view.animator().layer?.backgroundColor = .white
-          titleLabel.animator().textColor = .black
-          subtitleLabel.animator().textColor = .controlAccentColor
-          view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
-          view.layer?.borderWidth = 0
-        }
-      }, completionHandler:{
-        handler?()
-      })
-    } else {
-      switch appearance {
-      case .dark:
-        view.layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
-        titleLabel.textColor = .white
-        subtitleLabel.textColor = .controlAccentColor
-        view.layer?.borderWidth = 0.0
-      case .light:
-        view.layer?.backgroundColor = NSColor(named: "Light")?.cgColor
-        titleLabel.textColor = .black
-        subtitleLabel.textColor = .controlAccentColor
-        view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
-        view.layer?.borderWidth = 1.0
-      case .system:
-        switch view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) {
-        case .darkAqua?:
-          view.layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
-          titleLabel.textColor = .white
-          subtitleLabel.textColor = .lightGray
-          view.layer?.borderWidth = 0.0
-        case .aqua?:
-          view.layer?.backgroundColor = NSColor(named: "Light")?.cgColor
-          titleLabel.textColor = .black
-          subtitleLabel.textColor = .controlAccentColor
-          view.layer?.borderColor = NSColor.gray.withAlphaComponent(0.25).cgColor
-          view.layer?.borderWidth = 1.0
-        default:
-          break
-        }
-      }
-    }
   }
 }
 

@@ -2,7 +2,7 @@ import Cocoa
 import Differific
 
 {% for type in types.implementing.CollectionViewItemComponent %}
-class {{type.name|replace:"View",""}}ViewController: NSViewController {
+class {{type.name|replace:"View",""}}ViewController: NSViewController, Component {
   private let layout: NSCollectionViewFlowLayout
   private let dataSource: {{type.name|replace:"View",""}}DataSource
   let collectionView: NSCollectionView
@@ -155,4 +155,5 @@ struct {{type.name}}Model: Hashable {
   {{key}}: {{type.annotations[key]}}
   {% endfor %}
 }
+
 {% endfor %}

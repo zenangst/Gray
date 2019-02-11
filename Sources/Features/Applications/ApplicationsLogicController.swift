@@ -3,9 +3,9 @@ import Cocoa
 
 protocol ApplicationsLogicControllerDelegate: class {
   func applicationsLogicController(_ controller: ApplicationsLogicController,
-                                   didLoadApplication application: ApplicationGridViewModel,
+                                   didLoadApplication application: Application,
                                    offset: Int, total: Int)
-  func applicationsLogicController(_ controller: ApplicationsLogicController, didLoadApplications applications: [ApplicationGridViewModel])
+  func applicationsLogicController(_ controller: ApplicationsLogicController, didLoadApplications applications: [Application])
 }
 
 class ApplicationsLogicController {
@@ -40,10 +40,9 @@ class ApplicationsLogicController {
   }
 
   func toggleAppearance(_ newAppearance: Application.Appearance,
-                        for model: ApplicationGridViewModel) {
+                        for application: Application) {
     queue.async { [weak self] in
       let shell = Shell()
-      let application = model.application
 
       // The cfprefsd is killed for the current user to avoid plist caching.
       // PlistBuddy is used to set new values.
@@ -150,8 +149,8 @@ class ApplicationsLogicController {
   }
 
   private func parseApplicationUrls(_ appUrls: [URL],
-                                    excludedBundles: [String] = []) throws -> [ApplicationGridViewModel] {
-    var applications = [ApplicationGridViewModel]()
+                                    excludedBundles: [String] = []) throws -> [Application] {
+    var applications = [Application]()
     let shell = Shell()
     let sip = shell.execute(command: "csrutil status").contains("enabled")
     let libraryDirectory = try FileManager.default.url(for: .libraryDirectory,
@@ -193,38 +192,41 @@ class ApplicationsLogicController {
         FileManager.default.fileExists(atPath: appContainerPreferenceUrl.path) &&
         NSDictionary.init(contentsOfFile: appContainerPreferenceUrl.path) == nil
 
-      let application = Application(bundleIdentifier: bundleIdentifier,
-                                 name: bundleName, url: url,
-                                 preferencesUrl: resolvedAppPreferenceUrl,
-                                 appearance: applicationPlist?.appearance() ?? .system,
-                                 restricted: restricted)
-      var subtitle: String
-      switch application.appearance {
+      let appearance = applicationPlist?.appearance() ?? .system
+      var metadata: String
+      switch appearance {
       case .dark:
-        subtitle = "Dark appearance"
+        metadata = "Dark appearance"
       case .light:
-        subtitle = "Light appearance"
+        metadata = "Light appearance"
       case .system:
-        subtitle = "System appearance"
+        metadata = "System appearance"
       }
 
-      if application.restricted {
-        subtitle = "🔐 Locked"
+      if restricted {
+        metadata = "🔐 Locked"
       }
 
-      let app = ApplicationGridViewModel(
-        title: bundleName,
-        subtitle: subtitle,
-        application: application)
+      let application = Application(bundleIdentifier: bundleIdentifier,
+                                    name: bundleName, metadata: metadata,
+                                    url: url,
+                                    preferencesUrl: resolvedAppPreferenceUrl,
+                                    appearance: appearance,
+                                    restricted: restricted)
+
+//      let app = ApplicationGridViewModel(
+//        title: bundleName,
+//        subtitle: subtitle,
+//        application: application)
       DispatchQueue.main.async { [weak self] in
         guard let strongSelf = self else { return }
-        strongSelf.delegate?.applicationsLogicController(strongSelf, didLoadApplication: app, offset: offset, total: total)
+        strongSelf.delegate?.applicationsLogicController(strongSelf, didLoadApplication: application, offset: offset, total: total)
       }
 
-      applications.append(app)
+      applications.append(application)
       addedApplicationNames.append(bundleName)
     }
-    return applications.sorted(by: { $0.application.name.lowercased() < $1.application.name.lowercased() })
+    return applications.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
   }
 
   private func shouldExcludeApplication(with plist: NSDictionary, applicationUrl url: URL) -> Bool {
