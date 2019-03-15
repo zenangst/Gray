@@ -162,10 +162,12 @@ class ApplicationsLogicController {
     for (offset, url) in appUrls.enumerated() {
       let path = url.path
       let infoPath = "\(path)/Contents/Info.plist"
+
       guard FileManager.default.fileExists(atPath: infoPath),
         let plist = NSDictionary.init(contentsOfFile: infoPath),
         let bundleIdentifier = plist.value(forPlistKey: .bundleIdentifier),
         let bundleName = plist.value(forPlistKey: .bundleName) ?? plist.value(forPlistKey: .executableName),
+        let executableName = plist.value(forPlistKey: .executableName),
         !addedApplicationNames.contains(bundleName),
         !excludedBundles.contains(bundleIdentifier) else { continue }
 
@@ -224,7 +226,7 @@ class ApplicationsLogicController {
       }
 
       applications.append(application)
-      addedApplicationNames.append(bundleName)
+      addedApplicationNames.append(executableName)
     }
     return applications.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
   }
