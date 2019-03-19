@@ -2,6 +2,7 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+  let exportController = ExportController()
   weak var toolbar: Toolbar?
   weak var window: NSWindow?
   lazy var alertsController = AlertsController(versionController: versionController)
@@ -76,6 +77,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     (window?.contentViewController as? MainContainerViewController)?.toolbar(toolbar,
                                                                              didChangeMode: ApplicationsFeatureViewController.Mode.list.rawValue)
     NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "featureViewControllerMode"), object: nil)
+  }
+
+  @IBAction func export(_ sender: Any?) {
+    exportController.openDialog()
   }
 
   @IBAction func search(_ sender: Any?) {

@@ -29,6 +29,7 @@
 		BD67CE1C215BF4FE00216FDB /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CE1B215BF4FE00216FDB /* MainContainerViewController.swift */; };
 		BD6F243221620A240032338F /* ApplicationsFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9D3D7E215C30B000233333 /* ApplicationsFeatureViewController.swift */; };
 		BD750FDC215C1AC60024E70A /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD750FDB215C1AC60024E70A /* Application.swift */; };
+		BD987B2A22418BBF00783BE6 /* ExportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD987B2922418BBF00783BE6 /* ExportController.swift */; };
 		BD9F0C43216675F300608FD9 /* SystemPreferenceFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F0C42216675F300608FD9 /* SystemPreferenceFeatureViewController.swift */; };
 		BD9F0C462166764E00608FD9 /* SystemPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F0C452166764E00608FD9 /* SystemPreference.swift */; };
 		BD9F0C4C2166773300608FD9 /* SystemPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F0C4B2166773300608FD9 /* SystemPreferenceView.swift */; };
@@ -78,6 +79,7 @@
 		BD67CE14215BF16100216FDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD67CE1B215BF4FE00216FDB /* MainContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerViewController.swift; sourceTree = "<group>"; };
 		BD750FDB215C1AC60024E70A /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		BD987B2922418BBF00783BE6 /* ExportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportController.swift; sourceTree = "<group>"; };
 		BD9D3D7E215C30B000233333 /* ApplicationsFeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsFeatureViewController.swift; sourceTree = "<group>"; };
 		BD9F0C42216675F300608FD9 /* SystemPreferenceFeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPreferenceFeatureViewController.swift; sourceTree = "<group>"; };
 		BD9F0C452166764E00608FD9 /* SystemPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPreference.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		BD30ED4B216C010400FD2D91 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				BD987B2822418BB500783BE6 /* Export */,
 				BD9D3D79215C2D3F00233333 /* Applications */,
 				BD9F0C3F216675AB00608FD9 /* Main */,
 				BD9F0C40216675D200608FD9 /* SystemPreferences */,
@@ -252,6 +255,14 @@
 				BD111045215CEB240002D537 /* Shell.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		BD987B2822418BB500783BE6 /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				BD987B2922418BBF00783BE6 /* ExportController.swift */,
+			);
+			path = Export;
 			sourceTree = "<group>";
 		};
 		BD9D3D79215C2D3F00233333 /* Applications */ = {
@@ -495,6 +506,7 @@
 				BDB20F262167A64100A72623 /* Toolbar.swift in Sources */,
 				BDE5736D2210A9850065597B /* UserDefaults.swift in Sources */,
 				BD9F0C4C2166773300608FD9 /* SystemPreferenceView.swift in Sources */,
+				BD987B2A22418BBF00783BE6 /* ExportController.swift in Sources */,
 				BDE573682210A2CB0065597B /* AppearanceAware.swift in Sources */,
 				BD9F0C43216675F300608FD9 /* SystemPreferenceFeatureViewController.swift in Sources */,
 				BD23492F220744330047F910 /* StatefulItem-macOS.generated.swift in Sources */,
