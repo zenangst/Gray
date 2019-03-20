@@ -81,7 +81,7 @@
                             </menuItem>
                             <menuItem title="Import" keyEquivalent="o" id="KaW-ft-85H">
                                 <connections>
-                                    <action selector="exportAction:" target="Voe-Tx-rLC" id="leh-ak-ZzQ"/>
+                                    <action selector="importAction:" target="Voe-Tx-rLC" id="ODr-UG-1fv"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
