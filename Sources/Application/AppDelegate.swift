@@ -3,6 +3,7 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
   let exportController = ExportController()
+  let importController = ImportController()
   weak var toolbar: Toolbar?
   weak var window: NSWindow?
   lazy var alertsController = AlertsController(versionController: versionController)
@@ -79,8 +80,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "featureViewControllerMode"), object: nil)
   }
 
-  @IBAction func export(_ sender: Any?) {
+  @IBAction func exportAction(_ sender: Any?) {
     exportController.openDialog()
+  }
+
+  @IBAction func importAction(_ sender: Any?) {
+    importController.openDialog()
   }
 
   @IBAction func search(_ sender: Any?) {
