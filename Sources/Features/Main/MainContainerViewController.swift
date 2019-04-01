@@ -4,8 +4,11 @@ import Family
 class MainContainerViewController: FamilyViewController,
   ApplicationsFeatureViewControllerDelegate,
   SystemPreferenceFeatureViewControllerDelegate,
-ToolbarDelegate {
+  ToolbarDelegate,
+  ImportControllerDelegate {
+
   lazy var loadingLabelController = ApplicationsLoadingViewController(text: "Loading...")
+  lazy var importLabelController = ApplicationsLoadingViewController(text: "Importing...")
   let preferencesViewController: SystemPreferenceFeatureViewController
   let applicationsViewController: ApplicationsFeatureViewController
   let applicationLogicController = ApplicationsLogicController()
@@ -29,11 +32,15 @@ ToolbarDelegate {
     applicationsViewController.delegate = self
     preferencesViewController.delegate = self
 
-    addChild(preferencesViewController)
+    addChild(importLabelController)
     addChild(loadingLabelController)
+    addChild(preferencesViewController)
     addChild(applicationsViewController)
 
-    loadingLabelController.view.frame.size.height = 60 + 120 + 120 + 20 + scrollView.contentInsets.top
+    performBatchUpdates({ _ in
+      loadingLabelController.view.frame.size.height = 120
+    }, completion: nil)
+
     loadingLabelController.view.enclosingScrollView?.drawsBackground = true
   }
 
@@ -52,6 +59,31 @@ ToolbarDelegate {
         header?.setText("Search results: \(string)")
       }
     }, completion: nil)
+  }
+
+  // MARK: - ImportControllerDelegate
+
+  func importController(_ controller: ImportController, didStartImport: Bool, settingsCount: Int) {
+    importLabelController.view.alphaValue = 0.0
+    performBatchUpdates({ (_) in
+      importLabelController.view.frame.size.height = 75
+      importLabelController.view.animator().alphaValue = 1.0
+    }, completion: nil)
+  }
+
+  func importController(_ controller: ImportController,
+                        offset: Int,
+                        importProgress progress: Double,
+                        settingsCount: Int) {
+    importLabelController.progress.animator().doubleValue = floor(progress)
+    importLabelController.textField.stringValue = "Importing (\(offset) of \(settingsCount)) settings."
+  }
+
+  func importController(_ controller: ImportController, didFinishImport: Bool, settingsCount: Int) {
+    performBatchUpdates({ (_) in
+      importLabelController.view.animator().alphaValue = 0.0
+    }, completion: nil)
+    applicationsViewController.logicController.load()
   }
 
   // MARK: - ToolbarSearchDelegate

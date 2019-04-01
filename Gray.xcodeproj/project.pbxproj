@@ -21,6 +21,7 @@
 		BD23492F220744330047F910 /* StatefulItem-macOS.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2349252207442A0047F910 /* StatefulItem-macOS.generated.swift */; };
 		BD2349302207446D0047F910 /* CollectionViewItemComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD23492B2207442A0047F910 /* CollectionViewItemComponent.swift */; };
 		BD2349312207446D0047F910 /* StatefulItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD23492C2207442A0047F910 /* StatefulItem.swift */; };
+		BD299EB8224214A300098B39 /* ImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD299EB7224214A300098B39 /* ImportController.swift */; };
 		BD2AA1E62167A0E4000717B7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BD2AA1E52167A0E4000717B7 /* README.md */; };
 		BD30844A215C198D002A9349 /* ApplicationsLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD308449215C198D002A9349 /* ApplicationsLogicController.swift */; };
 		BD67CE0E215BF15F00216FDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CE0D215BF15F00216FDB /* AppDelegate.swift */; };
@@ -70,6 +71,7 @@
 		BD2349292207442A0047F910 /* ViewControllerFactory-macOS.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ViewControllerFactory-macOS.stencil"; sourceTree = "<group>"; };
 		BD23492B2207442A0047F910 /* CollectionViewItemComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewItemComponent.swift; sourceTree = "<group>"; };
 		BD23492C2207442A0047F910 /* StatefulItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulItem.swift; sourceTree = "<group>"; };
+		BD299EB7224214A300098B39 /* ImportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportController.swift; sourceTree = "<group>"; };
 		BD2AA1E52167A0E4000717B7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BD308449215C198D002A9349 /* ApplicationsLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsLogicController.swift; sourceTree = "<group>"; };
 		BD67CE0A215BF15F00216FDB /* Gray.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gray.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,9 +184,18 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		BD299EB62242148200098B39 /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				BD299EB7224214A300098B39 /* ImportController.swift */,
+			);
+			path = Import;
+			sourceTree = "<group>";
+		};
 		BD30ED4B216C010400FD2D91 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				BD299EB62242148200098B39 /* Import */,
 				BD987B2822418BB500783BE6 /* Export */,
 				BD9D3D79215C2D3F00233333 /* Applications */,
 				BD9F0C3F216675AB00608FD9 /* Main */,
@@ -488,6 +499,7 @@
 				BDB20F2B2167A9DB00A72623 /* SearchField.swift in Sources */,
 				BDB20F292167A73C00A72623 /* SearchToolbarItem.swift in Sources */,
 				BD23492D220744330047F910 /* ViewControllerFactory-macOS.generated.swift in Sources */,
+				BD299EB8224214A300098B39 /* ImportController.swift in Sources */,
 				BD6F243221620A240032338F /* ApplicationsFeatureViewController.swift in Sources */,
 				BD750FDC215C1AC60024E70A /* Application.swift in Sources */,
 				BDAAC48E2168EC2B0093B27D /* LayoutFactory.swift in Sources */,

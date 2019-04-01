@@ -7,6 +7,8 @@ class ApplicationsLoadingViewController: NSViewController {
   lazy var textField = NSTextField()
   lazy var progress = NSProgressIndicator()
 
+  private var layoutConstraints = [NSLayoutConstraint]()
+
   init(text: String) {
     super.init(nibName: nil, bundle: nil)
     self.textField.stringValue = text
@@ -18,17 +20,16 @@ class ApplicationsLoadingViewController: NSViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.addSubviews(textField, progress)
-    NSLayoutConstraint.constrain(
-      textField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-      textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
-      textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
-      progress.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      progress.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
-      progress.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
-      progress.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20),
-      progress.heightAnchor.constraint(equalToConstant: 10)
-    )
+
+    let stackView = NSStackView()
+    stackView.orientation = .vertical
+    stackView.alignment = .centerX
+    stackView.distribution = .gravityAreas
+    stackView.addArrangedSubview(textField)
+    stackView.addArrangedSubview(progress)
+    NSLayoutConstraint.addAndPin(stackView, toView: view, insets: .init(top: 20, left: 20, bottom: 20, right: 20))
+    NSLayoutConstraint.deactivate(layoutConstraints)
+
     textField.maximumNumberOfLines = -1
     textField.alignment = .center
     textField.isBezeled = false
@@ -39,10 +40,8 @@ class ApplicationsLoadingViewController: NSViewController {
     textField.font = NSFont.systemFont(ofSize: 15)
     progress.canDrawConcurrently = true
     progress.isIndeterminate = false
-//    progress.controlTint = NSControlTint.blueControlTint
     progress.style = .bar
     progress.doubleValue = 0.0
-//    progress.isBezeled = true
   }
 
   func setText(_ text: String) {

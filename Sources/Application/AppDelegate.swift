@@ -3,14 +3,16 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
   let exportController = ExportController()
+  let importController = ImportController()
   weak var toolbar: Toolbar?
   weak var window: NSWindow?
+  weak var mainContainerViewController: MainContainerViewController?
   lazy var alertsController = AlertsController(versionController: versionController)
   lazy var versionController = VersionController()
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     #if DEBUG
-    Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/macOSInjection10.bundle")?.load()
+    Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/macOSInjection.bundle")?.load()
     #endif
     versionController.delegate = alertsController
     loadApplication()
@@ -55,6 +57,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     window.makeKeyAndOrderFront(nil)
     self.window = window
     self.toolbar = toolbar
+
+    mainContainerViewController = contentViewController
   }
 
   // MARK: - Injection
@@ -79,8 +83,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "featureViewControllerMode"), object: nil)
   }
 
-  @IBAction func export(_ sender: Any?) {
+  @IBAction func exportAction(_ sender: Any?) {
     exportController.openDialog()
+  }
+
+  @IBAction func importAction(_ sender: Any?) {
+    importController.delegate = mainContainerViewController
+    importController.openDialog()
   }
 
   @IBAction func search(_ sender: Any?) {
