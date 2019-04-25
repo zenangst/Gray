@@ -28,7 +28,7 @@
                             <menuItem title="Check for Updates..." id="1Ic-d9-XXx">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="exportAction:" target="Voe-Tx-rLC" id="Cs0-h9-kOF"/>
+                                    <action selector="checkForNewVersion:" target="Voe-Tx-rLC" id="RPw-8y-KSF"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
@@ -443,12 +443,12 @@
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
                             <menuItem title="as Grid" keyEquivalent="1" id="QN9-Xa-3J4">
                                 <connections>
-                                    <action selector="exportAction:" target="Voe-Tx-rLC" id="VEp-5v-aFR"/>
+                                    <action selector="switchToGrid:" target="Voe-Tx-rLC" id="JGE-5r-rUA"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="as List" keyEquivalent="2" id="oUf-cU-ksv">
                                 <connections>
-                                    <action selector="exportAction:" target="Voe-Tx-rLC" id="h8R-9S-Ea8"/>
+                                    <action selector="switchToList:" target="Voe-Tx-rLC" id="X1I-lU-zXV"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
