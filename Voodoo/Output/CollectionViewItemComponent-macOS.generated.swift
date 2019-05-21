@@ -1,4 +1,4 @@
-// Generated using Sourcery 0.15.0 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 0.16.1 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 
 import Cocoa
@@ -122,10 +122,10 @@ class ApplicationGridDataSource: NSObject, NSCollectionViewDataSource {
     let model = self.model(at: indexPath)
 
     if let view = item as? ApplicationGridView {
-          view.currentAppearance = model.application.appearance
-          iconStore.loadIcon(for: model.application) { image in view.iconView.image = image }
-          view.titleLabel.stringValue = model.title
-          view.subtitleLabel.stringValue = model.subtitle
+      view.currentAppearance = model.application.appearance
+      iconStore.loadIcon(for: model.application) { image in view.iconView.image = image }
+      view.titleLabel.stringValue = model.title
+      view.subtitleLabel.stringValue = model.subtitle
     }
 
     return item
@@ -256,10 +256,10 @@ class ApplicationListDataSource: NSObject, NSCollectionViewDataSource {
     let model = self.model(at: indexPath)
 
     if let view = item as? ApplicationListView {
-          view.currentAppearance = model.application.appearance
-          iconStore.loadIcon(for: model.application) { image in view.iconView.image = image }
-          view.titleLabel.stringValue = model.title
-          view.subtitleLabel.stringValue = model.subtitle
+      view.currentAppearance = model.application.appearance
+      iconStore.loadIcon(for: model.application) { image in view.iconView.image = image }
+      view.titleLabel.stringValue = model.title
+      view.subtitleLabel.stringValue = model.subtitle
     }
 
     return item
@@ -390,9 +390,9 @@ class SystemPreferenceDataSource: NSObject, NSCollectionViewDataSource {
     let model = self.model(at: indexPath)
 
     if let view = item as? SystemPreferenceView {
-          view.iconView.image = model.icon
-          view.titleLabel.stringValue = model.title
-          view.subtitleLabel.stringValue = model.subtitle
+      view.iconView.image = model.icon
+      view.titleLabel.stringValue = model.title
+      view.subtitleLabel.stringValue = model.subtitle
     }
 
     return item

@@ -195,9 +195,9 @@
 		BD30ED4B216C010400FD2D91 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				BD299EB62242148200098B39 /* Import */,
-				BD987B2822418BB500783BE6 /* Export */,
 				BD9D3D79215C2D3F00233333 /* Applications */,
+				BD987B2822418BB500783BE6 /* Export */,
+				BD299EB62242148200098B39 /* Import */,
 				BD9F0C3F216675AB00608FD9 /* Main */,
 				BD9F0C40216675D200608FD9 /* SystemPreferences */,
 			);

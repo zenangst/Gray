@@ -149,12 +149,8 @@ ApplicationGridViewDelegate, ApplicationsLogicControllerDelegate, ApplicationLis
         strongSelf.performSearch(with: strongSelf.query)
       }
 
-      switch mode {
-      case .grid:
-        gridComponent.reload(with: gridModels(from: applications), completion: completion)
-      case .list:
-        listComponent.reload(with: listModels(from: applications), completion: completion)
-      }
+      gridComponent.reload(with: gridModels(from: applications), completion: completion)
+      listComponent.reload(with: listModels(from: applications), completion: completion)
     }
   }
 

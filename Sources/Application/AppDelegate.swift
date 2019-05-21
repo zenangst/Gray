@@ -40,9 +40,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         .fullSizeContentView, .unifiedTitleAndToolbar]
     window.titleVisibility = .hidden
     window.toolbar = toolbar
-
     window.minSize = windowSize
-    window.maxSize = CGSize(width: 790, height: 1280)
+    window.maxSize = CGSize(width: 790 * 2, height: 1280)
 
     if window.frame.size.width < windowSize.width || window.frame.size.width > window.maxSize.width {
       window.setFrame(NSRect.init(origin: .zero, size: windowSize),

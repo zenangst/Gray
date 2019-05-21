@@ -24,11 +24,12 @@ class ApplicationsLoadingViewController: NSViewController {
     let stackView = NSStackView()
     stackView.orientation = .vertical
     stackView.alignment = .centerX
-    stackView.distribution = .gravityAreas
-    stackView.addArrangedSubview(textField)
+    stackView.distribution = .fillProportionally
     stackView.addArrangedSubview(progress)
-    NSLayoutConstraint.addAndPin(stackView, toView: view, insets: .init(top: 20, left: 20, bottom: 20, right: 20))
+
     NSLayoutConstraint.deactivate(layoutConstraints)
+    layoutConstraints = NSLayoutConstraint.addAndPin(stackView, toView: view,
+                                                     insets: .init(top: 0, left: 20, bottom: 0, right: 20))
 
     textField.maximumNumberOfLines = -1
     textField.alignment = .center
