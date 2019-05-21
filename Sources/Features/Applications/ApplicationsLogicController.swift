@@ -216,10 +216,6 @@ class ApplicationsLogicController {
                                     appearance: appearance,
                                     restricted: restricted)
 
-//      let app = ApplicationGridViewModel(
-//        title: bundleName,
-//        subtitle: subtitle,
-//        application: application)
       DispatchQueue.main.async { [weak self] in
         guard let strongSelf = self else { return }
         strongSelf.delegate?.applicationsLogicController(strongSelf, didLoadApplication: application, offset: offset, total: total)
