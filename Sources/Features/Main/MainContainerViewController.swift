@@ -32,14 +32,13 @@ class MainContainerViewController: FamilyViewController,
     applicationsViewController.delegate = self
     preferencesViewController.delegate = self
 
-    addChild(importLabelController)
-    addChild(loadingLabelController)
-    addChild(preferencesViewController)
-    addChild(applicationsViewController)
-
-    performBatchUpdates({ _ in
+    body {
+      add(importLabelController)
+      add(loadingLabelController)
+      add(preferencesViewController)
+      add(applicationsViewController)
       loadingLabelController.view.frame.size.height = 120
-    }, completion: nil)
+    }
 
     loadingLabelController.view.enclosingScrollView?.drawsBackground = true
   }
@@ -47,7 +46,7 @@ class MainContainerViewController: FamilyViewController,
   private func performSearch(with string: String) {
     let header = applicationsViewController.component.collectionView.supplementaryView(forElementKind: NSCollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0)) as? CollectionViewHeader
 
-    performBatchUpdates({ controller in
+    body {
       switch string.count > 0 {
       case false:
         preferencesViewController.component.collectionView.animator().alphaValue = 1.0
@@ -58,17 +57,17 @@ class MainContainerViewController: FamilyViewController,
         applicationsViewController.performSearch(with: string)
         header?.setText("Search results: \(string)")
       }
-    }, completion: nil)
+    }
   }
 
   // MARK: - ImportControllerDelegate
 
   func importController(_ controller: ImportController, didStartImport: Bool, settingsCount: Int) {
     importLabelController.view.alphaValue = 0.0
-    performBatchUpdates({ (_) in
+    body {
       importLabelController.view.frame.size.height = 75
       importLabelController.view.animator().alphaValue = 1.0
-    }, completion: nil)
+    }
   }
 
   func importController(_ controller: ImportController,
@@ -80,9 +79,9 @@ class MainContainerViewController: FamilyViewController,
   }
 
   func importController(_ controller: ImportController, didFinishImport: Bool, settingsCount: Int) {
-    performBatchUpdates({ (_) in
+    body {
       importLabelController.view.animator().alphaValue = 0.0
-    }, completion: nil)
+    }
     applicationsViewController.logicController.load()
   }
 
@@ -99,7 +98,7 @@ class MainContainerViewController: FamilyViewController,
     UserDefaults.standard.featureViewControllerMode = mode
     applicationsViewController.mode = mode
     applicationsViewController.removeFromParent()
-    addChild(applicationsViewController)
+    add(applicationsViewController)
   }
 
   // MARK: - ApplicationCollectionViewControllerDelegate

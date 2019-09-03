@@ -6,17 +6,11 @@ protocol ApplicationListViewDelegate: class {
 
 // sourcery: let application = Application
 class ApplicationListView: NSCollectionViewItem, CollectionViewItemComponent, AppearanceAware {
-  let baseView = NSView()
+  let baseView = OpaqueView()
   weak var delegate: ApplicationListViewDelegate?
 
   // sourcery: currentAppearance = model.application.appearance
-  var currentAppearance: Application.Appearance? {
-    didSet {
-      if let currentAppearance = self.currentAppearance {
-        update(with: currentAppearance)
-      }
-    }
-  }
+  var currentAppearance: Application.Appearance?
 
   // sourcery: $RawBinding = "iconStore.loadIcon(for: model.application) { image in view.iconView.image = image }"
   lazy var iconView: NSImageView = .init()

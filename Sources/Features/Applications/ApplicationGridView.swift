@@ -7,17 +7,11 @@ protocol ApplicationGridViewDelegate: class {
 
 // sourcery: let application = Application
 class ApplicationGridView: NSCollectionViewItem, CollectionViewItemComponent, AppearanceAware {
-  lazy var baseView = NSView()
+  lazy var baseView = OpaqueView()
   weak var delegate: ApplicationGridViewDelegate?
 
   // sourcery: currentAppearance = model.application.appearance
-  var currentAppearance: Application.Appearance? {
-    didSet {
-        if let currentAppearance = self.currentAppearance {
-        update(with: currentAppearance)
-      }
-    }
-  }
+  var currentAppearance: Application.Appearance?
 
   // sourcery: $RawBinding = "iconStore.loadIcon(for: model.application) { image in view.iconView.image = image }"
   lazy var iconView = NSImageView()

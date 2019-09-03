@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2AECAC775C01910CCBFAD88E /* libPods-Gray.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C02BDE925690A5BBA8E6D44 /* libPods-Gray.a */; };
+		BD07D667231869BD0087F4D4 /* OpaqueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD07D666231869BD0087F4D4 /* OpaqueView.swift */; };
 		BD111046215CEB240002D537 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD111045215CEB240002D537 /* Shell.swift */; };
 		BD1A5590219CA170003C7D98 /* DepedencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A558F219CA170003C7D98 /* DepedencyContainer.swift */; };
 		BD1BA9BE215E68840052633B /* IconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BA9BD215E68840052633B /* IconController.swift */; };
@@ -54,6 +55,7 @@
 		097E55585FC0FE0ACC791B9E /* Pods-Gray.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gray.debug.xcconfig"; path = "Target Support Files/Pods-Gray/Pods-Gray.debug.xcconfig"; sourceTree = "<group>"; };
 		8925482688825713455FEF24 /* Pods-Gray.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gray.release.xcconfig"; path = "Target Support Files/Pods-Gray/Pods-Gray.release.xcconfig"; sourceTree = "<group>"; };
 		9C02BDE925690A5BBA8E6D44 /* libPods-Gray.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Gray.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD07D666231869BD0087F4D4 /* OpaqueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpaqueView.swift; sourceTree = "<group>"; };
 		BD111045215CEB240002D537 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		BD1A558F219CA170003C7D98 /* DepedencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepedencyContainer.swift; sourceTree = "<group>"; };
 		BD1BA9BD215E68840052633B /* IconController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconController.swift; sourceTree = "<group>"; };
@@ -131,6 +133,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BD07D665231869B10087F4D4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BD07D666231869BD0087F4D4 /* OpaqueView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		BD111047215CEB8E0002D537 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +205,7 @@
 		BD30ED4B216C010400FD2D91 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				BD07D665231869B10087F4D4 /* Views */,
 				BD9D3D79215C2D3F00233333 /* Applications */,
 				BD987B2822418BB500783BE6 /* Export */,
 				BD299EB62242148200098B39 /* Import */,
@@ -519,6 +530,7 @@
 				BDE5736D2210A9850065597B /* UserDefaults.swift in Sources */,
 				BD9F0C4C2166773300608FD9 /* SystemPreferenceView.swift in Sources */,
 				BD987B2A22418BBF00783BE6 /* ExportController.swift in Sources */,
+				BD07D667231869BD0087F4D4 /* OpaqueView.swift in Sources */,
 				BDE573682210A2CB0065597B /* AppearanceAware.swift in Sources */,
 				BD9F0C43216675F300608FD9 /* SystemPreferenceFeatureViewController.swift in Sources */,
 				BD23492F220744330047F910 /* StatefulItem-macOS.generated.swift in Sources */,
@@ -674,6 +686,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MARKETING_VERSION = 0.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zenangst.Gray;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -695,6 +708,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MARKETING_VERSION = 0.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zenangst.Gray;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
