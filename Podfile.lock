@@ -2,7 +2,7 @@ PODS:
   - Blueprints (0.12.0)
   - Differific (0.8.2)
   - Family (0.20.6)
-  - Sourcery (0.16.2)
+  - Sourcery (0.17.0)
   - UserInterface (0.5.0)
 
 DEPENDENCIES:
@@ -24,7 +24,7 @@ SPEC CHECKSUMS:
   Blueprints: 45e43bc69f0969967ba462772acdabe196095389
   Differific: c3840b9e4d1ee2216b2c0054c270e4a616df9327
   Family: cae19a87ce580920b8d3bba49e38da8ab64b3c69
-  Sourcery: 3f406d227efd179773b3c3599ebd1700d1a6013c
+  Sourcery: 3ed61be7c8a1218fce349266139379dba477efe0
   UserInterface: 54e15db9aceaec2b9686d00f471adb15d2598ea3
 
 PODFILE CHECKSUM: 9a4a4208e8595d7fa51cbc758521284dec9359cc
