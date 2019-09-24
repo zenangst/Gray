@@ -109,6 +109,7 @@ class ApplicationsLogicController {
     let applicationDirectoryN = URL(fileURLWithPath: "/Network/Applications")
     let applicationDirectoryND = URL(fileURLWithPath: "/Network/Developer/Applications")
     let coreServicesDirectory = URL(fileURLWithPath: "/System/Library/CoreServices")
+    let systemApplicationsDirectory = URL(fileURLWithPath: "/System/Applications")
     let applicationDirectoryS = URL(fileURLWithPath: "/Users/Shared/Applications")
     
     // macOS default Applications directories
@@ -125,6 +126,7 @@ class ApplicationsLogicController {
     directories.append(applicationDirectory.appendingPathComponent("Xcode.app/Contents/Developer/Applications"))
     directories.append(homeDirectory.appendingPathComponent("Library/Developer/Xcode/DerivedData")) // default location for subdirectories containing applications freshly built with Xcode                 
     directories.append(applicationDirectoryS)
+    directories.append(systemApplicationsDirectory)
 
     return directories
   }
@@ -162,9 +164,8 @@ class ApplicationsLogicController {
     for (offset, url) in appUrls.enumerated() {
       let path = url.path
       let infoPath = "\(path)/Contents/Info.plist"
-
       guard FileManager.default.fileExists(atPath: infoPath),
-        let plist = NSDictionary.init(contentsOfFile: infoPath),
+        let plist = NSDictionary(contentsOfFile: infoPath),
         let bundleIdentifier = plist.value(forPlistKey: .bundleIdentifier),
         let bundleName = plist.value(forPlistKey: .bundleName) ?? plist.value(forPlistKey: .executableName),
         let executableName = plist.value(forPlistKey: .executableName),
