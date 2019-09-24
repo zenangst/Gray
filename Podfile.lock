@@ -1,7 +1,7 @@
 PODS:
-  - Blueprints (0.12.0)
+  - Blueprints (0.13.1)
   - Differific (0.8.2)
-  - Family (0.20.8)
+  - Family (0.22.4)
   - Sourcery (0.17.0)
   - UserInterface (0.5.0)
 
@@ -21,9 +21,9 @@ SPEC REPOS:
     - UserInterface
 
 SPEC CHECKSUMS:
-  Blueprints: 45e43bc69f0969967ba462772acdabe196095389
+  Blueprints: ddd6ab1e455c98471aaef2fdd0b09b5f9b53af5b
   Differific: c3840b9e4d1ee2216b2c0054c270e4a616df9327
-  Family: f902b967dad9ac8a78bfb3c5a1e557529feacb6e
+  Family: 0dffb3c3ec36b85a599e43b9aa3d8cefeef81873
   Sourcery: 3ed61be7c8a1218fce349266139379dba477efe0
   UserInterface: 54e15db9aceaec2b9686d00f471adb15d2598ea3
 
