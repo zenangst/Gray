@@ -7,8 +7,8 @@ class MainContainerViewController: FamilyViewController,
   ToolbarDelegate,
   ImportControllerDelegate {
 
-  lazy var loadingLabelController = ApplicationsLoadingViewController(text: "Loading...")
-  lazy var importLabelController = ApplicationsLoadingViewController(text: "Importing...")
+    lazy var loadingLabelController = ApplicationsLoadingViewController(text: "Loading...".localized)
+    lazy var importLabelController = ApplicationsLoadingViewController(text: "Importing...".localized)
   let preferencesViewController: SystemPreferenceFeatureViewController
   let applicationsViewController: ApplicationsFeatureViewController
   let applicationLogicController = ApplicationsLogicController()
@@ -51,11 +51,11 @@ class MainContainerViewController: FamilyViewController,
       case false:
         preferencesViewController.component.collectionView.animator().alphaValue = 1.0
         applicationsViewController.performSearch(with: string)
-        header?.setText("Applications")
+        header?.setText("Applications".localized)
       case true:
         preferencesViewController.component.collectionView.animator().alphaValue = 0.0
         applicationsViewController.performSearch(with: string)
-        header?.setText("Search results: \(string)")
+        header?.setText("Search results:".localized + " \(string)")
       }
     }
   }
@@ -75,7 +75,7 @@ class MainContainerViewController: FamilyViewController,
                         importProgress progress: Double,
                         settingsCount: Int) {
     importLabelController.progress.animator().doubleValue = floor(progress)
-    importLabelController.textField.stringValue = "Importing (\(offset) of \(settingsCount)) settings."
+    importLabelController.textField.stringValue = "Importing".localized + " (\(offset)/\(settingsCount)) " + "settings.".localized
   }
 
   func importController(_ controller: ImportController, didFinishImport: Bool, settingsCount: Int) {
@@ -111,7 +111,7 @@ class MainContainerViewController: FamilyViewController,
                                  didLoad application: Application, offset: Int, total: Int) {
     let progress = Double(offset + 1) / Double(total) * Double(100)
     loadingLabelController.progress.doubleValue = floor(progress)
-    loadingLabelController.textField.stringValue = "Loading (\(offset)/\(total)): \(application.name)"
+    loadingLabelController.textField.stringValue = "Loading".localized + " (\(offset)/\(total)): \(application.name)"
   }
 
   func applicationViewController(_ controller: ApplicationsFeatureViewController,

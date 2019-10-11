@@ -9,20 +9,20 @@ class AlertsController: VersionControllerDelegate {
 
   func showNewVersionDialog(version: String, handler completion : (Bool)->Void) {
     let alert = NSAlert()
-    alert.messageText = "A new version is available."
-    alert.informativeText = "Version \(version) is available for download on GitHub."
+    alert.messageText = "A new version is available.".localized
+    alert.informativeText = "Version".localized + " \(version) " + "is available for download on GitHub.".localized
     alert.alertStyle = .informational
-    alert.addButton(withTitle: "Open GitHub")
-    alert.addButton(withTitle: "OK")
+    alert.addButton(withTitle: "Open GitHub".localized)
+    alert.addButton(withTitle: "OK".localized)
     completion(alert.runModal() == .alertFirstButtonReturn)
   }
 
   func showNoNewUpdates() {
     let alert = NSAlert()
-    alert.messageText = "You’re up-to-date!"
-    alert.informativeText = "Gray \(versionController.currentVersion()) is currently the newest version available."
+    alert.messageText = "You’re up-to-date!".localized
+    alert.informativeText = "Gray \(versionController.currentVersion()) " + "is currently the newest version available.".localized
     alert.alertStyle = .informational
-    alert.addButton(withTitle: "OK")
+    alert.addButton(withTitle: "OK".localized)
     alert.runModal()
   }
 

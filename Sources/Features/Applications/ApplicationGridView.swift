@@ -29,7 +29,7 @@ class ApplicationGridView: NSCollectionViewItem, CollectionViewItemComponent, Ap
     super.viewDidLoad()
 
     let menu = NSMenu()
-    menu.addItem(NSMenuItem(title: "Reset", action: #selector(resetApplication), keyEquivalent: ""))
+    menu.addItem(NSMenuItem(title: "Reset".localized, action: #selector(resetApplication), keyEquivalent: ""))
     view.menu = menu
 
     view.layer?.backgroundColor = NSColor.white.cgColor

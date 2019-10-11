@@ -199,15 +199,15 @@ class ApplicationsLogicController {
       var metadata: String
       switch appearance {
       case .dark:
-        metadata = "Dark appearance"
+        metadata = "Dark appearance".localized
       case .light:
-        metadata = "Light appearance"
+        metadata = "Light appearance".localized
       case .system:
-        metadata = "System appearance"
+        metadata = "System appearance".localized
       }
 
       if restricted {
-        metadata = "🔐 Locked"
+        metadata = "🔐 Locked".localized
       }
 
       let application = Application(bundleIdentifier: bundleIdentifier,
