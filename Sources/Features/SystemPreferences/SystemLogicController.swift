@@ -11,7 +11,7 @@ class SystemLogicController {
   func readSystemPreferences() -> [SystemPreferenceViewModel] {
     let icon = NSImage(named: .init("System Appearance"))!
     let preference = SystemPreference(icon: icon,
-                                      name: "System",
+                                      name: "System".localized,
                                       bundleIdentifier: "com.apple.dock",
                                       value: true,
                                       type: .appleScript,
@@ -24,7 +24,7 @@ class SystemLogicController {
         """)
 
     let subtitle = NSApplication.shared.mainWindow?.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-      ? "Dark appearance" : "Light appearance"
+        ? "Dark appearance".localized : "Light appearance".localized
 
     let systemPreferences = [
       SystemPreferenceViewModel(icon: icon,
@@ -60,11 +60,11 @@ class SystemLogicController {
 
   private func showSystemPreferencesDialog(handler completion : (Bool)->Void) {
     let alert = NSAlert()
-    alert.messageText = "Enable Accessibility."
-    alert.informativeText = "For this Gray to work properly, you will have to enable accessibility. You can do this by adding it under the Privacy-tab under Security & Privacy in System Preferences."
+    alert.messageText = "Enable Accessibility.".localized
+    alert.informativeText = "For this Gray to work properly, you will have to enable accessibility. You can do this by adding it under the Privacy-tab under Security & Privacy in System Preferences.".localized
     alert.alertStyle = .informational
-    alert.addButton(withTitle: "System Preferences")
-    alert.addButton(withTitle: "OK")
+    alert.addButton(withTitle: "System Preferences".localized)
+    alert.addButton(withTitle: "OK".localized)
     completion(alert.runModal() == .alertFirstButtonReturn)
   }
 

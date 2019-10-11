@@ -60,10 +60,10 @@ ApplicationGridViewDelegate, ApplicationsLogicControllerDelegate, ApplicationLis
     let layoutFactory = LayoutFactory()
     self.iconStore = iconStore
     self.mode = mode ?? .grid
-    self.gridComponent = ApplicationGridViewController(title: "Applications",
+    self.gridComponent = ApplicationGridViewController(title: "Applications".localized,
                                                        layout: layoutFactory.createGridLayout(),
                                                        iconStore: iconStore)
-    self.listComponent = ApplicationListViewController(title: "Applications",
+    self.listComponent = ApplicationListViewController(title: "Applications".localized,
                                                        layout: layoutFactory.createListLayout(),
                                                        iconStore: iconStore)
 
@@ -156,14 +156,11 @@ ApplicationGridViewDelegate, ApplicationsLogicControllerDelegate, ApplicationLis
 
   private func showPermissionsDialog(for application: Application, handler completion : (Bool)->Void) {
     let alert = NSAlert()
-    alert.messageText = "Additional privileges needed"
-    alert.informativeText = """
-    To be able to change the appearance of apps like Mail, Messages, Safari and Home, you need to grant permission Full Disk Access.
-
-    """
+    alert.messageText = "Additional privileges needed".localized
+    alert.informativeText = "To be able to change the appearance of apps like Mail, Messages, Safari and Home, you need to grant permission Full Disk Access.".localized
     alert.alertStyle = .informational
-    alert.addButton(withTitle: "Open Security & Preferences")
-    alert.addButton(withTitle: "OK")
+    alert.addButton(withTitle: "Open Security & Preferences".localized)
+    alert.addButton(withTitle: "OK".localized)
     completion(alert.runModal() == .alertFirstButtonReturn)
   }
 

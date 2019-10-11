@@ -13,7 +13,7 @@ DEPENDENCIES:
   - UserInterface
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs:
     - Blueprints
     - Differific
     - Family
@@ -29,4 +29,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9a4a4208e8595d7fa51cbc758521284dec9359cc
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.3

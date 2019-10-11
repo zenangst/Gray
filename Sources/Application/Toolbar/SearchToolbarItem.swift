@@ -1,7 +1,7 @@
 import Cocoa
 
 class SearchToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
-  static var itemIdentifier: NSToolbarItem.Identifier = .init("Search")
+    static var itemIdentifier: NSToolbarItem.Identifier = .init("Search")
 
   lazy var titleLabel = SearchField()
   lazy var customView = NSView()

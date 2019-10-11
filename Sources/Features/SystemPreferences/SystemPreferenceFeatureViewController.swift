@@ -16,7 +16,7 @@ class SystemPreferenceFeatureViewController: NSViewController, NSCollectionViewD
   init(iconStore: IconStore) {
     let layoutFactory = LayoutFactory()
     self.iconStore = iconStore
-    self.component = SystemPreferenceViewController(title: "Preferences",
+    self.component = SystemPreferenceViewController(title: "Preferences".localized,
                                                     layout: layoutFactory.createGridLayout(),
                                                     iconStore: iconStore)
     super.init(nibName: nil, bundle: nil)

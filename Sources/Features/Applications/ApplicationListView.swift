@@ -30,7 +30,7 @@ class ApplicationListView: NSCollectionViewItem, CollectionViewItemComponent, Ap
     super.viewDidLoad()
 
     let menu = NSMenu()
-    menu.addItem(NSMenuItem(title: "Reset", action: #selector(resetApplication), keyEquivalent: ""))
+    menu.addItem(NSMenuItem(title: "Reset".localized, action: #selector(resetApplication), keyEquivalent: ""))
     view.menu = menu
 
     let verticalStackView = NSStackView(views: [titleLabel, subtitleLabel])

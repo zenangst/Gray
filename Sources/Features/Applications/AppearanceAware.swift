@@ -15,7 +15,7 @@ extension AppearanceAware {
         context.duration = duration
         switch appearance {
         case .dark:
-          view.animator().layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
+            view.animator().layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
           titleLabel.animator().textColor = .white
           subtitleLabel.animator().textColor = .controlAccentColor
           view.layer?.borderWidth = 0.0

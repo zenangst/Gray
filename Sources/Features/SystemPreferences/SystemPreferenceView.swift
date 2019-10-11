@@ -69,7 +69,7 @@ class SystemPreferenceView: NSCollectionViewItem, CollectionViewItemComponent {
   private func configureAppearance() {
     switch view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) {
     case .darkAqua?:
-      view.layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
+        view.layer?.backgroundColor = NSColor(named: "Dark")?.cgColor
       titleLabel.animator().textColor = .white
       subtitleLabel.textColor = .lightGray
     case .aqua?:
