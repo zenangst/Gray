@@ -210,12 +210,24 @@ class ApplicationsLogicController {
         metadata = "🔐 Locked".localized
       }
 
-      let application = Application(bundleIdentifier: bundleIdentifier,
+      var application = Application(bundleIdentifier: bundleIdentifier,
                                     name: bundleName, metadata: metadata,
                                     url: url,
                                     preferencesUrl: resolvedAppPreferenceUrl,
                                     appearance: appearance,
                                     restricted: restricted)
+
+      if var preferredLanguage = NSLocale.preferredLanguages.first {
+        if preferredLanguage.contains("en-") {
+          preferredLanguage = "en"
+        }
+
+        let infoPlistPath = url.appendingPathComponent("Contents/Resources/zh-Hans.lproj/InfoPlist.strings")
+        if FileManager.default.fileExists(atPath: infoPlistPath.path),
+          let dictionary = NSDictionary(contentsOfFile: infoPlistPath.path) as? [String: String] {
+          application.localizedName = dictionary["CFBundleName"]
+        }
+      }
 
       DispatchQueue.main.async { [weak self] in
         guard let strongSelf = self else { return }

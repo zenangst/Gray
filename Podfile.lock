@@ -13,7 +13,7 @@ DEPENDENCIES:
   - UserInterface
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs:
+  https://github.com/CocoaPods/Specs.git:
     - Blueprints
     - Differific
     - Family
