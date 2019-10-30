@@ -217,12 +217,8 @@ class ApplicationsLogicController {
                                     appearance: appearance,
                                     restricted: restricted)
 
-      if var preferredLanguage = NSLocale.preferredLanguages.first {
-        if preferredLanguage.contains("en-") {
-          preferredLanguage = "en"
-        }
-
-        let infoPlistPath = url.appendingPathComponent("Contents/Resources/zh-Hans.lproj/InfoPlist.strings")
+      if let preferredLanguage = Locale.current.languageCode {
+        let infoPlistPath = url.appendingPathComponent("Contents/Resources/\(preferredLanguage).lproj/InfoPlist.strings")
         if FileManager.default.fileExists(atPath: infoPlistPath.path),
           let dictionary = NSDictionary(contentsOfFile: infoPlistPath.path) as? [String: String] {
           application.localizedName = dictionary["CFBundleName"]
