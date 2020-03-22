@@ -217,13 +217,7 @@ class ApplicationsLogicController {
                                     appearance: appearance,
                                     restricted: restricted)
 
-      if let preferredLanguage = Locale.current.languageCode {
-        let infoPlistPath = url.appendingPathComponent("Contents/Resources/\(preferredLanguage).lproj/InfoPlist.strings")
-        if FileManager.default.fileExists(atPath: infoPlistPath.path),
-          let dictionary = NSDictionary(contentsOfFile: infoPlistPath.path) as? [String: String] {
-          application.localizedName = dictionary["CFBundleName"]
-        }
-      }
+      application.localizedName = FileManager.default.displayName(atPath: application.url.path)
 
       DispatchQueue.main.async { [weak self] in
         guard let strongSelf = self else { return }
