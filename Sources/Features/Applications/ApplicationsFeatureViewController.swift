@@ -113,7 +113,9 @@ ApplicationGridViewDelegate, ApplicationsLogicControllerDelegate, ApplicationLis
     case 0:
       filtered = applicationCache
     default:
-      filtered = applicationCache.filter({ $0.name.lowercased().contains(query) })
+      filtered = applicationCache.filter({
+        return ($0.localizedName ?? $0.name).lowercased().contains(query)
+      })
     }
 
     switch mode {

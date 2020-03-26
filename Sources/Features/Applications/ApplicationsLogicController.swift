@@ -210,12 +210,14 @@ class ApplicationsLogicController {
         metadata = "🔐 Locked".localized
       }
 
-      let application = Application(bundleIdentifier: bundleIdentifier,
+      var application = Application(bundleIdentifier: bundleIdentifier,
                                     name: bundleName, metadata: metadata,
                                     url: url,
                                     preferencesUrl: resolvedAppPreferenceUrl,
                                     appearance: appearance,
                                     restricted: restricted)
+
+      application.localizedName = FileManager.default.displayName(atPath: application.url.path)
 
       DispatchQueue.main.async { [weak self] in
         guard let strongSelf = self else { return }

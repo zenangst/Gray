@@ -124,7 +124,7 @@ class ApplicationGridDataSource: NSObject, NSCollectionViewDataSource {
     if let view = item as? ApplicationGridView {
       view.currentAppearance = model.application.appearance
       iconStore.loadIcon(for: model.application) { image in view.iconView.image = image }
-      view.titleLabel.stringValue = model.title
+      view.titleLabel.stringValue = model.application.localizedName ?? model.title
       view.subtitleLabel.stringValue = model.subtitle
     }
 
@@ -258,7 +258,7 @@ class ApplicationListDataSource: NSObject, NSCollectionViewDataSource {
     if let view = item as? ApplicationListView {
       view.currentAppearance = model.application.appearance
       iconStore.loadIcon(for: model.application) { image in view.iconView.image = image }
-      view.titleLabel.stringValue = model.title
+      view.titleLabel.stringValue = model.application.localizedName ?? model.title
       view.subtitleLabel.stringValue = model.subtitle
     }
 

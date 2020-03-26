@@ -15,7 +15,7 @@ class ApplicationGridView: NSCollectionViewItem, CollectionViewItemComponent, Ap
 
   // sourcery: $RawBinding = "iconStore.loadIcon(for: model.application) { image in view.iconView.image = image }"
   lazy var iconView = NSImageView()
-  // sourcery: let title: String = "titleLabel.stringValue = model.title"
+  // sourcery: let title: String = "titleLabel.stringValue = model.application.localizedName ?? model.title"
   lazy var titleLabel = NSTextField()
   // sourcery: let subtitle: String = "subtitleLabel.stringValue = model.subtitle"
   lazy var subtitleLabel = NSTextField()

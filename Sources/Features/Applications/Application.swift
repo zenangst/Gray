@@ -14,4 +14,5 @@ struct Application: Hashable {
   let preferencesUrl: URL
   let appearance: Appearance
   let restricted: Bool
+  var localizedName: String?
 }

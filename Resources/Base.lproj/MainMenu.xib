@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -80,6 +80,24 @@
                                     <action selector="importAction:" target="Voe-Tx-rLC" id="ODr-UG-1fv"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="WVG-bW-ENt"/>
+                            <menuItem title="Close Window" keyEquivalent="w" id="HEn-2t-aJ4">
+                                <connections>
+                                    <action selector="performClose:" target="-1" id="Ag9-Ec-9I2"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Edit" id="RkH-bv-tyt">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Edit" id="xHZ-GJ-NC7">
+                        <items>
+                            <menuItem title="Find" keyEquivalent="f" id="I8X-fE-RoM">
+                                <connections>
+                                    <action selector="search:" target="-1" id="Ngs-CP-v6F"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -110,7 +128,7 @@
                                     <action selector="switchToList:" target="Voe-Tx-rLC" id="X1I-lU-zXV"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Enter Full Screen" keyEquivalent="↩" id="4J7-dP-txa">
+                            <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="toggleFullScreen:" target="-1" id="dU3-MA-1Rq"/>
@@ -128,8 +146,8 @@
                                     <action selector="performMiniaturize:" target="-1" id="VwT-WD-YPe"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Zoom" id="R4o-n2-Eq4">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Zoom" keyEquivalent="f" id="R4o-n2-Eq4">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="performZoom:" target="-1" id="DIl-cC-cCs"/>
                                 </connections>
@@ -158,6 +176,20 @@
                 </menuItem>
             </items>
             <point key="canvasLocation" x="102" y="227"/>
+        </menu>
+        <menu id="LDQ-su-H2T">
+            <items>
+                <menuItem title="Item 1" id="enw-At-piT">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 2" id="x29-PV-jIz">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 3" id="K0C-Im-LAa">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="140" y="120"/>
         </menu>
     </objects>
 </document>
