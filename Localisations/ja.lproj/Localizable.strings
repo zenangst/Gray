@@ -1,0 +1,35 @@
+/* 
+  Localizable.strings
+  Gray
+
+  Created by Licardo on 2019/10/11.
+  Copyright © 2019 zenangst. All rights reserved.
+*/
+
+"A new version is available." = "最新版があります。";
+"Version" = "バージョン";
+"is available for download on GitHub." = "が GitHub でダウンロードできます。";
+"Open GitHub" = "GitHub を開く";
+"OK" = "OK";
+"You’re up-to-date!" = "最新版をお使いです！";
+"is currently the newest version available." = "は最新版です。";
+"Reset" = "初期化";
+"Applications" = "アプリケーション";
+"Additional privileges needed" = "権限が必要です";
+"To be able to change the appearance of apps like Mail, Messages, Safari and Home, you need to grant permission Full Disk Access." = "メール、メッセージ、Safari、ホームなどのアプリの外観を変更するには、ディスクへのフルディスクアクセスを許可する必要があります。";
+"Open Security & Preferences" = "セキュリティの設定を開く";
+"Dark appearance" = "ダーク表示";
+"Light appearance" = "ライト表示";
+"System appearance" = "システムの表示";
+"🔐 Locked" = "🔐 ロック";
+"Loading..." = "読み込み中...";
+"Importing..." = "インポート中...";
+"Search results:" = "検索結果:";
+"Importing" = "インポート中";
+"settings." = "の設定";
+"Loading" = "読み込み中";
+"Enable Accessibility." = "アクセシビリティの有効化";
+"For this Gray to work properly, you will have to enable accessibility. You can do this by adding it under the Privacy-tab under Security & Privacy in System Preferences." = "この Gray を正しく動作させるには、アクセシビリティを許可する必要があります。これはシステム環境設定の「セキュリティとプライバシー」の「プライバシー」パネルから追加することで可能です。";
+"System Preferences" = "システムの設定";
+"Preferences" = "設定";
+"System" = "システム";
