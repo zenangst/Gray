@@ -49,6 +49,10 @@ open Gray.xcworkspace
 
 Happy coding!
 
+## Supporting the project
+
+If you want to support the development of this framework, you can do so by becoming a [sponsor](https://github.com/sponsors/zenangst). ❤️
+
 ## Author
 
 Christoffer Winterkvist, christoffer@winterkvist.com
