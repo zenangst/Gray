@@ -1,0 +1,35 @@
+/* 
+  Localizable.strings
+  Gray
+
+  Created by Licardo on 2019/10/11.
+  Copyright © 2019 zenangst. All rights reserved.
+*/
+
+"A new version is available." = "Está disponible una nueva versión.";
+"Version" = "Versión";
+"is available for download on GitHub." = "está disponible para su descarga en GitHub.";
+"Open GitHub" = "Abrir GitHub";
+"OK" = "OK";
+"You’re up-to-date!" = "¡Está actualizado!";
+"is currently the newest version available." = "es actualmente la versión más nueva disponible.";
+"Reset" = "Reiniciar";
+"Applications" = "Aplicaciones";
+"Additional privileges needed" = "Se necesitan privilegios adicionales";
+"To be able to change the appearance of apps like Mail, Messages, Safari and Home, you need to grant permission Full Disk Access." = "Para poder cambiar la apariencia de aplicaciones tales como Mail, Messages, Safari e Inicio, debe otorgar permiso de Acceso completo al disco.";
+"Open Security & Preferences" = "Abrir Seguridad & Preferencias";
+"Dark appearance" = "Apariencia oscura";
+"Light appearance" = "Apariencia clara";
+"System appearance" = "Apariencia del sistema";
+"🔐 Locked" = "🔐 Bloqueado";
+"Loading..." = "Cargando...";
+"Importing..." = "Importando...";
+"Search results:" = "Resultados de la búsqueda:";
+"Importing" = "Importando";
+"settings." = "configuraciones.";
+"Loading" = "Cargando";
+"Enable Accessibility." = "Habilitar Accesibilidad.";
+"For this Gray to work properly, you will have to enable accessibility. You can do this by adding it under the Privacy-tab under Security & Privacy in System Preferences." = "Para que Gray funcione correctamente, tendrá que habilitar la función accesibilidad. Simplemente agréguela en la pestaña Privacidad bajo la sección Seguridad y Privacidad en las Preferencias del Sistema.";
+"System Preferences" = "Preferencias del Sistema";
+"Preferences" = "Preferencias";
+"System" = "Sistema";
