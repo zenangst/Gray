@@ -44,6 +44,12 @@ class ApplicationsLogicController {
     queue.async { [weak self] in
       let shell = Shell()
 
+      let runningApplication = NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).first
+
+      if !application.url.path.contains("CoreServices") {
+        runningApplication?.terminate()
+      }
+
       // The cfprefsd is killed for the current user to avoid plist caching.
       // PlistBuddy is used to set new values.
       // Defaults is invoked in order to renew the cache.
@@ -53,44 +59,44 @@ class ApplicationsLogicController {
       case .light:
         command = """
         defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool true
+        defaults write \(application.bundleIdentifier.lowercased()) NSRequiresAquaSystemAppearance -bool true
         defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
         """
       case .dark:
         command = """
         defaults write \(application.bundleIdentifier) NSRequiresAquaSystemAppearance -bool false
+        defaults write \(application.bundleIdentifier.lowercased()) NSRequiresAquaSystemAppearance -bool false
         defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
         """
       case .system:
         command = """
         defaults delete \(application.bundleIdentifier) NSRequiresAquaSystemAppearance
+        defaults delete \(application.bundleIdentifier.lowercased()) NSRequiresAquaSystemAppearance
         defaults read \(application.bundleIdentifier) NSRequiresAquaSystemAppearance \(application.preferencesUrl.path)
         """
       }
 
-      let runningApplication = NSRunningApplication.runningApplications(withBundleIdentifier: application.bundleIdentifier).first
 
-      if !application.url.path.contains("CoreServices") {
-        runningApplication?.terminate()
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        let output = shell.execute(command: command)
+        NSLog("Gray: terminal output: (\(output))")
+        self?.load()
       }
 
-      NSLog("Gray: New settings for \(application.name) = \(newAppearance)")
-      NSLog("Gray: Command: \(command)")
-      let output = shell.execute(command: command)
-      NSLog("Gray: terminal output: (\(output))")
-
       if runningApplication != nil && !application.url.path.contains("CoreServices") {
-        self?.queue.asyncAfter(deadline: .now() + 0.5, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
           NSWorkspace.shared.launchApplication(withBundleIdentifier: application.bundleIdentifier,
                                                options: [.withoutActivation],
                                                additionalEventParamDescriptor: nil,
                                                launchIdentifier: nil)
-        })
+        }
       } else {
         let shell = Shell()
         shell.execute(command: "killall", arguments: ["-9", "\(application.name)"])
       }
 
-      self?.load()
+      NSLog("Gray: New settings for \(application.name) = \(newAppearance)")
+      NSLog("Gray: Command: \(command)")
     }
   }
 
