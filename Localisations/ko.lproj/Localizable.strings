@@ -1,0 +1,35 @@
+/* 
+  Localizable.strings
+  Gray
+  
+  Created by miniesam on 02/01/2020.
+  Copyright © 2020 miniesam. All rights reserved.
+*/
+
+"A new version is available." = "새 버전을 사용할 수 있습니다.";
+"Version" = "버전";
+"is available for download on GitHub." = "을(를) GitHub에서 다운로드할 수 있습니다.";
+"Open GitHub" = "GitHub 열기";
+"OK" = "확인";
+"You’re up-to-date!" = "최신 버전입니다!";
+"is currently the newest version available." = "이(가) 현재 사용 가능한 최신 버전입니다.";
+"Reset" = "초기화";
+"Applications" = "앱";
+"Additional privileges needed" = "추가 권한 필요";
+"To be able to change the appearance of apps like Mail, Messages, Safari and Home, you need to grant permission Full Disk Access." = "메일, 메시지, Safari, 홈과 같은 앱의 화면 모드를 변경하려면 전체 디스크 접근 권한을 부여해야 합니다.";
+"Open Security & Preferences" = "보안 및 개인 정보 보호 열기";
+"Dark appearance" = "다크 모드";
+"Light appearance" = "라이트 모드";
+"System appearance" = "화면 모드";
+"🔐 Locked" = "🔐 잠김";
+"Loading..." = "로딩 중...";
+"Importing..." = "가져오는 중...";
+"Search results:" = "검색 결과:";
+"Importing" = "가져오는 중";
+"settings." = "설정.";
+"Loading" = "로딩 중";
+"Enable Accessibility." = "손쉬운 사용 활성화.";
+"For this Gray to work properly, you will have to enable accessibility. You can do this by adding it under the Privacy-tab under Security & Privacy in System Preferences." = "Gray가 제대로 작동하려면 손쉬운 사용을 활성화해야 합니다. 손쉬운 사용 활성화는 시스템 환경설정의 보안 및 개인 정보 보호 아래에 있는 개인 정보 탭에서 할 수 있습니다.";
+"System Preferences" = "시스템 환경설정";
+"Preferences" = "환경설정";
+"System" = "시스템";
